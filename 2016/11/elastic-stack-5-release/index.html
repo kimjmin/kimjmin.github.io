@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Elastic Stack 5.0 출시 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2016/11/elastic-stack-5-release/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('elastic-stack-5.png')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                    </div>
+                    <h1>Elastic Stack 5.0 출시</h1>
+                    <h2 class="subheading">Elastic Stack 5.0 출시 및 관련글 번역에 대하여</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2016-11-26
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p>지난 11월 26일에 Elastic Stack 5.0 버전이 출시되었습니다. 한달이나 지난 지금에 와서야 뜬금없이 포스팅을 한 이유는</p>
+<p style="font-size:1.6em"><strong>드디어 한글 페이지 번역이 끝났습니다. (/;ㅁ;)/</strong></p>
+
+<p>5.0 출시를 맞아 Elastic의 홈페이지(<a href="https://elastic.co" target="_blank" rel="noopener">https://elastic.co</a>) 역시 새로 단장을 했습니다. 제품 페이지 부터 참 세련되게 바뀌었네요. :)</p>
+<p><img src="elastic-product-page.png" alt=""></p>
+<p>지난달 <a href="/2016/10/elastic-seoul-seminar">Elastic{on} Seoul Seminar</a> 라는 제 입사 이래 가장 큰 행사를 치뤘습니다. 때마침 그 날 Elastic Stack 5.0 이 발표가 되었고요. 본래는 5.0 출시에 맞춰 홈페이지 리뉴얼을 계획하고 있었고, 각 언어별로도 (Elastic 웹사이트는 영어, 프랑스어, 독일어, 일본어, 한국어로 서비스 되고 있습니다.) 미리 페이지들을 번역 해서 출시 하는 것을 목표로 하고 있었습니다. 그러나 저는 행사 준비가 바빠 미리 작업이 힘들었고 (사실 영어 외에 다른 나라 페이지들도 날짜 맞춰 나온 국가는 없었습니다. 😅) 우선 행사가 중요하니 지금은 어려워 행사 이후 최대한 빨리 번역 리뷰 작업을 하겠다고 저희 번역팀과 이야기 한 뒤 우선 행사 부터 치뤘습니다. 참고로 웹페이지나 블로그 번역은 저 혼자 하는건 아니고, 먼저 에이젼시에서 번역 해서 올라온 글을 제가 리뷰 하고 컨펌 하면 저희 홈페이지 웹마스터가 실 서버에 반영하는 방식으로 진행을 합니다.</p>
+<p>그런데 Elastic{on} Seoul Seminar 행사 끝나고 나서 행사 참여하신 업체분들로 부터 자사를 방문해서 설명회 요청 및 계약사항에 대한 문의가 끊이질 않아, 행사 이후 한달여 기간 동안을 정말 미팅, 미팅, 미팅을 하며 정신 없이 보냈습니다. 덕분에 성사된 계약도 있고, 상당한 크기의 빅딜 문의도 들어오고 있고 해서 저와 저희 한국 직원들 모두 육체는 피곤하지만 상당히 신나게 정신없이 달렸던 것 같습니다. 제 눈에 혼자 5사람분의 영업은 뛰고 있는 듯 한 우리 정하원 지사장님과 입사 하시자 마자 큰 행사 치르고 지금 혼이 나갈 정도로 구르고 계신 김황곤 부장님… 사랑합니다.</p>
+<p>참고로 행사에 참여 해 주신, 특히 개발자이신 분들로 부터 신제품 소개랑 회사 자랑만 있지 별다른 심도있는 기술 이야기가 없어 아쉬웠다 라는 피드백을 받았는데, 이번 행사가 회사를 널리 알리려는 일종의 세일즈 이벤트였기 때문에 이 부분에 대해서는 먼저 다시 한번 양해 부탁드리며, 올해 그리고 내년에 한국에서 비즈니스가 잘 되고 여러 좋은 사용 사례들이 많이 생기게 되면 내년에는 좀 더 알차게 준비 할 수 있을거라 생각됩니다. 이미 국내에서도 아주 탄탄하게 잘 쓰고 계신 분들도 많이 계시지만, 일단 저희 내부적으로 올해는 이정도 규모면 적당 했다 라고 평가 하는 중입니다.</p>
+<p>여하튼, 행사 치르기 전 제게 리뷰 요청 온 번역 문서가 프로덕트 페이지 15개와 블로그 페이지 7개… 총 22개 페이지였습니다. 😱</p>
+<p>번역된 페이지들은 아래와 같습니다. 대부분 영어로 이미 읽어보셨겠지만, 그래도 5.0 스택의 주요 변경 사항들을 잘 설명하고 있기 때문에 아직 안 보셨다면 한번씩 읽어 보시면 좋을 것 같습니다.</p>
+<ul>
+<li><p><strong>프로덕트 페이지</strong></p>
+<ul>
+<li>Elastic Stack: <a href="https://www.elastic.co/kr/products" target="_blank" rel="noopener">https://www.elastic.co/kr/products</a><ul>
+<li>Elasticsearch: <a href="https://www.elastic.co/kr/products/elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/kr/products/elasticsearch</a></li>
+<li>Kibana: <a href="https://www.elastic.co/kr/products/kibana" target="_blank" rel="noopener">https://www.elastic.co/kr/products/kibana</a></li>
+<li>Beats: <a href="https://www.elastic.co/kr/products/beats" target="_blank" rel="noopener">https://www.elastic.co/kr/products/beats</a><ul>
+<li>Filebeat: <a href="https://www.elastic.co/kr/products/beats/filebeat" target="_blank" rel="noopener">https://www.elastic.co/kr/products/beats/filebeat</a></li>
+<li>Metricbeat: <a href="https://www.elastic.co/kr/products/beats/metricbeat" target="_blank" rel="noopener">https://www.elastic.co/kr/products/beats/metricbeat</a></li>
+<li>Packetbeat: <a href="https://www.elastic.co/kr/products/beats/packetbeat" target="_blank" rel="noopener">https://www.elastic.co/kr/products/beats/packetbeat</a></li>
+<li>Winlogbeat: <a href="https://www.elastic.co/kr/products/beats/winlogbeat" target="_blank" rel="noopener">https://www.elastic.co/kr/products/beats/winlogbeat</a></li>
+</ul>
+</li>
+<li>Logstash: <a href="https://www.elastic.co/kr/products/logstash" target="_blank" rel="noopener">https://www.elastic.co/kr/products/logstash</a></li>
+<li>X-Pack: <a href="https://www.elastic.co/kr/products/x-pack" target="_blank" rel="noopener">https://www.elastic.co/kr/products/x-pack</a><ul>
+<li>Security: <a href="https://www.elastic.co/kr/products/x-pack/security" target="_blank" rel="noopener">https://www.elastic.co/kr/products/x-pack/security</a></li>
+<li>Alerting: <a href="https://www.elastic.co/kr/products/x-pack/alerting" target="_blank" rel="noopener">https://www.elastic.co/kr/products/x-pack/alerting</a></li>
+<li>Monitoring: <a href="https://www.elastic.co/kr/products/x-pack/monitoring" target="_blank" rel="noopener">https://www.elastic.co/kr/products/x-pack/monitoring</a></li>
+<li>Reporting: <a href="https://www.elastic.co/kr/products/x-pack/reporting" target="_blank" rel="noopener">https://www.elastic.co/kr/products/x-pack/reporting</a></li>
+<li>Graph: <a href="https://www.elastic.co/kr/products/x-pack/graph" target="_blank" rel="noopener">https://www.elastic.co/kr/products/x-pack/graph</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>릴리스 블로그</strong></p>
+<ul>
+<li>Elastic Stack: <a href="https://www.elastic.co/kr/blog/elastic-stack-5-0-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/elastic-stack-5-0-0-released</a></li>
+<li>Elasticsearch: <a href="https://www.elastic.co/kr/blog/elasticsearch-5-0-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/elasticsearch-5-0-0-released</a></li>
+<li>Kibana: <a href="https://www.elastic.co/kr/blog/kibana-5-0-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/kibana-5-0-0-released</a></li>
+<li>Logstash: <a href="https://www.elastic.co/kr/blog/logstash-5-0-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/logstash-5-0-0-released</a></li>
+<li>Beats: <a href="https://www.elastic.co/kr/blog/beats-5-0-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/beats-5-0-0-released</a></li>
+<li>X-Pack: <a href="https://www.elastic.co/kr/blog/x-pack-5-0-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/x-pack-5-0-0-released</a></li>
+<li>ES-Hadoop: <a href="https://www.elastic.co/kr/blog/es-hadoop-5-0-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/es-hadoop-5-0-0-released</a></li>
+</ul>
+</li>
+</ul>
+<p>한국 시간으로 오늘(11월 26일) 새벽에 드디어 실 웹페이지 서버에 반영 되었습니다. 아직 오탈자나 이상한 번역이 있을 수 있습니다. 제 책 출간 할 때 출판사 담당 편집장님과 리뷰 하면서도 느꼈지만 오탈자와의 전쟁은 끝이 없는 것 같습니다. 그 동안 낮에는 미팅 다니느라 번역 리뷰 할 시간이 없어 새벽 4시에 일어나 리뷰하고 그러면서 반영 된 것이라 뿌듯하네요. 😁 그리고 가끔 페이스북에도 올렸지만 저희 블로그 편집하는 직원이 워낙 영화나 아메코믹 덕후라서 일반인은 잘 알지도 못하는 표현을 자주 쓰는지라, 에이젼시 거쳐서 도저히 말이 안되는 이상한 문장이 온 것도 많아 애도 꽤 먹었습니다.</p>
+<p>예를 들면, 로그스태시 관련 글을 쓰는 창시자인 Jordan Sissel도 항상 글 마무리를 <strong><em>Happy ‘stashing!</em></strong> 으로 끝맺음 하는데, 사실 이걸 뉘앙스를 살려서 한국말로 딱 번역이 어렵습니다. Logstash 가 Log + Stash 의 합성어인데, Log 는 흔히들 아시는 <strong>시간 나열에 의한 기록물</strong> 이라는 의미와 <strong>통나무</strong> 라는 의미의 두가지 뜻이 있습니다. (그래서 Logstahs 예전 마스코트가 콧수염이 난 통나무였습니다) Stash는 <strong>은닉하다</strong> 라는 의미로, 한국말로 더 확 와닿는 번역으로는 <strong>짱박다</strong> 라는 뜻인데, 그래서 결국은 <strong>로그 기록을 짱박다</strong> 라는, 정말 Logstash가 어떤 기능을 하는 프로덕트인지를 설명하는 데 있어서는 더할 나위 없이 적절한 이름입니다. 근데 이걸 한국어로 간단하게 설명하긴 쉽지가 않네요. 공식 웹페이지에 <strong><em>즐거운 짱박음 되세요</em></strong> 라고 번역할 수도 없고. 여튼, 그래서 <strong><em>즐거운 stashing 되시길 바랍니다!</em></strong> 라는 애매한 문장으로 번역이 되었네요.</p>
+<p><img src="logstash.png" alt=""></p>
+<p>그리고 페이스북에서도 한번 주절거렸 던 것인데, ES-Hadoop 블로그에 필자가 <strong><em>May your TIMED_WAIT’s be few, and your Spark Streaming Jobs live long and prosper.</em></strong> 라는 표현이 있습니다. <strong>May the force be with you</strong> 라는 스타워즈 대사와 <strong>Live long and prosper</strong> 라는 스타트랙의 벌칸족 인사말을 섞어서 써 놓은 것입니다. 😩 대체 이걸 어떻게 번역하라고… 한글도 알아야 하고, 영어도 알아야 하고, 영화 대사도 알고 있어야 하고, IT 지식도 있어야 하는데… 결국에는 이것 역시 <strong><em>TIMED_WAIT가 적어짐이 함께하고, Spark Streaming 작업에 장수와 번영을 기원합니다.</em></strong> 라는 애매모호한 문장으로 번역을 했습니다. 사실 저 문장에 대해 미국에 계신 저희 프로덕트 매니저인 김보현님께 미국 친구들은 너무 이런 geek한 표현을 좋아한다고 했더니 본인도 저 (영어)문장 이해를 못 하겠다고 하신 기억이 납니다.</p>
+<p><img src="force.gif" alt="">  <img src="livelong.gif" alt=""></p>
+<p>올해 2월에 번역했던 <a href="https://www.elastic.co/kr/blog/introducing-elastic-cloud-and-elastic-cloud-enterprise" target="_blank" rel="noopener">Elastic Cloud 관련 블로그</a> 에서도 뜬금없이 포스트에 <strong><em>A Rose by Any Other Name…</em></strong> 라는 문장이 있어 번역에 애를 먹었던 것이 기억나네요. 구글링 했더니 저게 셰익스피어의 로미오와 줄리엣에 나오는 대사였습니다. 자세한 스토리는 해당 블로그 하단에 첨언을 해 놓았습니다.</p>
+<p>여하튼, 지금 Elastic 에서 제가 하고 있는 일이 대략 고객 기술지원, 컨설팅, 번역, 커뮤니티 및 컨퍼런스 지원, 기타 잡무들인데 (개발 컨트리뷰션은 언제.. ㅠ_ㅠ) 회사 블로그 번역 리뷰 업무도 해 보면 나름 재밌고 흥미로운 일인 것 같습니다.</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/thinks-of-education/" data-toggle="tooltip" data-placement="top" title="교육과 배움에 대하여">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/10/elastic-seoul-seminar/" data-toggle="tooltip" data-placement="top" title="Elasticon Seminar Seoul">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2016/11/elastic-stack-5-release/";
+    var disqus_url = "http://kimjmin.net/2016/11/elastic-stack-5-release/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Elasticon Seminar Seoul - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2016/10/elastic-seoul-seminar/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('IMG_0088.JPG')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Meetup" title="Meetup">Meetup</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#Training" title="Training">Training</a>
+                        
+                    </div>
+                    <h1>Elasticon Seminar Seoul</h1>
+                    <h2 class="subheading">Elastic{on} Seminar Seoul - 엘라스티콘 세미나 서울 행사</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2016-10-31
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p>지난 1월 26일, 서울에서 Elastic{on} Seminar 행사가 열렸습니다. 보통 Elastic 에서는 3월에 샌프란시스코에서 Elastic{on}(엘라스티콘) 글로벌 컨퍼런스를 3일동안 개최하고, 가을~겨울 시즌 동안에 세계 주요 도시들을 돌면서 <a href="https://www.elastic.co/elasticon/tour/2016" target="_blank" rel="noopener">Elastic{on} Tour</a> 라는 행사를 진행합니다. 보통 아시아태평양 지역에서는 시드니, 도쿄 정도를 진행 하는데 이번에는 Elastic{on} Tour 행사의 일환은 아니었고, Elastic의 APJ 팀 차원에서 고객, 파트너사들 대상으로 하는 Elastic{on} Seminar 라는 행사를 기획하게 되어 서울에서도 개최하게 되었습니다. 개발자 컨퍼런스이기 보다는 세일즈 행사의 일환이라 커뮤니티에 오픈은 못 하고 대부분 초청 한 사람들 대상으로 하는 행사였습니다.</p>
+<p>한국에서 처음으로 열리는 큰 행사이다 많은 부분을 기획하려 신경을 썼는데요, Elasticsearch 창시자이자 저희 CTO 인 <a href="https://www.elastic.co/kr/about/leadership" target="_blank" rel="noopener">Shay Banon</a>을 부르고 싶어서 연락을 해 보았는데 이 시기에 가족 행사가 있다고 해서, 차선 이름들을 거론하다가 Kibana 창시자인 <a href="https://github.com/rashidkpc" target="_blank" rel="noopener">Rashid Khan</a>을 초청하기로 했습니다. 그리고 Rashid 역시 발표도 잘 하고 목소리 톤도 좋아 비교적 알아듣기 쉬운 것도 있고 해서 제가 적극 추천을 해서 이번 행사에 오게 되었습니다. 서울은 본인도 처음이라고 하네요. 그 외에도 저희 회사 전체 Operation &amp; Sales SVP 인 Aaron Katz 부사장이 와서 오프닝 키노트를 진행했고요, 그 밖에 APJ팀을 총괄하는 홍콩의 Robert Lau 이사 등이 참석을 했습니다. </p>
+<p>수요일 행사를 위해 대부분 직원들이 월요일에 와서 금요일에 떠났는데요, 화, 수, 목 3일간 알찬 시간들을 만들기 위해 저하고 정하원 지사장님하고 오래 전 부터 미팅들 잡고 하느라 땀 좀 뺐습니다. 월요일 저녁에 모인 직원들끼리 우선 간단하게 삼겹살과 꽃등심으로 웰컴 투 서울회를 가졌습니다.</p>
+<p><img src="IMG_0163.jpg" alt=""></p>
+<h3 id="10월-25일-화요일"><a href="#10월-25일-화요일" class="headerlink" title="10월 25일 화요일"></a>10월 25일 화요일</h3><p>화요일 부터 본격적으로 이번 주 일정을 시작했는데요, 오전에는 바로 전주에 어레인지 된 카카오와 판교에서 미팅을 가졌습니다. 보통 라시드, 김보현님은 제 차에, 다른 VP들과 세일즈들은 정하원 지사장님 차를 타고 다녔습니다. 카카오 미팅 어레인지 해 주신 Milo 님 이 자리를 빌어 다시 한번 감사드립니다. :)</p>
+<p><img src="IMG_0044.jpg" alt=""> <img src="IMG_0046.jpg" alt=""></p>
+<p>판교에서 간단히 점심을 먹고 정하원 지사장님과 세일즈들은 다른 미팅을 하러 떠나고 저, 라시드, 보현님은 코엑스에 가서 데뷰 컨퍼런스를 짧게 구경했습니다. 작년에는 여기서 저희 Elastic 부스도 운영 했었는데 올해는 CFP 통과를 못해서 참여는 못했습니다. 그런데 지금 생각 해 보니 다른 일정도 바쁜데 이것까지 했으면 진짜 죽었을지도 모르겠다는 생각이 들어 오히려 다행이라는 느낌이 들었습니다. 티켓이 없어 컨퍼런스장 안쪽은 못가고 그랜드 볼룸 로비만 돌아다니며 참여 업체들 구경했는데, 한시간 남짓 한 시간에 아는 분들만 한 10분 가까이 만난 것 같습니다. 저도 이제 컨퍼런스 짬빱이 은근 되는 것 같습니다. (쿨럭)</p>
+<p>꼭 가보고 싶은 부스가 있었는데, 요즘 핫한 <a href="https://www.facebook.com/groups/AapacheZeppelinFanKorea" target="_blank" rel="noopener">아파치 제플린</a> 부스를 찾아갔습니다. 다른 일정이 바빠 정리를 하고 계시는 중이었는데, 제가 저희 본사 직원들이고 키바나 창시자인데 일부러 구경하고 싶어서 왔다고 하니 다시 또 랩탑을 꺼내서 친절하게 설명을 해 주셨습니다. 감사합니다. 제플린 화이팅!</p>
+<p><img src="IMG_0048.jpg" alt=""> <img src="IMG_0052.jpg" alt=""></p>
+<p>그리고 코엑스에서 <a href="http://www.buzzni.com/" target="_blank" rel="noopener">버즈니</a>의 남상협 대표님과 엔지니어 분들을 만나 근처 토즈로 이동해서 잠시 서로를 소개하는 시간을 가졌는데요, 저도 버즈니에서 Elastic Stack을 다양하게 잘 쓰고 계시다는 이야기만 들었지 이정도로 다양하게 활용하고 계신줄 몰랐습니다. 고객 비밀 관련된 내용이 많아 미팅때 나눈 자세한 내용은 기술할 수 없지만, 저희 PM인 김보현님이 완전 감동해서 와~ 와~ 하고 감탄사를 멈추질 못했습니다.</p>
+<p><img src="IMG_0054.jpg" alt=""> </p>
+<p>코엑스에서의 일정도 마치고 이날 저녁 밋업이 있어 선정릉에 있는 디캠프로 이동했습니다. 50여 분 정도가 참석 해 주셨는데요, 저, 라시드, 보현님이 다음날 저희 행사때 발표할 키노트 부분을 간단히 발표를 하고 피자를 시켜서 먹었습니다. 처음에는 피자만 시켰는데 같이 온 라시드와 마티아스(아시아 팀 SA)가 꼭 치맥을 먹어야겠다고 해서 치킨도 세마리 정도 추가로 시켰습니다. 바깥에 테라스가 시원하고 날씨도 좋아 테라스에서 피자 먹으며 이야기들을 나누었는데 분위기가 상당히 좋았습니다.</p>
+<p><img src="IMG_0065.jpg" alt=""> <img src="IMG_0068.jpg" alt=""> <img src="IMG_0069.jpg" alt=""> <img src="IMG_0072.jpg" alt=""></p>
+<p>판교, 코엑스 미팅에 밋업까지 하드한 일정을 마쳤는데도 다들 우리끼리 한 잔 더 하고 가셔야겠다고 해서 마지막으로 저희끼리 선릉역 근처에서 한 잔 하고 이날은 헤어졌습니다.</p>
+<p><img src="IMG_0078.jpg" alt=""></p>
+<h3 id="10월-26일-수요일-Elastic-on-Seminar-Seoul"><a href="#10월-26일-수요일-Elastic-on-Seminar-Seoul" class="headerlink" title="10월 26일 수요일 - Elastic{on} Seminar Seoul"></a>10월 26일 수요일 - Elastic{on} Seminar Seoul</h3><p>드디어 행사날입니다. 여의도 콘래드 호텔에서 전일 행사로 진행됬습니다. 아침 일찍 가 보니 저희 아시아 마케팅 팀인 Janis가 대행사 분들과 함께 열심히 준비를 하고 있었습니다. 250~300명 규모라고 저도 알고만 있었지만 막상 와서 현장을 보니 상당히 설레였습니다.</p>
+<p><img src="IMG_0088.JPG" alt=""> <img src="IMG_0080.jpg" alt=""> <img src="IMG_0089.jpg" alt=""> <img src="IMG_0081.jpg" alt=""> <img src="IMG_0083.jpg" alt=""> <img src="IMG_0085.jpg" alt=""> <img src="IMG_0086.jpg" alt=""> <img src="IMG_0087.jpg" alt=""> </p>
+<p>오전에는 키노트와 Elastic 사용 사례들 중심으로 발표를 했습니다. 먼저 Aaron Katz 부사장이 저희 Elastic이 지금까지 얼마나 성장해왔고, 얼마나 큰 가능성을 품고 있는지 다양한 숫자를 가지고 발표를 했고, Rashid Kahn이 새로운 키바나에 대한 소개, 김보현님이 5.0의 새 프로덕트와 X-Pack 에 대한 내용들로, 그리고 제가 이번에 Elastic 에서 새로 인수한 Prelert 라는 머신러닝 엔진에 대한 소개를 했습니다.</p>
+<p>그리고 저희 발표 후에는 SK Telecom 의 김종연 팀장님께서 <strong>이상징후탐지를 위한 Elastic활용</strong>, okky.kr / GS-Shop 의 허광남님 께서 <strong>Elastic을 이용한 스타트업 및 신규서비스 개발</strong>, 그리고 NHN Entertainment 의 이상민 팀장님께서 <strong>Elastic을 이용한 협업시스템 TOAST Dooray 구축</strong> 을 주제로 오전 세션을 진행했습니다. 다들 말씀들을 재밌게 잘 해주셔서 즐거웠습니다.</p>
+<p><img src="IMG_0090.jpg" alt=""> <img src="IMG_0097.jpg" alt=""> </p>
+<p>이날 발표한 영상과 슬라이드들은 나중에 전부 Elastic 홈페이지에 게재 될 예정입니다. 저는 정신이 없어 사진을 별로 못 찍었는데 포토그래퍼 분 께서 사진 많이 찍어주셨으니 나중에 좋은 사진들 많이 공유할 수 있을거라 생각됩니다.</p>
+<p>보도된 행사 관련 기사는 <a href="http://www.newswire.co.kr/newsRead.php?no=838244" target="_blank" rel="noopener">여기</a>에 있습니다.</p>
+<p><img src="IMG_0092.jpg" alt=""> <img src="IMG_0093.jpg" alt=""> <img src="IMG_0095.jpg" alt=""> <img src="Boys_with_hats.jpg" alt=""></p>
+<p>로비에는 메가존, 위즈코어 같은 저희 파트너사와 <strong>AMA(Ask Me Anything)</strong> 부스라고 해서 저희가 컨퍼런스 할 때 마다 운영하는 기술 상담 부스가 있습니다. 저희 직원들인 홍콩에서 온 William, 싱가폴에서 온 Matias 그리고 한국에 이번에 새로 직원이 되신 김황곤 부장님께서 부스에서 상담을 진행 해 주셨습니다.</p>
+<p>오후에는 파트를 나누어 스폰서사들 발표와 저희 발표를 나누어서 했는데요, 저도 오전에 잠깐 소개를 했던 Prelert 에 대해 오후에 데모를 곁들여 더 자세하게 발표를 했습니다. 사실 Prelert는 저도 이제 막 배워서 써보는 중이라 심도있는 내용은 많이 못 보여드리고 돌아가는 데모 정도만 시연을 했는데도 상당히 많은 분들이 흥미를 갖고 들어주셨습니다. 나중에 제가 발표한 동영상도 공유가 되겠지만, 잠깐 여기서 설명 드리자면, Prelert는 Anomaly behaviour 를 unsupervised machine learning 방식으로 탐지하는 엔진입니다. 저도 이 발표 준비하느라 Prelert 팀 사람들에게 많이 물어보고, 이메일도 주고 받고, 영상도 보고 했는데 짧은 기간 동안 많이들 도움을 줘서 잘 준비할 수 있었던 것 같습니다. 이자리를 빌어 많은 도움을 준 Prelert SA 인 Rich Collier 에게 큰 감사를 하고 싶네요. Thank you Rich! You the man!</p>
+<h3 id="10월-27일-금요일"><a href="#10월-27일-금요일" class="headerlink" title="10월 27일 금요일"></a>10월 27일 금요일</h3><p>이 날은 오전에는 정자동의 네이버 그린팩토리에서 설명회를 가졌습니다. 카카오 때 처럼 서로 시스템 설명하고 사용 사례를 듣고 하는 자리인 줄 알았는데, 일단 한시간 정도 가량 컨퍼런스 룸에서 저희가 발표 하는 것으로 일정이 되어 있었습니다. 마찬가지로 저, Rashid, 김보현님 순으로 발표를 하고 QnA 하는 시간을 가졌습니다. 기술 미팅은 제가 대부분 arrange 를 했는데, 네이버는 사실 뭔가 중요한 내용 보다도 한국 방문한 저희 직원들에게 구경 시켜주고 싶은 마음이 컸습니다. 네이버 회사 소개 해 주시고 시간 마련 해 주신 이동현님. 미팅 끝나고 휴게실도 구경시켜 주시고, 선물도 챙겨주시고… 정말 감사드립니다. :)</p>
+<p><img src="IMG_0119.jpg" alt=""> <img src="IMG_0121.jpg" alt=""> <img src="IMG_0125.jpg" alt=""> <img src="IMG_0126.jpg" alt=""> <img src="IMG_0154.jpg" alt=""></p>
+<p>이 날 오전에 분당에 가면서 누군가가 라면에 치즈 넣어 먹으면 맛있다는 이야기가 갑자기 나와서 점심에는 치즈라면 먹으러 가기로 했습니다. 정자동 근처 분식집에서 치즈라면 시켜 먹었는데 다들 나중에 집에 가면 또 만들어 먹어야겠다고 했네요.</p>
+<p><img src="IMG_0133.jpg" alt=""></p>
+<p>저녁에는 원래 서울역 쪽에서 SK 브로드밴드와의 미팅이 예정되어 있었는데 전날 장소가 분당으로 바뀌어서 3~4시간 정도 시간이 비게 되었습니다. 저희 커뮤니티에 평소에도 많이 기여를 해 주시는 Elasticsearch 전문가 정호욱 님한테 번개를 쳐서 미미박스에 놀러갔습니다. 참고로 미미박스는 판교 현대백화점에 입주 해 있어서 현대백화점 지하에서 케이크랑 커피를 디저트로 먹었는데, 치즈라면 먹은 점심보다 가격이 두배는 더 나온것 같네요. 덜덜…</p>
+<p><img src="IMG_0137.jpg" alt=""></p>
+<p>쇼룸도 있고 했는데 김보연님은 정호욱님이 구축하신 시스템에 대한 설명을 듣느라 여기서도 열중이었습니다. 정호욱님 역시 검색엔진 전문가 답게 다양한 장치로 여러 단계의 장애를 대비하고 탄탄한 시스템을 구축 해 놓으셨는데 지난번 버즈니 때와 마찬가지로 들으면서 감동을 많이 받았습니다. 참고로 정호욱님도 다양한 노하우들을 본인 <a href="http://jjeong.tistory.com/" target="_blank" rel="noopener">블로그</a>와 커뮤니티에 많이 공개하고 있습니다.</p>
+<p>저녁에는 조인중님 소개로 SK 브로드밴드에서 발표를 하고 사례도 들었는데 이곳도 상당히 열기가 뜨거웠습니다. 정신이 없어 SK 브로드밴드 미팅 사진은 한장도 못 찍었는데, 마찬가지로 미팅 주선 해 주신 조인중님 너무너무 감사드립니다. :)</p>
+<p>라시드가 서울 구경좀 하고 싶어했는데 목요일 저녁에나 시간이 나서 일단 경복궁으로 갔습니다. 배고프기도 하고 늦기도 해서 안에 들어가진 않았는데, 밖에 한복 입고 나들이 오신 분들이 많아 나름 좋은 구경을 했습니다.</p>
+<p><img src="IMG_0140.jpg" alt=""> </p>
+<p>저녁을 먹고 나오던 중 라시드가 아까 한국에서 크래프트 맥주집을 봤다고 꼭 가보자고 해서 거기도 들렀네요.</p>
+<p><img src="IMG_0142.jpg" alt=""> <img src="IMG_0146.jpg" alt=""> </p>
+<p>그리고 한국에서 기념품을 좀 사가야겠다며 과자 파는곳에좀 들르자고 합니다. 자기는 보통 여행을 가면 그 지역 과자를 사 간다고 하네요.</p>
+<p><img src="IMG_0149.jpg" alt=""></p>
+<p>이렇게 하고 다시 콘래드 호텔로 와서 (출장 온 직원들 대부분으 콘래드 호텔에 묵었습니다) 정하원 지사장님 팀과 합류해서 진짜 마지막 wrap-up 을 했습니다. 자정이 넘도록 시간 가는 줄 모르고 떠들고 집에 왔네요. 리모트로 일을 하면서도 일년에 수차례 이렇게 직원들끼리 모일 일이 있는데, 그럴 때 마다 참 많은 이야기들을 하게 됩니다.</p>
+<p>여하튼, 제가 입사하고 나서 아마 제일 크게 신경썼던 행사였던 것 같습니다. 이 날 국가적으로도 많은 이슈가 있었고… 여튼 정신 없는 시간을 보낸것 같습니다. 행사 오신 분들이 회사 이정도로 잘 나가는줄 몰랐다고 해 주셔서 기분도 많이 좋았고, 한국에서도 저희 회사 위상이 많이 높아진 것 같아 뿌듯했습니다. 앞으로도 더 열심히, 잘 하겠습니다.</p>
+<p>전문 포토그래퍼가 찍은 더 많은 사진들은 <a href="https://photos.google.com/share/AF1QipPkBQyZO0-9HvEwIeWiSUXRNGK5JkztiWTwkSKLk1MU8ocBCMjIrB7B1Y39_GnoCw" target="_blank" rel="noopener">여기</a>에서 보실 수 있습니다.</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/11/elastic-stack-5-release/" data-toggle="tooltip" data-placement="top" title="Elastic Stack 5.0 출시">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/09/eng-all-hands-prague/" data-toggle="tooltip" data-placement="top" title="Engineering all hands in Prague">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Meetup" title="Meetup">Meetup</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#Training" title="Training">Training</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2016/10/elastic-seoul-seminar/";
+    var disqus_url = "http://kimjmin.net/2016/10/elastic-seoul-seminar/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

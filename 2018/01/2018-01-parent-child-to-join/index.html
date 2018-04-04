@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Elasticsearch 6.x 에서의 join 사용 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2018/01/2018-01-parent-child-to-join/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('join-data.png')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                    </div>
+                    <h1>Elasticsearch 6.x 에서의 join 사용</h1>
+                    <h2 class="subheading">Elasticsearch 6.x 에서 join 관계 설정 및 Logstash 색인 설정.</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2018-01-19
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <h2 id="5-x-이전의-도큐먼트-간-parent-child-구조"><a href="#5-x-이전의-도큐먼트-간-parent-child-구조" class="headerlink" title="5.x 이전의 도큐먼트 간 parent - child 구조"></a>5.x 이전의 도큐먼트 간 parent - child 구조</h2><p>Elasticsearch 에서는 도큐먼트들 간에 연결을 맺을 수 있는 몇가지 기능들을 제공하고 있습니다. 대표적으로는 nested type 이 있으며, 5.x 이전 버전에서는 parent-child 구조의 정의를 할 수 있었습니다.</p>
+<p>5.x 이전의 parent - child 구조는 인덱스 내부의 타입을 parent, 그리고 child 타입으로 나눠서 생성하고 child 에 속한 도큐먼트들이 색인될 때 해당 도큐먼트의 parent 를 명시 해서 저장하는 방식으로 사용했습니다. 자세한 내용은 아래를 문서를 참고하세요.<br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.6/mapping-parent-field.html#_parent_child_restrictions" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/5.6/mapping-parent-field.html#_parent_child_restrictions</a></p>
+<p>다음은 <code>stackoverflow</code> 라는 인덱스에 <code>question</code> 타입과 <code>answer</code> 타입을 각각 parent - child 구조로 저장 한 예제 입니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;stackoverflow&quot;: &#123;</span><br><span class="line">    &quot;mappings&quot;: &#123;</span><br><span class="line">      &quot;question&quot;: &#123;</span><br><span class="line">        &quot;properties&quot;: &#123;</span><br><span class="line">          &quot;accepted_answer_id&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;long&quot;</span><br><span class="line">          &#125;</span><br><span class="line">          ... 중략 ...</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;answer&quot;: &#123;</span><br><span class="line">        &quot;_parent&quot;: &#123;</span><br><span class="line">          &quot;type&quot;: &quot;question&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;_routing&quot;: &#123;</span><br><span class="line">          &quot;required&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;properties&quot;: &#123;</span><br><span class="line">          &quot;id&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;keyword&quot;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-x-에서의-join-데이터-타입-설정"><a href="#6-x-에서의-join-데이터-타입-설정" class="headerlink" title="6.x 에서의 join 데이터 타입 설정"></a>6.x 에서의 join 데이터 타입 설정</h2><p>6.0 부터는 한 인덱스에 하나의 타입만 생성할 수 있도록 강제됩니다. 그래서 parent - child 구조는 더 이상 사용이 불가능하고, 대신 join 이라는 데이터 타입을 이용해서 도큐먼트들 간의 관계를 정의하게 됩니다. join 데이터 타입에 대해서는 아래 문서를 참고합니다.<br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/parent-join.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/parent-join.html</a></p>
+<p>먼저 관계를 설정하기 위한 join 필드를 새로 추가합니다. 저는 <code>qna_join</code> 이라는 필드를 join 필드로 설정했습니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT stackoverflow</span><br><span class="line">&#123;</span><br><span class="line">  &quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;doc&quot;: &#123;</span><br><span class="line">      &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;qna_join&quot;: &#123;</span><br><span class="line">          &quot;type&quot;: &quot;join&quot;,</span><br><span class="line">          &quot;relations&quot;: &#123;</span><br><span class="line">            &quot;question&quot;: &quot;answer&quot; </span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>그리고 question 도큐먼트에는 <code>qna_join</code> 필드 안의 <code>name</code> 값을 <code>question</code> 으로, answer 도큐먼트에는 <code>answer</code> 와 parent에 해당하는 question 도큐먼트의 id 값을 넣어줍니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST stackoverflow/doc/25691276?routing=25691276</span><br><span class="line">&#123;</span><br><span class="line">  &quot;title&quot;: &quot;Import CSV into MySQL - Offset by 1 Column&quot;,</span><br><span class="line">  &quot;accepted_answer_id&quot;: 25691509,</span><br><span class="line">  ... 중략 ...</span><br><span class="line">  &quot;id&quot;: 25691276,</span><br><span class="line">  &quot;view_count&quot;: 15,</span><br><span class="line">  &quot;qna_join&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;question&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">POST stackoverflow/doc/25691509?routing=25691276</span><br><span class="line">&#123;</span><br><span class="line">  &quot;comment_count&quot;: 0,</span><br><span class="line">  &quot;owner&quot;: &#123;</span><br><span class="line">    &quot;location&quot;: &quot;Sao Paulo, Brazil&quot;,</span><br><span class="line">    &quot;id&quot;: 3337405,</span><br><span class="line">    &quot;display_name&quot;: &quot;vinibarr&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;comments&quot;: [],</span><br><span class="line">  &quot;creation_date&quot;: &quot;2014-09-05T18:01:23.033&quot;,</span><br><span class="line">  &quot;id&quot;: 25691509,</span><br><span class="line">  &quot;body&quot;: &quot;&quot;&quot;</span><br><span class="line">&lt;p&gt;You can load your data specifing the order columns that you&apos;re going to use into your table:</span><br><span class="line">... 중략 ...</span><br><span class="line">&quot;&quot;&quot;,</span><br><span class="line">  &quot;qna_join&quot;: &#123;</span><br><span class="line">    &quot;name&quot;: &quot;answer&quot;,</span><br><span class="line">    &quot;parent&quot;:&quot;25691276&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>중요한 것은 parent, child 두개 도큐먼트는 항상 동일한 routing 값을 넣어줘야 합니다. 같은 routing 값을 가진 도큐먼트는 같은 샤드에 저장이 됩니다.<br>이렇게 저장한 후 <code>has_parent</code> 쿼리를 이용해서 <code>question</code> 도큐먼트의 id 필드 값을 이용해서 그 도큐먼트와 연결된 <code>answer</code> 도큐먼트를 가져오는 쿼리를 실행 해 봅니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET stackoverflow/_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;has_parent&quot;: &#123;</span><br><span class="line">      &quot;parent_type&quot;: &quot;question&quot;,</span><br><span class="line">      &quot;query&quot;: &#123;</span><br><span class="line">        &quot;term&quot;: &#123;</span><br><span class="line">          &quot;id&quot;: &#123;</span><br><span class="line">            &quot;value&quot;: &quot;25691276&quot;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>위 쿼리를 실행하면 아래와 같이 <code>answer</code> 도큐먼트를 결과로 가져옵니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;took&quot;: 12,</span><br><span class="line">  &quot;timed_out&quot;: false,</span><br><span class="line">  &quot;_shards&quot;: &#123;</span><br><span class="line">    &quot;total&quot;: 1,</span><br><span class="line">    &quot;successful&quot;: 1,</span><br><span class="line">    &quot;skipped&quot;: 0,</span><br><span class="line">    &quot;failed&quot;: 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;hits&quot;: &#123;</span><br><span class="line">    &quot;total&quot;: 1,</span><br><span class="line">    &quot;max_score&quot;: 1,</span><br><span class="line">    &quot;hits&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;_index&quot;: &quot;stackoverflow&quot;,</span><br><span class="line">        &quot;_type&quot;: &quot;doc&quot;,</span><br><span class="line">        &quot;_id&quot;: &quot;25691509&quot;,</span><br><span class="line">        &quot;_score&quot;: 1,</span><br><span class="line">        &quot;_routing&quot;: &quot;1&quot;,</span><br><span class="line">        &quot;_source&quot;: &#123;</span><br><span class="line">          &quot;comment_count&quot;: 0,</span><br><span class="line">          &quot;owner&quot;: &#123;</span><br><span class="line">            &quot;location&quot;: &quot;Sao Paulo, Brazil&quot;,</span><br><span class="line">            &quot;id&quot;: 3337405,</span><br><span class="line">            &quot;display_name&quot;: &quot;vinibarr&quot;</span><br><span class="line">          &#125;,</span><br><span class="line">          &quot;comments&quot;: [],</span><br><span class="line">          &quot;creation_date&quot;: &quot;2014-09-05T18:01:23.033&quot;,</span><br><span class="line">          &quot;id&quot;: 25691509,</span><br><span class="line">          &quot;body&quot;: &quot;&quot;&quot;</span><br><span class="line">&lt;p&gt;You can load your data specifing the order columns that you&apos;re going to use into your table:</span><br><span class="line">    ... 중략 ...</span><br><span class="line">&quot;&quot;&quot;,</span><br><span class="line">          &quot;qna_join&quot;: &#123;</span><br><span class="line">            &quot;name&quot;: &quot;answer&quot;,</span><br><span class="line">            &quot;parent&quot;: &quot;25691276&quot;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Logstash-색인-설정"><a href="#Logstash-색인-설정" class="headerlink" title="Logstash 색인 설정"></a>Logstash 색인 설정</h2><p>이제 5.x 에서 parent - child 타입으로 나뉘어 있던 데이터를 6.x 로 재 색인을 해야 합니다. 먼저 데이터를 타입별로 구분해야 하므로 저는 question 타입과 answer 타입의 데이터들을 각각 <code>/Users/kimjmin/elastic/source/stackoverflow/</code> 경로 아래에 <code>question.json</code>, <code>answer.json</code> 이라는 파일들로 저장 했습니다.<br>이제 logstash 설정 파일을 작성하겠습니다. path 로 부터 파일 이름에 있는 <code>question</code> 그리고 <code>answer</code> 를 추출하여 <code>qna_join.name</code> 에 해당하는 값을 넣어주도록 했습니다.</p>
+<p> 우선 파일 이름을 기준으로 <code>question</code>, <code>answer</code> 태그를 만들도록 합니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  file &#123;</span><br><span class="line">    path =&gt; &quot;/Users/kimjmin/elastic/source/stackoverflow/*.json&quot;</span><br><span class="line">    sincedb_path =&gt; &quot;/dev/null&quot;</span><br><span class="line">    start_position =&gt; &quot;beginning&quot;</span><br><span class="line">    codec =&gt; &quot;json&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter &#123;</span><br><span class="line">  # &quot;/&quot; 기준으로 path를 배열로 분리하여 [6]번째 값인 &quot;question.json&quot; 또는 &quot;answer.json&quot;을 path_array 에 저장.</span><br><span class="line">  mutate &#123;</span><br><span class="line">    split =&gt; &#123; &quot;path&quot; =&gt; &quot;/&quot; &#125;</span><br><span class="line">    add_field =&gt; &#123; &quot;path_array&quot; =&gt; &quot;%&#123;path[6]&#125;&quot; &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mutate &#123;</span><br><span class="line">    # &quot;.&quot; 기준으로 path_array를 배열로 분리하여 [0]번째 값인 &quot;question&quot; 또는 &quot;answer&quot;을 qna_join.name, doc_type 에 저장.</span><br><span class="line">    split =&gt; &#123; &quot;path_array&quot; =&gt; &quot;.&quot; &#125;</span><br><span class="line">    add_field =&gt; &#123; &quot;[qna_join][name]&quot; =&gt; &quot;%&#123;path_array[0]&#125;&quot; &#125;</span><br><span class="line">    add_field =&gt; &#123; &quot;doc_type&quot; =&gt; &quot;%&#123;path_array[0]&#125;&quot; &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mutate &#123;</span><br><span class="line">    remove_field =&gt; [&quot;host&quot;,&quot;@version&quot;,&quot;path&quot;,&quot;path_array&quot;,&quot;@timestamp&quot;]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ... 중략 ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>현재 구성중인 stackoverflow 는 parent가 question, child 가 answer 구조로 되어 있습니다. 하지만 도큐먼트 내용을 보면 question 도큐먼트에는 answer 도큐먼트와 연결되는 <code>accepted_answer_id</code> 필드가 있지만 answer 에는 question 도큐먼트를 확인하는 필드가 없습니다. answer 도큐먼트가 색인 될 때 연결되는 question 도큐먼트의 id 값을 가져오기 위해 Logstash 의 filter 내부에 <code>elasticsearch</code> 필터를 추가합니다.<br><a href="https://www.elastic.co/guide/en/logstash/6.1/plugins-filters-elasticsearch.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/logstash/6.1/plugins-filters-elasticsearch.html</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">filter &#123;</span><br><span class="line"></span><br><span class="line">  ... 중략 ...</span><br><span class="line"></span><br><span class="line">  if [doc_type] == &quot;question&quot; &#123;</span><br><span class="line">    # routing 을 위해 question 도큐먼트의 id를 question_id 필드에 저장</span><br><span class="line">    mutate&#123;</span><br><span class="line">      add_field =&gt; &#123; &quot;question_id&quot; =&gt; &quot;%&#123;id&#125;&quot; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else if [doc_type] == &quot;answer&quot; &#123;</span><br><span class="line">    # routing 을 위해 answer에 해당하는 question 도큐먼트의 id 를 가져와서 question_id 필드에 저장</span><br><span class="line">    elasticsearch &#123;</span><br><span class="line">      hosts =&gt; [&quot;localhost:9200&quot;]</span><br><span class="line">      index =&gt; &quot;stackoverflow&quot;</span><br><span class="line">      query =&gt; &quot;doc_type:question AND accepted_answer_id:%&#123;id&#125;&quot;</span><br><span class="line">      fields =&gt; &#123; &quot;id&quot; =&gt; &quot;[qna_join][parent]&quot; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    mutate&#123;</span><br><span class="line">      add_field =&gt; &#123; &quot;question_id&quot; =&gt; &quot;%&#123;[qna_join][parent]&#125;&quot; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이제 데이터를 elasticsearch로 저장하도록 output 을 입력합니다. parent - child 구조의 도큐먼트는 같은 샤드에 저장하기 위해 항상 같은 rounting 값을 적어줘야 합니다. routing 값을 question 도큐먼트의 id 값인 <code>question_id</code> 필드 값으로 지정합니다. 만약에 stackoverflow 인덱스에 샤드가 1개만 있다고 하면 routing 에 모든 도큐먼트에 적용되는 임의의 값을 넣어도 됩니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">output &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    index =&gt; &quot;stackoverflow&quot;</span><br><span class="line">    document_type =&gt; &quot;doc&quot;</span><br><span class="line">    document_id =&gt; &quot;%&#123;id&#125;&quot;</span><br><span class="line">    routing =&gt; &quot;%&#123;question_id&#125;&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이제 데이터를 색인합니다.</p>
+<blockquote>
+<p>중요! 반드시 <code>question</code> 도큐먼트들을 먼저 색인 한 뒤에 <code>answer</code> 도큐먼트들을 색인해야 합니다.</p>
+</blockquote>
+<p>데이터 색인이 끝난 뒤 앞에서 실행했던 <code>has_parent</code> 쿼리를 이용해서 데이터가 정상적으로 나오는지 확인 해 봅니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET stackoverflow/_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;has_parent&quot;: &#123;</span><br><span class="line">      &quot;parent_type&quot;: &quot;question&quot;,</span><br><span class="line">      &quot;query&quot;: &#123;</span><br><span class="line">        &quot;term&quot;: &#123;</span><br><span class="line">          &quot;id&quot;: &#123;</span><br><span class="line">            &quot;value&quot;: &quot;25691276&quot;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;took&quot;: 1,</span><br><span class="line">  &quot;timed_out&quot;: false,</span><br><span class="line">  &quot;_shards&quot;: &#123;</span><br><span class="line">    &quot;total&quot;: 5,</span><br><span class="line">    &quot;successful&quot;: 5,</span><br><span class="line">    &quot;skipped&quot;: 0,</span><br><span class="line">    &quot;failed&quot;: 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;hits&quot;: &#123;</span><br><span class="line">    &quot;total&quot;: 1,</span><br><span class="line">    &quot;max_score&quot;: 1,</span><br><span class="line">    &quot;hits&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;_index&quot;: &quot;stackoverflow&quot;,</span><br><span class="line">        &quot;_type&quot;: &quot;doc&quot;,</span><br><span class="line">        &quot;_id&quot;: &quot;25691509&quot;,</span><br><span class="line">        &quot;_score&quot;: 1,</span><br><span class="line">        &quot;_routing&quot;: &quot;1&quot;,</span><br><span class="line">        &quot;_source&quot;: &#123;</span><br><span class="line">          &quot;comment_count&quot;: 0,</span><br><span class="line">          &quot;owner&quot;: &#123;</span><br><span class="line">            &quot;location&quot;: &quot;Sao Paulo, Brazil&quot;,</span><br><span class="line">            &quot;id&quot;: 3337405,</span><br><span class="line">            &quot;display_name&quot;: &quot;vinibarr&quot;</span><br><span class="line">          &#125;,</span><br><span class="line">          &quot;comments&quot;: [],</span><br><span class="line">          &quot;creation_date&quot;: &quot;2014-09-05T18:01:23.033&quot;,</span><br><span class="line">          &quot;id&quot;: 25691509,</span><br><span class="line">          &quot;body&quot;: &quot;&quot;&quot;</span><br><span class="line">&lt;p&gt;You can load your data specifing the order columns that you&apos;re going to use into your table:</span><br><span class="line">    ... 중략 ...</span><br><span class="line">&quot;&quot;&quot;,</span><br><span class="line">          &quot;qna_join&quot;: &#123;</span><br><span class="line">            &quot;name&quot;: &quot;answer&quot;,</span><br><span class="line">            &quot;parent&quot;: &quot;25691276&quot;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>이처럼 <code>join</code> 타입의 필드를 사용해서 과거처럼 parent-child 구조를 만들 수 있으며, logstash의 <code>elasticsearch</code> 필터를 사용해서 데이터를 색인할 때 elasticsearch 에 있는 데이터를 가져와서 도큐먼트에 추가할 수 있습니다.</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/04/2018-04-swiftype-site-search/" data-toggle="tooltip" data-placement="top" title="Swiftype 사이트 서치">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/01/2018-01-build-es-cluster-8/" data-toggle="tooltip" data-placement="top" title="Elastic Cluster 구성 8">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2018/01/2018-01-parent-child-to-join/";
+    var disqus_url = "http://kimjmin.net/2018/01/2018-01-parent-child-to-join/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          나만의 Beats 만들기 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2016/06/create-own-beats/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('metricbeats.png')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Beats" title="Beats">Beats</a>
+                        
+                    </div>
+                    <h1>나만의 Beats 만들기</h1>
+                    <h2 class="subheading">나만의 Elasticsearch Beats 를 만들어 보자</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2016-06-02
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p>Beats는 Elasticsearch로 데이터를 전송하는 <strong>경량 데이터 전송 프로그램 (Lightweight Data Shipper)</strong> 입니다. 현재 Elastic 에서는 자체적으로 Packetbeat, Filebeat, Topbeat 등을 배포하고 있으며 커뮤니티 개발자들이 직접 만든 다양한 <a href="https://www.elastic.co/guide/en/beats/libbeat/current/community-beats.html" target="_blank" rel="noopener">Community Beats</a> 도 사용할 수 있습니다. </p>
+<p>Beats는 개발자들이 자신이 필요로 하는 Beat을 만들 수 있도록 libbeat 이라고 하는 라이브러리와 Beat Generator 라는 패키지를 제공하고 있습니다. 이번 포스트에서는 Beat Generator를 사용해서 직접 나만의 Beat 를 만드는 법을 알아보도록 하겠습니다. 오늘 제가 만들 Beat은 유닉스 계열에서 <code>ls</code> 명령을 실행하면 나오는 파일, 디렉토리 리스트 정보를 elasticsearch 에 색인하는 lsbeat 입니다. 참고로 저는 MacOS 에서 했기 때문에 Windows나 다른 Unix 계열 OS 에서는 추가적으로 필요한 정보들을 확인 하시고 그에 맞게 설치 및 진행을 하시기 바랍니다.</p>
+<p>Beats는 Go 언어로 개발이 되어 있습니다. Beats 를 시작하기 위해서는 Go 언어 컴파일러 및 glide가 설치되어 있어야 합니다. glide 는 Golang 에서 사용하는 Package Management 도구 입니다. NodeJS의 npm 같은 도구이라고 보시면 될 것 같습니다. 앞의 두 패키지들을 설치 해 줍니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ brew install go</span><br><span class="line">$ brew install glide</span><br></pre></td></tr></table></figure></p>
+<p>Beat Generator는 cookiecutter를 이용해서 내려받을 수 있습니다.참고로 저는 파이썬을 써 보질 않아서 pip, cookiecutter 가 설치되어 있지 않았습니다. 그래서 cookiecutter도 설치했습니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ sudo easy_install pip</span><br><span class="line">$ sudo pip install cookiecutter</span><br><span class="line">$ sudo pip install virtualenv</span><br></pre></td></tr></table></figure></p>
+<p>여기서 잠깐 우리가 개발 할 lsbeat 에서 사용할 파일과 디렉토리를 목록을 조회하는 프로그램을 먼저 Go 언어로 짜 보겠습니다. 프로그램은 다음과 같습니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//파라메터를 안 받았다면 현재 경로 "." 이하 파일, 디렉토리들 출력</span></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(os.Args) == <span class="number">1</span> &#123;</span><br><span class="line">		listDir(<span class="string">"."</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		listDir(os.Args[<span class="number">1</span>])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">listDir</span><span class="params">(dirFile <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	files, _ := ioutil.ReadDir(dirFile)</span><br><span class="line">	<span class="keyword">for</span> _, f := <span class="keyword">range</span> files &#123;</span><br><span class="line">		t := f.ModTime()</span><br><span class="line">		fmt.Println(f.Name(), dirFile+<span class="string">"/"</span>+f.Name(), f.IsDir(), t, f.Size()) <span class="comment">//파일(디렉토리)명, 전체path, 디렉토리여부, 생성시간, 파일크기 출력</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//디렉토리인 경우 하위 파일들 재귀 호출.</span></span><br><span class="line">		<span class="keyword">if</span> f.IsDir() &#123;</span><br><span class="line">			listDir(dirFile + <span class="string">"/"</span> + f.Name())</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>저는 위 파일을 <code>lsscan.go</code> 라는 이름으로 저장했습니다. <code>go run lsscan</code> 을 실행하면 현재 위치 이하의 디렉토리와 파일들을 출력합니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ go run lsscan.go</span><br><span class="line">lsscan.go ./lsscan.go <span class="literal">false</span> 2016-06-02 15:11:47 +0200 CEST 575</span><br></pre></td></tr></table></figure></p>
+<p>출력이 잘 됩니다. 이제 lsbeats 를 만들기 위한 사전 작업들을 실행 해 보겠습니다. cookiecutter 명령어를 이용해서 <a href="https://github.com/elastic/beat-generator" target="_blank" rel="noopener">Beat Generator Project</a> 스켈레톤을 설치합니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ cookiecutter https://github.com/elastic/beat-generator.git</span><br></pre></td></tr></table></figure></p>
+<p>설치 중에 몇가지 질문이 나오는데 대답 해 줍니다. 프로젝트 이름은 우리가 만들 <code>lsbeat</code>로 합니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">project_name [Examplebeat]: lsbeat</span><br><span class="line">github_name [your-github-name]: kimjmin</span><br><span class="line">beat [lsbeat]:</span><br><span class="line">beat_path [github.com/kimjmin]:</span><br><span class="line">full_name [Firstname Lastname]: Jongmin Kim</span><br></pre></td></tr></table></figure></p>
+<p>위 과정을 실행하고 나면 <code>lsbeat</code> 디렉토리가 생성됩니다. <code>lsbeat</code>에 들어가서 설치된 파일들을 확인 해 보면 다음과 같습니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> lsbeat</span><br><span class="line">$ tree</span><br><span class="line">.</span><br><span class="line">├── CONTRIBUTING.md</span><br><span class="line">├── LICENSE</span><br><span class="line">├── Makefile</span><br><span class="line">├── README.md</span><br><span class="line">├── beater</span><br><span class="line">│   └── lsbeat.go</span><br><span class="line">├── config</span><br><span class="line">│   ├── config.go</span><br><span class="line">│   └── config_test.go</span><br><span class="line">├── dev-tools</span><br><span class="line">│   └── packer</span><br><span class="line">│       ├── Makefile</span><br><span class="line">│       ├── beats</span><br><span class="line">│       │   └── lsbeat.yml</span><br><span class="line">│       └── version.yml</span><br><span class="line">├── docs</span><br><span class="line">│   └── index.asciidoc</span><br><span class="line">├── etc</span><br><span class="line">│   ├── beat.yml</span><br><span class="line">│   └── fields.yml</span><br><span class="line">├── glide.yaml</span><br><span class="line">├── lsbeat.template.json</span><br><span class="line">├── main.go</span><br><span class="line">├── main_test.go</span><br><span class="line">└── tests</span><br><span class="line">    └── system</span><br><span class="line">        ├── config</span><br><span class="line">        │   └── lsbeat.yml.j2</span><br><span class="line">        ├── lsbeat.py</span><br><span class="line">        ├── requirements.txt</span><br><span class="line">        └── test_base.py</span><br></pre></td></tr></table></figure></p>
+<p>이 프로젝트는 <a href="https://github.com/elastic/beats/tree/master/libbeat" target="_blank" rel="noopener">libbeat</a> 파일들을 포함하고 있으며 수집한 데이터를 elasticsearch로 전송하기 위한 모든 기본 기능들을 담고 있습니다. 이제 프로젝트에서 연관 라이브러리들을 내려받아 설치하고 컴파일 해서 기본 설정 파일들을 생성해야 합니다. 다음 명령들을 차례대로 실행합니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ make init</span><br><span class="line">$ make commit</span><br></pre></td></tr></table></figure></p>
+<p>위 명령을 실행하고 나면 <code>lsbeat.yml</code>, <code>lsbeat.template.json</code> 파일들이 생성되고 <code>vendor</code> 디렉토리 아래에 <code>elstic/beats</code> 라이브러리 들이 내려받아집니다. <code>lsbeat.yml</code> 파일을 살펴보면 beats 실행에 필요한 기본적인 환경변수 값들이 미리 설정이 되어 있습니다.<br><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">lsbeat:</span></span><br><span class="line">  <span class="comment"># Defines how often an event is sent to the output</span></span><br><span class="line"><span class="attr">  period:</span> <span class="number">1</span><span class="string">s</span></span><br></pre></td></tr></table></figure></p>
+<p>현재 <code>lsbeat.yml</code>에는 beats 의 실행 주기인 period 값이 1초로 설정되어 있습니다. 이는 beats가 매 1초마다 재실행되면서 elasticsearch 로 데이터를 전송하도록 하는 것을 뜻합니다. 지금 1초로 되어 있는 기준을 10초로 늘리고, 여기에 lsbeat 가 실행될 때 파일과 디렉토리 목록을 가져올 기준 경로로 지정할 <code>path</code> 매개변수를 추가 해 보도록 하겠습니다. 매개변수 추가는 <code>lsbeat.yml</code> 이 아니라 <code>etc</code> 디렉토리 아래에 있는 <code>beat.yml</code> 에 추가 한 후 <code>make update</code> 명령어로 다시 컴파일을 합니다. <code>etc/beat.yml</code>의 내용을 다음과 같이 수정합니다.<br><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">lsbeat:</span></span><br><span class="line">  <span class="comment"># Defines how often an event is sent to the output</span></span><br><span class="line"><span class="attr">  period:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">"."</span></span><br></pre></td></tr></table></figure></p>
+<p>다시 lsbeat 홈 경로로 돌아와 <code>make update</code> 를 실행하고 <code>lsbeat.yml</code> 파일을 다시 열어보면 앞의 <code>etc/beat.yml</code> 에서 설정 해 준 내용들이 반영된 것을 확인할 수 있습니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ make update</span><br><span class="line">$ cat lsbeat.yml</span><br><span class="line"><span class="comment">################### Lsbeat Configuration Example #########################</span></span><br><span class="line"></span><br><span class="line"><span class="comment">############################# Lsbeat ######################################</span></span><br><span class="line"></span><br><span class="line">lsbeat:</span><br><span class="line">  <span class="comment"># Defines how often an event is sent to the output</span></span><br><span class="line">  period: 10s</span><br><span class="line">  path: <span class="string">"."</span></span><br><span class="line"><span class="comment">###############################################################################</span></span><br></pre></td></tr></table></figure></p>
+<p>추가된 path 값을 사용하려면 <code>config</code> 디렉토리 아래 있는 <code>config.go</code> 파일에 내용을 추가해야합니다. <code>config.go</code> 파일에 다음과 같이 path 환경변수 값을 가져오는 로직을 추가합니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> LsbeatConfig <span class="keyword">struct</span> &#123;</span><br><span class="line">	Period <span class="keyword">string</span> <span class="string">`config:"period"`</span></span><br><span class="line">	Path   <span class="keyword">string</span> <span class="string">`config:"path"`</span> <span class="comment">//path 환경변수 값 추가.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>참고로 Go 언어에서는 다른 패키지에서 사용할 수 있도록 public으로 선언된 변수는 변수명이 대문자로 시작해야 합니다. 변수명을 반드시 Path 로 하되 path 로 하지 않도록 합니다.</p>
+<p>이제 컴파일 할 때 추가된 libbeat 패키지의 <code>/vendor/elastic/beats/libbeat/beat/beat.go</code> 파일 안에 있는 Beater의 interface 를 확인 해 보면 다음과 같은 interface 들을 포함하고 있습니다 .<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Beater <span class="keyword">interface</span> &#123;</span><br><span class="line">	Config(*Beat) error  <span class="comment">// Read and validate configuration.</span></span><br><span class="line">	Setup(*Beat) error   <span class="comment">// Initialize the Beat.</span></span><br><span class="line">	Run(*Beat) error     <span class="comment">// The main event loop. This method should block until signalled to stop by an invocation of the Stop() method.</span></span><br><span class="line">	Cleanup(*Beat) error <span class="comment">// Cleanup is invoked to perform any final clean-up prior to exiting.</span></span><br><span class="line">	Stop()               <span class="comment">// Stop is invoked to signal that the Run method should finish its execution. It will be invoked at most once.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>위의 <code>Config</code>, <code>Setup</code>, <code>Run</code>, <code>Cleanup</code>, <code>Stop</code> 5개 인터페이스들이 실제 모든 종류의 Beat이 실행되는 루틴입니다. 실제 우리가 만들 lsbeat 가 실행하는 로직은 <code>beater</code> 디렉토리 아래에 있는 <code>lsbeat.go</code> 파일에 구현을 하게 됩니다. <code>beater/lsbeat.go</code> 파일을 열어 확인 해 보면 <code>Config</code>, <code>Setup</code>, <code>Run</code>, <code>Cleanup</code>, <code>Stop</code> 함수들이 실제로 구현되어 있습니다. <code>beater/lsbeat.go</code> 내용을 하나씩 살펴보겠습니다.</p>
+<p>먼저 상단에 <code>Lsbeat</code> 이름의 구조체가 선언되어 있습니다.  <code>lsbeat</code> 전체에서 사용할 전역 변수들을 담고 있습니다. 우리가 사용 할 파라메터 값들도 여기에 추가하게 됩니다. lsbeat 가 실행될 root 디렉토리값인 <code>path</code> 와 가장 마지막에 검색 한 시간을 가져올 <code>lastIndexTime</code> 값을 각각 string 그리고 time.Time 형식으로 추가 선언 해 주도록 합니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Lsbeat <span class="keyword">struct</span> &#123;</span><br><span class="line">	beatConfig   *config.Config</span><br><span class="line">	done         <span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line">	period       time.Duration</span><br><span class="line">	client       publisher.Client</span><br><span class="line">	path         <span class="keyword">string</span>    <span class="comment">//root 디렉토리</span></span><br><span class="line">	lasIndexTime time.Time <span class="comment">//가장 마지막에 검색한 시간</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>Setup</code> 함수에서는 config 에서 설정된 파라메터 값들을 Lsbeat 구조체 값들에 대입해줍니다. 현재 <code>Period</code> 라는 파라메터값이 디폴트로 생성되어 있는데 <code>Period</code> 값이 없다면 1s 로 셋팅 해 주도록 하고 있습니다. 여기에 우리가 추가한 path 파라메터의 기본값을 할당하는 코드를 추가합니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(bt *Lsbeat)</span> <span class="title">Setup</span><span class="params">(b *beat.Beat)</span> <span class="title">error</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Setting default period if not set</span></span><br><span class="line">	<span class="keyword">if</span> bt.beatConfig.Lsbeat.Period == <span class="string">""</span> &#123;</span><br><span class="line">		bt.beatConfig.Lsbeat.Period = <span class="string">"1s"</span></span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// path 값을 lsbeat.yml 에 설정된 값으로 설정.</span></span><br><span class="line">	<span class="keyword">if</span> bt.beatConfig.Lsbeat.Path == <span class="string">""</span> &#123;</span><br><span class="line">		bt.beatConfig.Lsbeat.Path = <span class="string">"."</span></span><br><span class="line">	&#125;</span><br><span class="line">	bt.path = bt.beatConfig.Lsbeat.Path</span><br><span class="line">  </span><br><span class="line">	bt.client = b.Publisher.Connect()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> err error</span><br><span class="line">	bt.period, err = time.ParseDuration(bt.beatConfig.Lsbeat.Period)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>이제 가장 중요한 <code>Run</code> 함수를 살펴봅니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(bt *Lsbeat)</span> <span class="title">Run</span><span class="params">(b *beat.Beat)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	logp.Info(<span class="string">"lsbeat is running! Hit CTRL-C to stop it."</span>)</span><br><span class="line"></span><br><span class="line">	ticker := time.NewTicker(bt.period)</span><br><span class="line">	counter := <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> &lt;-bt.done:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">		<span class="keyword">case</span> &lt;-ticker.C:</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		event := common.MapStr&#123;</span><br><span class="line">			<span class="string">"@timestamp"</span>: common.Time(time.Now()),</span><br><span class="line">			<span class="string">"type"</span>:       b.Name,</span><br><span class="line">			<span class="string">"counter"</span>:    counter,</span><br><span class="line">		&#125;</span><br><span class="line">		bt.client.PublishEvent(event)</span><br><span class="line">		logp.Info(<span class="string">"Event sent"</span>)</span><br><span class="line">		counter++</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>여기 <code>Run</code> 함수에 있는 <code>event := common.MapStr</code> 부분이 elasticsearch 에 전송될 json 도큐먼트를 MapStr 형식으로 저장하는 부분이며, <code>bt.client.PublishEvent(event)</code> 라인이 도큐먼트를 elasticsearch 로 실제 전송하는 부분입니다. 현재 <code>@timestamp</code>, <code>type</code>, <code>counter</code> 필드가 디폴트로 구현되어 있는 것을 확인할 수 있습니다. 이제 여기에 우리가 수집한 파일(디렉토리)명, 전체 path, 디렉토리여부, 생성시간, 파일크기를 추가 할 것입니다.</p>
+<p>먼저 <code>lsbeat.go</code> 파일 맨 아래에 우리가 앞서 만들었던 파일과 디렉토리 list 를 가져오는 listDir() 함수를 추가 합니다. 상단의 <code>import</code> 에도 <code>&quot;io/ioutil&quot;</code> 패키지를 추가 해 줘야 합니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span> <span class="comment">//listDir 에서 사용하기 위해 추가</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">  </span><br><span class="line">... 중략 ...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 파일, 디렉토리 조회해서 출력하는 함수</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">listDir</span><span class="params">(dirFile <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	files, _ := ioutil.ReadDir(dirFile)</span><br><span class="line">	<span class="keyword">for</span> _, f := <span class="keyword">range</span> files &#123;</span><br><span class="line">		t := f.ModTime()</span><br><span class="line">    fmt.Println(f.Name(), dirFile+<span class="string">"/"</span>+f.Name(), f.IsDir(), t, f.Size())</span><br><span class="line">    </span><br><span class="line">		<span class="keyword">if</span> f.IsDir() &#123;</span><br><span class="line">			listDir(dirFile+<span class="string">"/"</span>+f.Name(), bt, b, counter)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>이제 이 파일에서 <code>fmt.Println</code>로 콘솔 출력을 하는 대신 <code>event</code> MapStr 데이터를 만들어서 전송 해 주는 로직을 추가합니다. 이를 위해서 listDir 함수가 입력 받는 파라메터로  <code>bt *Lsbeat</code>, <code>b *beat.Beat</code>, <code>counter int</code> 를 추가합니다. 그리고 event 객체에에 다음 5개의 필드를 추가합니다.</p>
+<ul>
+<li><code>modTime</code>: f.ModTime() - 마지막 파일 수정 시간 </li>
+<li><code>filename</code>: f.Name() - 파일명</li>
+<li><code>fullname</code>: dirFile + “/“ + f.Name() - 전체 path 경로</li>
+<li><code>isDirectory</code>: f.IsDir() - 디렉토리 여부</li>
+<li><code>fileSize</code>: f.Size() - 파일 크기</li>
+</ul>
+<p>또한 계속해서 같은 파일들을 중복해서 색인하지 않도록 첫번째 실행에만 파일들을 색인 하고 이후에는 이전 색인 프로세스 이후에 생성/변경된 파일들만 색인하도록 시간을 체크하는 로직도 추가합니다. 최근 데이터 송신 시간은 <code>Lsbeat</code> 구조체의 <code>lasIndexTime</code> 변수에 저장 할 것입니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// bt *Lsbeat, b *beat.Beat, counter int 추가</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">listDir</span><span class="params">(dirFile <span class="keyword">string</span>, bt *Lsbeat, b *beat.Beat, counter <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	files, _ := ioutil.ReadDir(dirFile)</span><br><span class="line">	<span class="keyword">for</span> _, f := <span class="keyword">range</span> files &#123;</span><br><span class="line">		t := f.ModTime()</span><br><span class="line">		<span class="comment">//fmt.Println(f.Name(), dirFile+"/"+f.Name(), f.IsDir(), t, f.Size())</span></span><br><span class="line"></span><br><span class="line">		event := common.MapStr&#123;</span><br><span class="line">			<span class="string">"@timestamp"</span>:  common.Time(time.Now()),</span><br><span class="line">			<span class="string">"type"</span>:        b.Name,</span><br><span class="line">			<span class="string">"counter"</span>:     counter,</span><br><span class="line">			<span class="string">"modTime"</span>:     t,</span><br><span class="line">			<span class="string">"filename"</span>:    f.Name(),</span><br><span class="line">			<span class="string">"fullname"</span>:    dirFile + <span class="string">"/"</span> + f.Name(),</span><br><span class="line">			<span class="string">"isDirectory"</span>: f.IsDir(),</span><br><span class="line">			<span class="string">"fileSize"</span>:    f.Size(),</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//첫번째 실행인 경우 전체 파일 목록 색인.</span></span><br><span class="line">		<span class="keyword">if</span> counter == <span class="number">1</span> &#123;</span><br><span class="line">			bt.client.PublishEvent(event) <span class="comment">//elasticsearch 로 데이터 전송.</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//2번째 이후 인 경우 지난번 실행 이후에 추가된 파일만 색인</span></span><br><span class="line">			<span class="keyword">if</span> t.After(bt.lasIndexTime) &#123;</span><br><span class="line">				bt.client.PublishEvent(event) <span class="comment">//elasticsearch 로 데이터 전송.</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> f.IsDir() &#123;</span><br><span class="line">			listDir(dirFile+<span class="string">"/"</span>+f.Name(), bt, b, counter) <span class="comment">// bt *Lsbeat, b *beat.Beat, counter int 추가</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>이제 <code>Run</code> 함수에서 elasticsearch 로 데이터를 전송하던 부분을 주석 처리하고 우리가 만든 <code>listDir</code> 함수를 호출하는 로직과 송신 후 <code>lasIndexTime</code>에 타임스탬프를 기록하는 로직을 추가합니다.<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(bt *Lsbeat)</span> <span class="title">Run</span><span class="params">(b *beat.Beat)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	logp.Info(<span class="string">"lsbeat is running! Hit CTRL-C to stop it."</span>)</span><br><span class="line"></span><br><span class="line">	ticker := time.NewTicker(bt.period)</span><br><span class="line">	counter := <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		listDir(bt.path, bt, b, counter) <span class="comment">// lsbeat 데이터 송신</span></span><br><span class="line">		bt.lasIndexTime = time.Now()     <span class="comment">// 송신 후 타임스탬프 기록.</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> &lt;-bt.done:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">		<span class="keyword">case</span> &lt;-ticker.C:</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 기존 elasticsearch 전송 로직 삭제</span></span><br><span class="line">		<span class="comment">// event := common.MapStr&#123;</span></span><br><span class="line">		<span class="comment">// 	"@timestamp": common.Time(time.Now()),</span></span><br><span class="line">		<span class="comment">// 	"type":       b.Name,</span></span><br><span class="line">		<span class="comment">// 	"counter":    counter,</span></span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="comment">// bt.client.PublishEvent(event)</span></span><br><span class="line"></span><br><span class="line">		logp.Info(<span class="string">"Event sent"</span>)</span><br><span class="line">		counter++</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>프로그램이 거의 완성되었습니다. 새로 추가한 필드들의 매핑 정보를 설정해야 합니다. 매핑 정보는 <code>etc</code> 디렉토리 아래의 <code>fields.yml</code>에서 추가합니다.<br><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">lsbeat:</span></span><br><span class="line"><span class="attr">  fields:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">counter</span></span><br><span class="line"><span class="attr">      type:</span> <span class="string">integer</span></span><br><span class="line"><span class="attr">      required:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">      description:</span> <span class="string">&gt;</span></span><br><span class="line"><span class="string">        PLEASE UPDATE DOCUMENTATION</span></span><br><span class="line"><span class="string">    #lsbeat 에서 추가된 필드들.</span></span><br><span class="line"><span class="string"></span><span class="attr">    - name:</span> <span class="string">modTime</span></span><br><span class="line"><span class="attr">      type:</span> <span class="string">date</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">filename</span></span><br><span class="line"><span class="attr">      type:</span> <span class="string">text</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">fullname</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">isDirectory</span></span><br><span class="line"><span class="attr">      type:</span> <span class="string">boolean</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">fileSize</span></span><br><span class="line"><span class="attr">      type:</span> <span class="string">long</span></span><br></pre></td></tr></table></figure></p>
+<p>이제 새로 업데이트 한 설정들을 반영하기 위해 다시 <code>make update</code> 를 실행합니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ make update</span><br></pre></td></tr></table></figure></p>
+<p><code>make update</code>를 실행하고 나면 <code>lsbeat.template.json</code> 파일에 앞에 수정한 매핑 설정이 반영됩니다. <code>filename</code> 필드는 nGram 방식으로 색인을 진행 할 것이기 때문에 <code>lsbeat.template.json</code> 파일을 열고 “settings” 부분에 nGram analyzer 를 추가하고 filename 필드에도 적용 해 줍니다.<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//filename 에 "analyzer": "ls_ngram_analyzer" 추가</span></span><br><span class="line"><span class="string">"filename"</span>: &#123;</span><br><span class="line">  <span class="string">"norms"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="string">"type"</span>: <span class="string">"text"</span>,</span><br><span class="line">  <span class="string">"analyzer"</span>: <span class="string">"ls_ngram_analyzer"</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">//settings 에 ls_ngram_analyzer 추가.</span></span><br><span class="line"><span class="string">"settings"</span>: &#123;</span><br><span class="line">  <span class="string">"index.refresh_interval"</span>: <span class="string">"5s"</span>,</span><br><span class="line">  <span class="string">"analysis"</span>: &#123;</span><br><span class="line">    <span class="string">"analyzer"</span>: &#123;</span><br><span class="line">      <span class="string">"ls_ngram_analyzer"</span>: &#123;</span><br><span class="line">        <span class="string">"tokenizer"</span>: <span class="string">"ls_ngram_tokenizer"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"tokenizer"</span>: &#123;</span><br><span class="line">      <span class="string">"ls_ngram_tokenizer"</span>: &#123;</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"ngram"</span>,</span><br><span class="line">        <span class="string">"min_gram"</span>: <span class="string">"2"</span>,</span><br><span class="line">        <span class="string">"token_chars"</span>: [</span><br><span class="line">          <span class="string">"letter"</span>,</span><br><span class="line">          <span class="string">"digit"</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>이제 이 템플릿을 elasticsearch 에 적용하고 <code>make</code> 명령어로 <code>lsbeat</code> 를 컴파일 합니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ curl -XPUT localhost:9200/_template/lsbeat -d@lsbeat.template.json</span><br><span class="line">&#123;<span class="string">"acknowledged"</span>:<span class="literal">true</span>&#125;</span><br><span class="line">$ make</span><br><span class="line">go build</span><br></pre></td></tr></table></figure></p>
+<p>컴파일 후 <code>lsbeat</code> 실행 바이너리 파일이 생성됩니다. 이제 모든 준비가 완료되었습니다. 윈도우 계열이라면 <code>lsbeat.exe</code> 파일이 생성 될 것입니다. 이제 생성된 <code>lsbeat</code> 파일을 실해 해 볼 것입니다. 실행 전에 <code>lsbeat.yml</code>에서 파일을 색인 할 root 경로를 지정 해 줘야 합니다. 저는 제 컴퓨터의 $GOPATH 인 <code>/Users/kimjmin/golang</code> 을 설정하겠습니다.<br><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">lsbeat:</span></span><br><span class="line">  <span class="comment"># Defines how often an event is sent to the output</span></span><br><span class="line"><span class="attr">  period:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">"/Users/kimjmin/golang"</span></span><br></pre></td></tr></table></figure></p>
+<p>이제 <code>lsbeat</code>를 실행합니다. 당연히 elasticsearch 는 사전에 실행중이어야 합니다.<br><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ ./lsbeat</span><br></pre></td></tr></table></figure></p>
+<p>파일이 색인되고 있는지 확인 해 보겠습니다. 먼저 <code>_cat</code> API를 이용해서 인덱스가 제대로 생성되었는지 확인합니다.<br><img src="cat.png" alt=""></p>
+<p><strong>lsbeat-2016.06.03</strong> 인덱스가 생성되었고 데이터가 정상적으로 들어오고 있습니다. 이제 query 를 사용해서 lsbeat 를 검색 해 보겠습니다. nGram 으로 제대로 색인이 되었는지 <code>lsbe</code> 까지만 검색 해 보겠습니다.<br><img src="query.png" alt=""></p>
+<p>검색이 정상적으로 실행됩니다.</p>
+<p>이처럼 libbeat 프레임워크를 사용해서 내가 필요로 하는 Beat를 만들 수 있습니다.</p>
+<iframe src="https://www.youtube.com/embed/N3NbYQgiUn0" frameborder="0" allowfullscreen></iframe>
+
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/06/elastic-jobs/" data-toggle="tooltip" data-placement="top" title="Jobs in Elastic">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/05/aws-summit-seoul-2016/" data-toggle="tooltip" data-placement="top" title="AWS Summit Seoul 2016">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Beats" title="Beats">Beats</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2016/06/create-own-beats/";
+    var disqus_url = "http://kimjmin.net/2016/06/create-own-beats/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

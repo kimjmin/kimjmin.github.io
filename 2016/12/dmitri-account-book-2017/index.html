@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          2017 구글 가계부 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2016/12/dmitri-account-book-2017/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('finance-img.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#구글 가계부" title="구글 가계부">구글 가계부</a>
+                        
+                          <a class="tag" href="/tags/#google 가계부" title="google 가계부">google 가계부</a>
+                        
+                    </div>
+                    <h1>2017 구글 가계부</h1>
+                    <h2 class="subheading">2017년도 구글 가계부 템플릿 배포합니다.</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2016-12-29
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p>한 6년 전 부터 구글 드라이브의 스프레드시트로 가계부를 만들어 쓰고 있습니다. <strong>드미트리 가계부</strong> 라는 이름으로 템플릿을 오픈 해 놓았는데 다른 분들도 많이 받아서 쓰셨던 것 같습니다. <del>게을러서</del> 바쁜 일정 때문에 2012년인가를 마지막으로 업데이트를 안 하고 같은 템플릿을 계속 쓰고 있었는데, 아이들도 생기고 하다 보니 소비 패턴에도 많은 변화가 생기기도 하고 해서 간만에 템플릿 업데이트를 했습니다.</p>
+<p><strong>새로운 가계부 템플릿 주소는 아래와 같습니다.<br><a href="https://docs.google.com/spreadsheets/d/1y626Oq27d7TxB28KNRMmAxQs7AS56lHc-PJ1JsCrWyI" target="_blank" rel="noopener">https://docs.google.com/spreadsheets/d/1y626Oq27d7TxB28KNRMmAxQs7AS56lHc-PJ1JsCrWyI</a></strong></p>
+<h3 id="가계부-템플릿-저장"><a href="#가계부-템플릿-저장" class="headerlink" title="가계부 템플릿 저장"></a>가계부 템플릿 저장</h3><p>사용하려면 당연히 구글 계정이 필요하고요, 공개 읽기 권한으로 되어 있으니 편집 하려면 자신의 계정으로 <strong>사본을 저장해서</strong> 사용하면 됩니다.</p>
+<p><img src="copy_1.png" alt=""> <img src="copy_2.png" alt=""></p>
+<p>가끔 템플릿 문서를 편집 권한 달라고 저한테 메일 보내는 분들 계신데 <span style="color:red"><strong><em>사본 저장해서 사용하세요!!</em></strong></span></p>
+<h3 id="개요-탭"><a href="#개요-탭" class="headerlink" title="개요 탭"></a>개요 탭</h3><p>먼저 첫번째로 <code>개요</code> 탭이 있습니다. 개요 탭에서는 수입/지출 항목과 형태를 정의하고 전체 합계를 보는 화면입니다.</p>
+<p><img src="summary_01.png" alt=""> </p>
+<h5 id="항목값-B3-B22"><a href="#항목값-B3-B22" class="headerlink" title="항목값 - [B3:B22]"></a>항목값 - [B3:B22]</h5><p>먼저 B열의 <code>B3 ~ B22</code> 범위는 수입/지출 항목값을 관리하는 셀 들입니다. 우선은 제가 주로 사용하는 항목대로 했는데, 이 범위의 셀의 값들을 변경하시면 다른 <code>통계</code> 탭과 <code>1월 ~ 12월</code> 탭의 항목 선택 옵션값 들도 모두 자동으로 적용됩니다. <code>B13 ~ B19</code> 셀에는 색깔이 입혀져 있는데 1~12월 탭에서 항목 선택시 이 색들과 동일하게 적용되도록 조건부 서식이 적용되어 있으니 <span style="color:red"><strong><em>색깔은 변경하면 안됩니다.</em></strong></span> </p>
+<p><code>B3 ~ B22</code> 셀에는 내가 사용할 항목들을 넣고 <code>C3 ~ C22</code> 셀에는 그 항목에 대한 설명들을 적으면 됩니다.</p>
+<p><img src="summary_02.png" alt=""> </p>
+<h5 id="월별-예산계획-수입-D3-D22-지출-E3-E22"><a href="#월별-예산계획-수입-D3-D22-지출-E3-E22" class="headerlink" title="월별 예산계획 - 수입 [D3:D22], 지출 [E3:E22]"></a>월별 예산계획 - 수입 [D3:D22], 지출 [E3:E22]</h5><p><code>D3 ~ E22</code> 셀에는 각 항목에 대한 월별 예산 계획값을 입력합니다. <span style="color:blue"><strong>D 열은 수입</strong></span>, <span style="color:red"><strong>E 열은 지출</strong></span> 입니다. 이번 가계부 작성하면서 가장 신경쓰고 싶었던 것이 미리 계획한 예산과 내가 쓴 경비들을 계속 비교할 수 있는 기능을 넣는 것이었습니다. 특히 <strong><code>3행의 고정비</code></strong> 값은 1월~12월 탭에 매월 고정비로 자동 반영이 되기 때문에 3행의 고정는 항목은 수정하지 말고 수입/지출 값만 수정해서 사용하도록 합니다.</p>
+<p><img src="summary_03.png" alt=""> </p>
+<p><code>23행</code>은 <strong>각 수입/지출 예산 계획값의 합계</strong> 가, <code>24행</code>은 <strong>전체 수입에서 지출을 뺀 잔액</strong> 이 표시됩니다. 템플릿의 경우 수입 350만원, 지출 338만원으로 매월 12만원의 잔액이 남는 것으로 되어 있습니다.</p>
+<h5 id="년간-예산계획-수입-F3-F22-지출-G3-G22"><a href="#년간-예산계획-수입-F3-F22-지출-G3-G22" class="headerlink" title="년간 예산계획 - 수입 [F3:F22], 지출 [G3:G22]"></a>년간 예산계획 - 수입 [F3:F22], 지출 [G3:G22]</h5><p><code>F3 ~ G22</code> 셀에는 각 항목에 대한 년간 예산 계획값이 표시됩니다. 월별과 마찬가지로 <span style="color:blue"><strong>F 열은 수입</strong></span>, <span style="color:red"><strong>G 열은 지출</strong></span> 입니다. 기본적으로는 <code>[월별 수입/지출 값 x 12]</code>가 되어 있습니다. 하지만 몇가지 항목은 월 고정 지출 외에 년간 이벤트로 발생하는 수입/지출이 있어 약간의 수정이 되어 있습니다. </p>
+<ul>
+<li><code>F4</code> 셀 값은 <strong>350만 x 12 = 4200만원</strong> 이 기본 값인데, 별도 상여금 <strong>100만원</strong>이 있다고 가정하여 <strong>4,300만원</strong> 으로 되어 있습니다. 셀 서식은 <code>=(D4*12)+1000000</code> 입니다.</li>
+<li><code>G6</code> 셀 값은 <strong>40만 x 12 = 480만원</strong> 이 기본 값인데, 자동차세 등 년 단위 세금 <strong>30만원</strong>이 있다고 가정하여 <strong>510만원</strong> 으로 입력되어 있습니다. 셀 서식은 <code>=(E6*12)+300000</code> 입니다.</li>
+<li><code>G11</code> 셀 값은 <strong>10만 x 12 = 120만원</strong> 이 기본 값인데 휴가철 해외여행 경비 <strong>200만원</strong>을 잡아놓았다고 가정하여 <strong>320만원</strong> 으로 입력되어 있습니다. 셀 서식값은 <code>=(E11*12)+2000000</code> 입니다.</li>
+</ul>
+<p><img src="summary_04.png" alt=""> </p>
+<p><code>F3 ~ G22</code> 셀 값들은 <code>D3 ~ E22</code> 셀들의 값 x 12 가 아닌 경우 약간 더 진한 노란색으로 표시되도록 조건부 서식이 적용되어 있습니다. 특별한 경우가 아니면 월별 예산 x 12 를 입력하고, 별도 특별 수입/지출이 있는 경우 셀 값을 수정하면 됩니다.</p>
+<h5 id="년간-지출-현황-합계-H3-H22-계획대비-잔액-I3-I22-잔액-비율-J3-J22"><a href="#년간-지출-현황-합계-H3-H22-계획대비-잔액-I3-I22-잔액-비율-J3-J22" class="headerlink" title="년간 지출 현황 - 합계 [H3:H22], 계획대비 잔액 [I3:I22], 잔액 비율 [J3:J22]"></a>년간 지출 현황 - 합계 [H3:H22], 계획대비 잔액 [I3:I22], 잔액 비율 [J3:J22]</h5><p><code>H,I,J</code> 셀에는 년간 전체 지출 현황이 나타나 있습니다. 이 셀의 값들은 모두 자동 계산됨으로 <span style="color:red"><strong>수정하지 않도록 합니다</strong></span>. 참고로 월별 현황은 <code>통계</code> 탭에 있습니다. 현재 템플릿에는 1월달 가계부에 대한 값들만 입력이 되어 있어서 실제 <code>H3~H22</code> 열의 값들은 1월 통계의 값과 동일합니다.</p>
+<p><img src="summary_05.png" alt=""> </p>
+<p><code>23행</code>은 각 통계에 대한 합계가 나타나 있습니다. <code>H23</code> 셀은 <strong>지금까지의 전체 수입에서 지출은 뺀 값</strong> 인 <strong>808,112</strong> 원을 나타내고, <code>I23</code> 셀은 예산 대비 잔액인 (1년 전체 예산은 14 만원을 남기도록 되어 있습니다) <strong>808,112</strong> 에서 <strong>140,000</strong> 을 뺀 <strong>668,112</strong> 원을 나타내고 있습니다. <code>J23</code> 셀은 <strong>1년 전체 예산 4,300만원에서 현재까지 지출 한 금액 대비 잔액 비율</strong> 인 <strong>93.59%</strong> 를 나타내고 있습니다. 이는 1년치 예산 계획 중 현재 <strong>100 - 93.59</strong> 인 <code>6.41%</code> 만큼 사용했다는 뜻입니다.</p>
+<h5 id="형태값-B27-B31"><a href="#형태값-B27-B31" class="headerlink" title="형태값 [B27:B31]"></a>형태값 [B27:B31]</h5><p>개요 탭의 더 아래쪽을 보면 <code>B27 ~ B31</code> 셀에 수입/지출 방법에 대한 형태값 들이 있습니다. 항목값과 마찬가지로 이 범위의 셀의 값들을 변경하시면 다른 <code>통계</code> 탭과 <code>1월 ~ 12월</code> 탭의 형태 선택 옵션값 들도 모두 자동으로 적용됩니다. 또한 이 역시도 조건부 서식이 적용되어 있으니 <span style="color:red"><strong><em>글씨 색은 변경하면 안됩니다.</em></strong></span> </p>
+<p><img src="summary_06.png" alt=""> </p>
+<p><code>D:27 ~ D31</code>, <code>E:27 ~ E31</code> 셀에는 형태에 대한 수입/지출 형태에 대한 합계가 있어 내가 지금까지 카드를 얼마나 많이 긁었나, 현금은 얼마를 썼나 볼 수 있습니다.</p>
+<h3 id="통계-탭"><a href="#통계-탭" class="headerlink" title="통계 탭"></a>통계 탭</h3><p>두번째 통계 탭 입니다. 보게 되면 개요 탭에서 정의 한 항목과 형태 값 들이 반영되어 있습니다.<br><code>B열</code>의 데이터 값들과 <code>C열</code>,<code>D열</code>의 월별 예산계획 값은 <code>개요</code> 탭에서 입력한 값들이 자동 반영됩니다. <code>E열</code> 부터는 <code>1월 ~ 12월</code> 탭에서 입력한 실제 가계부 값이 반영된 통계값들이 나타나게 됩니다.</p>
+<p><img src="stat_01.png" alt=""> </p>
+<p><code>23행</code>은 개요 탭의 연간 합계와 마찬가지로 월별 항목별 통계가 반영되어 있습니다. 템플릿의 1월의 경우에는 <code>E23</code> 셀은 1월간 전체 수입에서 지출을 뺀 <strong>808,112</strong> 원이 표시되고 있고, <code>F23</code> 셀은 원래 예산은 월마다 12만원을 남기도록 짰기 때문에 예산대비 잔액인 808,112 에서 120,000 을 뺀 <strong>668,112</strong> 원이 표시됩니다. <code>G23</code> 셀은 전체 예산 수입 대비 잔액인 <strong>23.09%</strong> 가 표시되고 있습니다. 이 셀에서 계산하는 잔액은 예산대비 잔액이 아닌 실제 잔액이며 이 셀의 서식은 <code>=E$23/$C$23</code> 입니다.</p>
+<p><code>26행</code> 부터는 항목별이 아닌 월별 형태별 통계가 반영되어 있습니다.</p>
+<p><img src="stat_02.png" alt=""> </p>
+<p>기본적으로 <code>통계</code> 탭은 모든 셀 값들이 자동 반영 되기 때문에 수정할 일은 없습니다.</p>
+<blockquote>
+<p>참고로 셀 색이 <code>개요 탭의 D,E열</code> 같이 <code>에메랄드 색</code>인 경우는 입력한 값이 전체 스프레드시트에 영향을 미치는 값이고, <code>통계 탭의 대부분 셀</code> 처럼 <code>엷은 노란색</code>인 경우는 값들이 자동으로 계산되는 셀 들입니다. 따라서 <span style="color:red"><strong>엷은 노란색 셀은 절대로 변경하면 안됩니다.</strong></span> </p>
+</blockquote>
+<h3 id="1월-12월-탭"><a href="#1월-12월-탭" class="headerlink" title="1월 ~ 12월 탭"></a>1월 ~ 12월 탭</h3><p>이제 실제로 가계부를 입력하는 1월 ~ 12월 탭에 대해 알아보겠습니다. 템플릿에는 1월 탭의 내용에 예시 값들을 미리 입력 해 두었습니다. 실제 사용 하실 때는 <code>A ~ F열의 5번째 행</code> 아래 값 부터 지우고 사용하시면 됩니다. 앞에서 언급했듯이 <code>3, 4행</code>의 <span style="color:red"><strong>엷은 노란색 셀들은 변경하면 안됩니다.</strong></span> </p>
+<p><img src="month_01.png" alt=""></p>
+<h5 id="수입-지출-항목-입력"><a href="#수입-지출-항목-입력" class="headerlink" title="수입/지출 항목 입력"></a>수입/지출 항목 입력</h5><p>기본적으로 <code>A열</code>에는 날짜를, <code>B열</code>에 내용을 입력하고 <code>C열</code>,<code>D열</code>의 항목, 형태는 드롭다운 메뉴로 선택하도록 합니다. <code>개요</code> 탭에서 입력한 항목, 형태의 데이터 값들이 드롭다운 목록 선택 옵션으로 나타납니다.</p>
+<p><img src="month_02.png" alt=""> </p>
+<p><code>E열</code>, <code>F열</code> 에는 각각 수입, 지출 값을 입력합니다. 각 열의 <code>2행</code>에 전체 수입, 지출에 대한 합계가 나타납니다. <code>H열</code> 에는 위에서부터 아래로 전체 수입/지출 에 대한 누계가 표시되며 지금 입력한 행 까지의 수입-소비 합을 볼 수 있습니다.</p>
+<p><img src="month_03.png" alt=""></p>
+<h5 id="예산계획-대비-잔액"><a href="#예산계획-대비-잔액" class="headerlink" title="예산계획 대비 잔액"></a>예산계획 대비 잔액</h5><p>사실 이번 2017년 가계부에서 가장 신경 쓴 부분이 <code>G열</code>의 예산계획 대비 잔액 기능입니다. <code>C열</code>의 항목을 선택하게 되면 G열에 해당 항목에 대한 잔액이 바로 표시되어 내가 이번 달에 해당 항목에 얼마나 더 소비가 가능한지 볼 수 있습니다.<br>예를 들어 아래와 같이 <strong>외식</strong> 항목을 선택하면 예산대비 잔액이 <strong>2만원</strong> 이 남았다고 <code>G열</code> 에 바로 표시를 해 줍니다. 이걸 보면서 아, 이번달은 이제 외식에 얼마를 더 쓸 수 있겠구나 하고 미리 짐작을 할 수 있습니다.</p>
+<p><img src="month_04.png" alt=""></p>
+<h5 id="고정-지출비와-전월-이월금"><a href="#고정-지출비와-전월-이월금" class="headerlink" title="고정 지출비와 전월 이월금"></a>고정 지출비와 전월 이월금</h5><p>각 월별 탭에 상단의 <code>3, 4행</code> 에는 각각 <code>전월 이월금</code>과 <code>고정 지출비</code> 항목이 미리 입력 되어 있습니다. 앞에서 언급 했듯이 <span style="color:red"><strong>엷은 노란색 셀임으로 절대로 변경하면 안됩니다.</strong></span> 고정 지출비는 <code>개요</code> <strong>탭에서 입력 해 놓은 고정 지출비</strong> 가 자동 입력되고, 전월 이월금은 <strong>이전 달 이월 누계 금액</strong> (예를 들어 2월 탭에서는 1월 전체 누계 금액) 이 반영됩니다.</p>
+<p><img src="month_05.png" alt=""></p>
+<p>그런데 통계 탭에서는 고정 지출비를 40만원으로 입력했는데, 위 화면에는 고정비 지출인 <code>F4</code> 셀의 값이 0 으로 되어 있습니다. 통계 값에서 제대로 반영하기 위해 고정 지출비의 값은 <code>A4</code><strong>셀에 있는 날짜값에 영향을 받도록</strong> 되어 있습니다. 실제로 오늘 날짜가 <code>A4</code> 셀의 날짜와 같거나 이후가 되어야 고정 지출비가 나타나게 됩니다. A4 셀의 값을 오늘(제가 지금 블로그 포스트를 작성중인 날짜) 로 바꿔보도록 하겠습니다.</p>
+<p><img src="month_06.png" alt=""></p>
+<p>위와 같이 <code>A4</code> 셀의 날짜를 2016년 12월로 바꾸니 <code>F4</code> 셀 값이 고정 지출비로 반영이 되었습니다. <code>1월 ~ 12월 탭</code>의 <code>A3</code>, <code>A4</code> 셀의 값은 <strong>각 월의 1일</strong> 로 입력이 되어 있습니다. 만약 고정 지출비용이 나가는 날짜가 따로 있다면 그 날짜로 변경 해 놓아도 됩니다. <code>F4</code> 셀 서식은 <code>=IF(TODAY()&gt;=$A$4,&#39;개요&#39;!E$3,0)</code> 입니다.</p>
+<p><code>A3</code> 셀은 <code>H3</code>의 이월누계 값에 영향을 받습니다. 아래는 <code>2월</code> 탭의 내용입니다. <code>A3</code> 셀 값을 보면 <strong>2017년 2월 1일</strong> 로 되어 있습니다. <code>H3</code> 셀의 이월 누계 값은 <code>A3</code> <strong>셀의 날짜 값에서 월을 가져와 그 전월 탭의 이월 누계값</strong> 을 가져오도록 되어 있습니다.</p>
+<p><img src="month_07.png" alt=""></p>
+<p><code>3월</code> 탭의 경우 <code>A3</code> 셀 값이 <strong>2017년 3월 1일</strong> 로 되어 있고, <code>H3</code> 셀의 값은 <strong>2월 탭의 이월 누계값</strong> 을 가져오도록 되어 있습니다. 만약 3월 탭의 A3 셀 값을 2017년 2월 1일로 바꾸게 되면 <strong>2월 대신 1월 탭의 이월 누계값</strong> 을 가져오게 됩니다. <code>1월</code> 탭의 <code>H3</code> 셀 값은 0 이고, <code>2월 ~ 12월</code> 탭의 <code>H3</code> 셀 서식은 <code>=INDIRECT(CHAR(39)&amp;CONCAT(MONTH($A$3)-1,&quot;월&quot;)&amp;CHAR(39)&amp;&quot;!$I$2&quot;)</code> 입니다. (앞에 설명한 <code>A3</code>셀 날짜 값에서 월만 추출해서 1을 뺀 월 탭의 <code>I2</code> 셀 값을 가져오는 수식입니다. 좀 복잡하죠?)</p>
+<h3 id="탭을-다른-기준으로-변경하기"><a href="#탭을-다른-기준으로-변경하기" class="headerlink" title="탭을 다른 기준으로 변경하기"></a>탭을 다른 기준으로 변경하기</h3><p>현재는 1월 ~ 12월의 월별 기준으로 되어 있는데, 만약에 나는 이 가계부를 월별이 아니라 주 단위, 아니면 분기별 같이 다른 기준으로 사용하고 싶다고 하는 경우가 있을 것입니다. 문제가 되는 것은 <code>통계</code> 탭인데 통계 탭에 있는 수많은 셀들의 수식은 <code>1행</code>의 타이틀 값에 영향을 받도록 되어 있습니다.</p>
+<p><img src="month_to_stat_01.png" alt=""></p>
+<p>위와 같이 <code>E,F,G</code> 열에 속한 셀들은 <code>E,F,G:1</code> 셀 값인 <strong>1월</strong> 이라는 값을 참조하여 실제 <code>1월</code> 탭의 값들을 가져오도록 수식화 되어 있습니다. 탭의 이름과 타이틀의 이름을 동일하게 맞춰주면 그 열에 속한 셀들은 타이틀 이름과 같은 셀의 값들을 바라보게 됩니다. 아래는 <code>1월</code>을 <code>1분기</code>로 탭 이름과 타이틀명을 바꾼 예 입니다.</p>
+<p><img src="month_to_stat_02.png" alt=""></p>
+<blockquote>
+<p>참고로 셀들은 타이틀을 바꿨을 때 반영됩니다. 타이틀을 먼저 바꾸면 셀들이 그 즉시 잘못된 값들을 참조하게 되어 수많은 셀들에서 수식 오류가 납니다. <span style="color:red"><strong>항상 탭 이름을 먼저 바꾸고 타이틀명을 변경해야 합니다.</strong></span></p>
+</blockquote>
+<h3 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h3><p>기본적인 가계부 사용법 설명은 다 끝났습니다. 실제로 사용 하다 보면 수식 버그가 나올 수도 있을텐데 발견할 때 마다 고쳐놓도록 하겠습니다. 옛날 버전에는 통화 (KRW, USD) 를 변환하는 기능도 있었는데 이번 가계부에는 그 기능은 뺐습니다. 환율 변동도 있고, 실제로 별로 도움이 되지 않아서 입력할 때 마다 환율 계산 해서 넣는게 편하더군요.</p>
+<p>원래는 이 가계부를 구글 드라이브 API를 사용하는 웹앱 이나 모바일 앱으로 만드는게 목표였는데, 올해도 이런 저런 일로 미루다 보니 하지 못했습니다. 내년에는 할 수 있도록 다시 노력 해 보겠습니다. 사용하면서 궁금한 점 있으면 아래 답글 달아 주시거나 메일, 페북 메신져 등으로 연락 주세요. 😘</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/02/2017-02-oss-univ-hackathon/" data-toggle="tooltip" data-placement="top" title="소프트웨어 중심대학 오픈소스 해커톤">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/12/adios-2016/" data-toggle="tooltip" data-placement="top" title="2016년을 마치며">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#구글 가계부" title="구글 가계부">구글 가계부</a>
+                        
+                          <a class="tag" href="/tags/#google 가계부" title="google 가계부">google 가계부</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2016/12/dmitri-account-book-2017/";
+    var disqus_url = "http://kimjmin.net/2016/12/dmitri-account-book-2017/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

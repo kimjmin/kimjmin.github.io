@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Elastic{on}17 미리보기 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2017/02/elasticon-2017-agenda/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('elasticon-conf-banner.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#실리콘밸리" title="실리콘밸리">실리콘밸리</a>
+                        
+                    </div>
+                    <h1>Elastic{on}17 미리보기</h1>
+                    <h2 class="subheading">Elastic{on} 2017 컨퍼런스 행사에서 주목할 만한 세션들 소개</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2017-02-09
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <h1 id="Elastic-on-17이-한달-앞으로-다가왔습니다"><a href="#Elastic-on-17이-한달-앞으로-다가왔습니다" class="headerlink" title="Elastic{on}17이 한달 앞으로 다가왔습니다."></a>Elastic{on}17이 한달 앞으로 다가왔습니다.</h1><p>올해로 세번째를 맞는 Elastic 의 글로벌 이벤트인 Elastic{on}17이 3월 7~9일 샌프란시스코에서 열립니다.</p>
+<p><img src="elsaticon.png" alt=""></p>
+<p>작년과 동일하게 <a href="https://www.google.co.kr/maps/place/Pier+48,+San+Francisco,+CA+94158+%EB%AF%B8%EA%B5%AD/@37.7756433,-122.3889372,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7fdbafe3848f:0xaa0c4fa02144459!8m2!3d37.7756224!4d-122.3865937?hl=ko" target="_blank" rel="noopener">Pier48</a> 에서 열리고요, 행사 페이지와 등록은 : <a href="https://www.elastic.co/elasticon/conf/2017/sf" target="_blank" rel="noopener">https://www.elastic.co/elasticon/conf/2017/sf</a> 여기서 하시면 됩니다.</p>
+<p>티켓 가격은 $1,495 이고요, 작년 오픈 직후에는 EarlyBird 할인, 그 다음은 New Year 할인, 지금은 Valentine 할인($1,395) 중입니다. 아마 현장 등록을 하는게 아니면 제값 내고 가는 경우는 없지 않을까 생각됩니다. 지금이라도 등록하실 분은 제게 따로 페이스북 쪽지나 트윗 등을 주시면 <strong>추가 할인 코드</strong> 를 드리겠습니다.</p>
+<p><a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda" target="_blank" rel="noopener">아젠다 페이지</a>에 가 보시면 전체 시간표가 있고, 각각 세션 별로 설명과 URL이 구분되어 있어 공유하기 편하게 되어있네요.</p>
+<p><img src="agenda.png" alt=""></p>
+<p>월요일은 교육이 있고 본 행사는 화요일 오후 키노트를 시작으로 본격적으로 오픈됩니다. 아마 저는 스피커가 아니어서 Demo 부스 아니면 AMA(Ask Me Anything) 부스에 배정될거라 예상되는데, 직원들 시간표도 나와 봐야 알 것 같습니다. 키노트에 발표될 키 테마가 뭘지 직원들에게도 공지는 안 되었지만 대충 뭐가 될지 예상은 됩니다. 머신러닝이랑, Elastic Cloud랑, 또 (읍…읍…)</p>
+<p>여하튼, 이번 행사에서 관심있게 볼 만한 세션 몇가지를 블로그를 빌어 소개하려고 합니다. 세션들은 크게는 저희 내부 직원들이 소개하는 Elastic Stack의 기능들에 대한 내용들과, 외부 인사들이 소개하는 사용 사례들로 구분되어 있습니다. 외부 사례들은 <code>Application Search</code>, <code>Business Analytics</code>, <code>Log Analytics</code>, <code>Metrics</code>, <code>Security</code> 카테고리로 나뉘어 있고, 또 다시 산업 영역 별로 <code>교육</code>,<code>금융</code>,<code>요식업</code>,<code>건강</code>,<code>SW &amp; Tech</code>,<code>유통</code>… 등으로 나뉘어 있습니다.</p>
+<p>다음은 저희 회사에서 내부적으로 공유된 추천 세션들입니다.</p>
+<h4 id="Barclays-The-Engine-for-Key-Security-Platforms-at-Barclays"><a href="#Barclays-The-Engine-for-Key-Security-Platforms-at-Barclays" class="headerlink" title="Barclays - The Engine for Key Security Platforms at Barclays"></a>Barclays - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=the-engine-for-key-security-platforms-at-barclays" target="_blank" rel="noopener">The Engine for Key Security Platforms at Barclays</a></h4><p>바클리스는 글로벌 금융 서비스 그룹인데 이번에 처음으로 자사의 보안 아키텍쳐에 적용된 대해 CIO가 직접 발표를 합니다. 금융 보안쪽에 관심 있는 분들이 들으시면 좋을것 같습니다.</p>
+<h4 id="Walmart-Retail-Fraud-Detection-and-Real-Time-Inventory-Reporting"><a href="#Walmart-Retail-Fraud-Detection-and-Real-Time-Inventory-Reporting" class="headerlink" title="Walmart - Retail Fraud Detection and Real-Time Inventory Reporting "></a>Walmart - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=retail-fraud-detection-and-realtime-inventory-reporting--walmart" target="_blank" rel="noopener">Retail Fraud Detection and Real-Time Inventory Reporting </a></h4><p>월마트에서 소비자가 불법적인 방법으로 구매를 시도했던 것들을 탐지하는 fraud detection과 모니터링을 주제로 발표합니다. Dev-Ops 분들이 관심가질 만한 주제인 것 같습니다.</p>
+<h4 id="Tinder-Using-the-Elastic-Stack-to-Make-Connections-Around-the-World"><a href="#Tinder-Using-the-Elastic-Stack-to-Make-Connections-Around-the-World" class="headerlink" title="Tinder - Using the Elastic Stack to Make Connections Around the World"></a>Tinder - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=tinder-using-the-elastic-stack-to-make-connections-around-the-world" target="_blank" rel="noopener">Using the Elastic Stack to Make Connections Around the World</a></h4><p>틴더는 온라인으로 데이트 상대를 매칭시켜 찾아주는 서비스입니다. 틴더의 백엔드의 추천 엔진에서 Elasticsearch가 어떻게 동작하고있는지 한번 들어보는것도 재미있을 것 같습니다.</p>
+<h4 id="NVIDIA-NVIDIA’s-User-Experience-Streaming-Analytics"><a href="#NVIDIA-NVIDIA’s-User-Experience-Streaming-Analytics" class="headerlink" title="NVIDIA - NVIDIA’s User Experience Streaming Analytics"></a>NVIDIA - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=data-intelligence-with-the-elastic-stack--scale-nvidias-user-experience-streaming-analytics" target="_blank" rel="noopener">NVIDIA’s User Experience Streaming Analytics</a></h4><p>엔비디아에서는 지포스의 프레임 스트리밍 데이터를 Elasticsearch 에 넣고 분석하고 있습니다. 고성능 게임 개발을 하는 분들이라면 꼭 들어보시길 추천합니다.</p>
+<h4 id="Blizzard-Building-a-Near-Real-Time-Pipeline-for-All-Things-Blizzard"><a href="#Blizzard-Building-a-Near-Real-Time-Pipeline-for-All-Things-Blizzard" class="headerlink" title="Blizzard - Building a Near Real-Time Pipeline for All Things Blizzard"></a>Blizzard - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=building-a-near-realtime-pipeline-for-all-things-blizzard" target="_blank" rel="noopener">Building a Near Real-Time Pipeline for All Things Blizzard</a></h4><p>블리자드입니다. 말이 필요 없습니다. Elasticsearch로 World of Warcraft, Overwatch 등을 모니터링 하는 사례를 발표합니다.</p>
+<h4 id="Verizon-Wireless-The-Elasticsearch-Journey-at-Verizon"><a href="#Verizon-Wireless-The-Elasticsearch-Journey-at-Verizon" class="headerlink" title="Verizon Wireless - The Elasticsearch Journey at Verizon"></a>Verizon Wireless - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=the-elasticsearch-journey-at-verizon" target="_blank" rel="noopener">The Elasticsearch Journey at Verizon</a></h4><p>미국 최대 통신사인 버라이즌에서 Elastic Stack을 사용하여 시스템 모니터링을 구축한 사례를 발표합니다. 과거에는 시스템 문제가 발생했을 경우 리커버리 시간이 30분 정도였는데 Elastic Stack을 사용하고 부터는 리커버리 시간이 2~3분으로 줄었다고 합니다. 참고로 시스템이 다운되면 버라이즌이 입는 손실은 1분에 64,000 달러 정도라고 합니다.</p>
+<h4 id="IBM-Localizing-Kibana-for-the-Global-Language-Landscape"><a href="#IBM-Localizing-Kibana-for-the-Global-Language-Landscape" class="headerlink" title="IBM - Localizing Kibana for the Global Language Landscape"></a>IBM - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=localizing-kibana-for-the-global-language-landscape" target="_blank" rel="noopener">Localizing Kibana for the Global Language Landscape</a></h4><p>IBM은 약간 의외의 주제로 발표를 하는데, 자신의 고객들에게 Kibana를 이용해 서비스를 하고 있습니다. 이것들을 어떻게 로컬라이징 시켰는지에 대해 이야기를 합니다.</p>
+<h4 id="Terradue-Advancing-Earth-Science-with-Elasticsearch-at-Terradue"><a href="#Terradue-Advancing-Earth-Science-with-Elasticsearch-at-Terradue" class="headerlink" title="Terradue - Advancing Earth Science with Elasticsearch at Terradue"></a>Terradue - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=advancing-earth-science-with-elasticsearch-at-terradue" target="_blank" rel="noopener">Advancing Earth Science with Elasticsearch at Terradue</a></h4><p>테라두드는 나사와 비슷하게 유럽쪽에서 인공위성, 우주탐사 사업을 지원하는 회사입니다. 인공위성에서 수집한 데이터를 가지고 지진, 홍수, 화산활동 등을 분석하는 일을 합니다. Elasticsearch가 자연과학 쪽에 어떻게 쓰이는지 궁금하신 분들은 들어보시면 좋을것 같습니다.</p>
+<h4 id="Uber-Powering-Uber-Marketplace’s-Real-Time-Data-Needs-with-Elasticsearch"><a href="#Uber-Powering-Uber-Marketplace’s-Real-Time-Data-Needs-with-Elasticsearch" class="headerlink" title="Uber - Powering Uber Marketplace’s Real-Time Data Needs with Elasticsearch"></a>Uber - <a href="https://www.elastic.co/elasticon/conf/2017/sf/agenda?sess=powering-uber-marketplaces-realtime-data-needs-with-elasticsearch" target="_blank" rel="noopener">Powering Uber Marketplace’s Real-Time Data Needs with Elasticsearch</a></h4><p>개인적으로 정말 존경하는 개발자이고, 과거 넷플릭스에서 <a href="https://github.com/Netflix/suro" target="_blank" rel="noopener">suro</a>를 만드셨던 우버의 <a href="https://www.facebook.com/jaehb" target="_blank" rel="noopener">배재현</a>님께서 우버가 Elasticsearch를 가지고 어떻게 서비스에 적용하고 있는지 직접 발표를 하십니다.</p>
+<p>이밖에도 많은 주제들로 재미있는 내용들이 준비되어 있어서 개인적으로 큰 기대가 됩니다. 참석 못 하시는 분들도 시간이 지나면 홈페이지에 영상과 발표 자료들은 공유 될 예정이니 나중에라도 관심 갖고 봐 주시면 좋을것 같습니다.</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/02/2017-02-meetup-survey/" data-toggle="tooltip" data-placement="top" title="커뮤니티 밋업 사전 설문">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/02/2017-02-oss-univ-hackathon/" data-toggle="tooltip" data-placement="top" title="소프트웨어 중심대학 오픈소스 해커톤">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#실리콘밸리" title="실리콘밸리">실리콘밸리</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2017/02/elasticon-2017-agenda/";
+    var disqus_url = "http://kimjmin.net/2017/02/elasticon-2017-agenda/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

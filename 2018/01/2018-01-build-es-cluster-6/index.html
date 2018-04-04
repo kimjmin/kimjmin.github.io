@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Elastic Cluster 구성 6 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2018/01/2018-01-build-es-cluster-6/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('bg-linux-prompt.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#Elastic Cluster Settings" title="Elastic Cluster Settings">Elastic Cluster Settings</a>
+                        
+                          <a class="tag" href="/tags/#X-Pack" title="X-Pack">X-Pack</a>
+                        
+                    </div>
+                    <h1>Elastic Cluster 구성 6</h1>
+                    <h2 class="subheading">X-Pack Security를 이용한 SSL 및 TLS 설정</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2018-01-06
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p>이번 포스트에서는 X-Pack Security를 이용한 보안 설정을 하도록 하겠습니다. 이전 또는 이후 내용들은 아래 포스트에서 확인하세요.</p>
+<blockquote>
+<p><a href="/2018/01/2018-01-build-es-cluster-1">1. 서버 생성 및 Elasticsearch RPM 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-2">2. 메모리, 네트워크 설정 및 플러그인 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-3">3. 클러스터 구성 및 마스터, 데이터 노드 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-4">4. Kibana 설치 및 X-Pack Monitoring 확인</a><br><a href="/2018/01/2018-01-build-es-cluster-5">5. NFS 구성 및 elasticsearch 추가 설정</a><br><strong>6. X-Pack Security를 이용한 SSL 및 TLS 설정</strong><br><a href="/2018/01/2018-01-build-es-cluster-7">7. X-Pack License 적용 및 사용자 생성</a><br><a href="/2018/01/2018-01-build-es-cluster-8">8. Logstash 설치 및 Elasticsearch 기본 템플릿 설정</a></p>
+</blockquote>
+<p>참고로 X-Pack은 Elastic에서 배포하는 공식 상용 플러그인이며 다음과 같은 모듈들을 가지고 있습니다.</p>
+<p><img src="x-pack-list.png" alt=""></p>
+<ul>
+<li><a href="https://www.elastic.co/kr/products/x-pack/security" target="_blank" rel="noopener">Security</a>: 사용자/권한 기반의 인증 및 통신 암호화 기능을 제공합니다.</li>
+<li><a href="https://www.elastic.co/kr/products/x-pack/alerting" target="_blank" rel="noopener">Alerting</a>: 쿼리 기반의 자동 알림 기능을 제공합니다.</li>
+<li><a href="https://www.elastic.co/kr/products/x-pack/monitoring" target="_blank" rel="noopener">Monitoring</a>: ES 클러스터의 상태 모니터링 기능을 제공합니다.</li>
+<li><a href="https://www.elastic.co/kr/products/x-pack/graph" target="_blank" rel="noopener">Graph</a>: 관계도 분석 기능을 제공합니다.</li>
+<li><a href="https://www.elastic.co/kr/products/x-pack/reporting" target="_blank" rel="noopener">Reporting</a>: Kibana 대시보드를 PDF로 내려받거나 데이터를 CSV 파일로 저장합니다.</li>
+<li><a href="https://www.elastic.co/kr/products/x-pack/machine-learning" target="_blank" rel="noopener">Machine Learning</a>: 시계열 데이터 기반의 실시간 이상징후 탐지 기능을 제공합니다.</li>
+</ul>
+<p>다른 모듈들에 대해서는 각 제목에 링크된 공식 홈페이지 내용을 참고하시기 바랍니다.</p>
+<p>오늘은 작업 할 내용들은 다음과 같습니다.</p>
+<ul>
+<li>Elasticsearch 노드들 간의 통신에 TLS를 설정 하고, Elasticsearch와 다른 클라이언트 프로그램들 간에는 그냥 http로 두겠습니다.</li>
+<li>Kibana 에 SSL을 적용해서 사용자가 Kibana에 접속할 때 <a href="https://host:5601" target="_blank" rel="noopener">https://host:5601</a> 로 접속할 수 있도록 하겠습니다.</li>
+<li>Audit(감사) 로그를 수집하도록 하겠습니다.</li>
+</ul>
+<p><img src="architecture-security.png" alt=""></p>
+<h2 id="Elasticsearch-노드들-간의-TLS-설정"><a href="#Elasticsearch-노드들-간의-TLS-설정" class="headerlink" title="Elasticsearch 노드들 간의 TLS 설정"></a>Elasticsearch 노드들 간의 TLS 설정</h2><p>Elasticsearch 6.0 부터는 X-Pack 설치 이후에는 기본적으로 노드들 간의 통신에 TLS를 설정 해 주어야 합니다. 그렇지 않으면 계속 해서 경고가 표시되고 심지어 기술지원 라이센스의 등록도 되지 않습니다.</p>
+<p><img src="tls-warning.png" alt=""></p>
+<h3 id="인증서-파일-생성"><a href="#인증서-파일-생성" class="headerlink" title="인증서 파일 생성"></a>인증서 파일 생성</h3><p>X-Pack은 이미 설치가 되어 있으니 이제 인증서 파일을 만들어 줍니다. 공인 인증기관으로부터 구매한 인증서가 있다면 사용하셔도 되고, X-Pack 에는 Elastic 에서 발행하는 사설 인증서를 생성하는 도구인 <code>certgen</code> 을 포함하고 있습니다. <code>certgen</code>에 대한 내용은 아래 링크를 참고하세요.<br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/certgen.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/certgen.html</a></p>
+<p>인증서를 생성하기 위해 설치 디렉토리로 가서 다음과 같은 명령을 실행합니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ cd /usr/share/elasticsearch/</span><br><span class="line">[ ]$ sudo bin/x-pack/certgen</span><br><span class="line">This tool assists you in the generation of X.509 certificates and certificate</span><br><span class="line"></span><br><span class="line">... 중략 ...</span><br><span class="line"></span><br><span class="line">Let&apos;s get started...</span><br></pre></td></tr></table></figure>
+<p>몇가지 질문이 나옵니다.<br>인증서 파일 세트를 담은 압축 파일은 <code>certificate-bundle.zip</code> 그대로 두겠습니다. 비워두고 그냥 엔터를 칩니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Please enter the desired output file [certificate-bundle.zip]:</span><br></pre></td></tr></table></figure></p>
+<p>인증서 인스턴스 이름은 임의의 이름을 입력하면 됩니다. 여기서는 <code>es-demo</code> 라고 하겠습니다. <code>es-demo</code>를 입력하고 엔터를 칩니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Enter instance name: es-demo</span><br></pre></td></tr></table></figure></p>
+<p>디렉토리, 파일 이름은 인증서 이름이랑 동일하게 하면 됩니다. 그냥 엔터를 칩니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Enter name for directories and files [es-demo]:</span><br></pre></td></tr></table></figure></p>
+<p>인증서에 적용할 IP 주소들을 적습니다. 저희 노드를 설치한 서버들의 IP 주소들을 콤마로 구분해서 모두 적어줍니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Enter IP Addresses for instance (comma-separated if more than one) []: 192.168.0.10,192.168.0.11,192.168.0.12,192.168.0.13</span><br></pre></td></tr></table></figure></p>
+<p>DNS는 없으니까 비워두겠습니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Enter DNS names for instance (comma-separated if more than one) []:</span><br></pre></td></tr></table></figure></p>
+<p>추가 인증서는 만들지 않으니 <code>n</code>을 입력하고 엔터를 칩니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Would you like to specify another instance? Press &apos;y&apos; to continue entering instance information: n</span><br></pre></td></tr></table></figure></p>
+<p>그럼 이제 <code>/usr/share/elasticsearch/certificate-bundle.zip</code> 경로에 인증서가 담긴 압축 파일이 생성됩니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Certificates written to /usr/share/elasticsearch/certificate-bundle.zip</span><br><span class="line">... 후략 ...</span><br></pre></td></tr></table></figure></p>
+<p>이제 이 압축 파일을 <code>/usr/share/elasticsearch</code> 아래에 <code>cert</code> 라는 디렉토리를 만들고 이곳으로 옮겨 압축을 풀도록 하겠습니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ sudo mkdir cert</span><br><span class="line">[ ]$ sudo mv certificate-bundle.zip ./cert</span><br><span class="line">[ ]$ cd cert/</span><br><span class="line">[ ]$ sudo unzip certificate-bundle.zip</span><br><span class="line">Archive:  certificate-bundle.zip</span><br><span class="line">   creating: ca/</span><br><span class="line">  inflating: ca/ca.crt</span><br><span class="line">  inflating: ca/ca.key</span><br><span class="line">   creating: es-demo/</span><br><span class="line">  inflating: es-demo/es-demo.crt</span><br><span class="line">  inflating: es-demo/es-demo.key</span><br></pre></td></tr></table></figure></p>
+<p>압축을 풀면 <code>ca</code> 디렉토리 아래에 <code>ca.crt</code>, <code>ca.key</code> 파일, 그리고 <code>es-demo</code> 디렉토리 아래에 <code>es-demo.crt</code>, <code>es-demo.key</code> 파일, 총 4개의 파일이 생성됩니다.</p>
+<h3 id="Elasticsearch-설정"><a href="#Elasticsearch-설정" class="headerlink" title="Elasticsearch 설정"></a>Elasticsearch 설정</h3><p>이제 인증서가 만들어 졌으니 elasticsearch 설정을 합니다. 설정은 아래 페이지를 참고하여 진행합니다.<br><a href="https://www.elastic.co/guide/en/x-pack/current/ssl-tls.html#enable-ssl" target="_blank" rel="noopener">https://www.elastic.co/guide/en/x-pack/current/ssl-tls.html#enable-ssl</a></p>
+<p>코디네이션 노드의 <code>elasticsearcy.yml</code> 파일을 열고<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/elasticsearch/elasticsearch.yml</span><br></pre></td></tr></table></figure></p>
+<p>아래와 같이 입력 해 줍니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xpack.ssl.key: /usr/share/elasticsearch/cert/es-demo/es-demo.key</span><br><span class="line">xpack.ssl.certificate: /usr/share/elasticsearch/cert/es-demo/es-demo.crt</span><br><span class="line">xpack.ssl.certificate_authorities: [ &quot;/usr/share/elasticsearch/cert/ca/ca.crt&quot; ]</span><br><span class="line"></span><br><span class="line">xpack.security.transport.ssl.enabled: true</span><br><span class="line">xpack.security.http.ssl.enabled: true</span><br></pre></td></tr></table></figure></p>
+<p><code>xpack.security.http.ssl.enabled: true</code> 이 http SSL 설정 부분은 나중에는 다시 제거하겠으나 테스트를 위해 일단 지금은 설정을 하겠습니다.</p>
+<p>데이터 노드들도 위와 동일하게 하는데 데이터 노드들은 http 기능을 잠궈 놓았기 때문에 <code>xpack.security.http.ssl.enabled: true</code> 이 부분은 입력하지 않도록 합니다.</p>
+<p>이제 설정이 끝났으면 모든 노드들을 재시작 해 보겠습니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo service elasticsearch restart</span><br></pre></td></tr></table></figure></p>
+<p>그리고 로그를 확인 해 보면… 오류가 납니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Caused by: java.security.AccessControlException: access denied (&quot;java.io.FilePermission&quot; &quot;/usr/share/elasticsearch/cert/ca/ca.crt&quot; &quot;read&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>지금 설치된 서버의 Java에 java.io.FilePermission 권한이 없어서 그렇습니다. 조금 귀찮은 작업을 좀 해야 하는데요, <code>java.policy</code> 파일 내용을 수정해야 합니다. 아래와 같이 <code>java.policy</code> 파일을 열고 (시스템 마다 설치 경로는 다를 수 있습니다.)<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /usr/lib/jvm/jre-1.8.0-openjdk.x86_64/lib/security/java.policy</span><br></pre></td></tr></table></figure></p>
+<p><code>grant</code> 내부의 맨 아래 부분에 다음과 같이 추가 해 줍니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grant &#123;</span><br><span class="line">  ... 중략 ...</span><br><span class="line"></span><br><span class="line">        permission java.io.FilePermission &quot;&lt;&lt;ALL FILES&gt;&gt;&quot;, &quot;read&quot;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>이제 다시 한번 노드들을 재시작 하고 나면 정상적으로 실행 되는 것을 확인할 수 있습니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo service elasticsearch restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="SSL-확인"><a href="#SSL-확인" class="headerlink" title="SSL 확인"></a>SSL 확인</h3><p>코디네이트 노드가 있는 서버 콘솔에서 curl 로 접속을 해 보면<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ curl http://172.31.27.193:9200</span><br><span class="line">curl: (52) Empty reply from server</span><br></pre></td></tr></table></figure></p>
+<p>서버가 없다고 나옵니다. SSL을 적용 했기 때문에 http가 아닌 https 로 접속해야 합니다. https로 접속을 해 보면<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ curl https://172.31.27.193:9200</span><br><span class="line">curl: (60) Peer&apos;s Certificate issuer is not recognized.</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>또 다시 아까와는 다른 오류 메시지가 나오는데, 제가 사용한 인증서가 사설 인증서라서 나오는 경고입니다. -k 옵션을 추가 해 주면 경고를 무시합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ curl https://172.31.27.193:9200 -k</span><br><span class="line">&#123;&quot;error&quot;:&#123;&quot;root_cause&quot;:[&#123;&quot;type&quot;:&quot;security_exception&quot;,&quot;reason&quot;:&quot;missing authentication token for REST request [/]&quot;,&quot;header&quot;:&#123;&quot;WWW-Authenticate&quot;:&quot;Basic realm=\&quot;security\&quot; charset=\&quot;UTF-8\&quot;&quot;&#125;&#125;],&quot;type&quot;:&quot;security_exception&quot;,&quot;reason&quot;:&quot;missing authentication token for REST request [/]&quot;,&quot;header&quot;:&#123;&quot;WWW-Authenticate&quot;:&quot;Basic realm=\&quot;security\&quot; charset=\&quot;UTF-8\&quot;&quot;&#125;&#125;,&quot;status&quot;:401&#125;</span><br></pre></td></tr></table></figure></p>
+<p>이제 조금 익숙한 화면이 나옵니다. -u 옵션으로 사용자 이름, 암호까지 넣어주면 이제 확인이 가능합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ curl https://172.31.27.193:9200 -k -u elastic</span><br><span class="line">Enter host password for user &apos;elastic&apos;:</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot; : &quot;es-demo-service&quot;,</span><br><span class="line">  &quot;cluster_name&quot; : &quot;es-demo&quot;,</span><br><span class="line">  &quot;cluster_uuid&quot; : &quot;VLakkqSHynSuf0g&quot;,</span><br><span class="line">  &quot;version&quot; : &#123;</span><br><span class="line">    &quot;number&quot; : &quot;6.1.1&quot;,</span><br><span class="line">    &quot;build_hash&quot; : &quot;bd92e7f&quot;,</span><br><span class="line">    &quot;build_date&quot; : &quot;2017-12-17T20:23:25.338Z&quot;,</span><br><span class="line">    &quot;build_snapshot&quot; : false,</span><br><span class="line">    &quot;lucene_version&quot; : &quot;7.1.0&quot;,</span><br><span class="line">    &quot;minimum_wire_compatibility_version&quot; : &quot;5.6.0&quot;,</span><br><span class="line">    &quot;minimum_index_compatibility_version&quot; : &quot;5.0.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;tagline&quot; : &quot;You Know, for Search&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>http SSL을 사용하려면 kibana 등에서도 <code>elasticsearch.url:</code> 값을 <code>https://...</code> 로 바꾸는 등 여러가지 설정을 해야 합니다. 그리고 지금 사용중인 인증서가 공인 기관의 인증서가 아닌 사설 인증서이기 때문에 elasticsearch에 REST API로 접속하는 프로그램들은 모두 인증서 경고에 대한 예외 처리를 히야 해서 손이 많이 가고, elasticsearch 코디네이트 노드와의 통신은 모두 같은 로컬 서버에서 이루어지기 때문에, http SSL 옵션은 다시 꺼 놓도록 하겠습니다.<br>코디네이션 노드의 <code>elasticsearcy.yml</code> 파일의 <code>xpack.security.http.ssl.enabled: true</code> 부분은 삭제 또는 주석처리 하도록 합니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/elasticsearch/elasticsearch.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xpack.security.transport.ssl.enabled: true</span><br><span class="line">#xpack.security.http.ssl.enabled: true</span><br></pre></td></tr></table></figure>
+<p>참고로, Kibana 의 Monitoring 화면을 확인 해 보면 아까 나타났었던 TLS 경고 문구가 사라져 있습니다.</p>
+<h2 id="Kibana-SSL-설정"><a href="#Kibana-SSL-설정" class="headerlink" title="Kibana SSL 설정"></a>Kibana SSL 설정</h2><p>이제 Kibana에도 SSL을 설정 해 보도록 하겠습니다. 먼저 <code>kibana.yml</code> 파일을 열어서<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/kibana/kibana.yml</span><br></pre></td></tr></table></figure></p>
+<p>아래 내용을 추가 해 줍니다. 중간에 잘 찾아 보면 주석 처리 된 부분이 있는데 이 부분을 풀고 수정 해도 됩니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.ssl.enabled: true</span><br><span class="line">server.ssl.certificate: /usr/share/elasticsearch/cert/es-demo/es-demo.crt</span><br><span class="line">server.ssl.key: /usr/share/elasticsearch/cert/es-demo/es-demo.key</span><br></pre></td></tr></table></figure></p>
+<p>이제 Kibana 를 재시작하고 나면<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo service kibana restart</span><br></pre></td></tr></table></figure></p>
+<p>Kibana도 <code>https://서버주소:5601</code> 로 접속할 수 있습니다. 그런데 접속 해 보면 사설인증서를 알리는 경고창이 뜹니다.</p>
+<p><img src="kibana-https.png" alt=""></p>
+<p><code>고급</code> &gt; <code>예외 추가</code>를 눌러서 (브라우저 마다 다를 수 있습니다. 저는 FireFox Quantum을 씁니다.) 인증서를 허가 하면 이제 Kibana 화면이 나타납니다.</p>
+<p><img src="kibana-https-done.png" alt=""></p>
+<h2 id="Audit-감사-로그-설정"><a href="#Audit-감사-로그-설정" class="headerlink" title="Audit(감사) 로그 설정"></a>Audit(감사) 로그 설정</h2><p>X-Pack Security 에는 접속 및 사용 이력을 기록하는 감사 로그를 설정할 수 있습니다. 감사 로그 설정은 아래 문서를 참고해서 진행합니다.<br><a href="https://www.elastic.co/guide/en/x-pack/current/auditing.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/x-pack/current/auditing.html</a></p>
+<p>감사 로그는 다음의 두가지 방법으로 기록할 수 있습니다. 둘 다 동시에 하는것도 가능합니다.</p>
+<ol>
+<li>elasticsearch 시스템 로그 파일에 기록</li>
+<li>elasticsearch 인덱스 안에 도큐먼트로 색인</li>
+</ol>
+<p>저희는 2번째 방법처럼 elasticsearch 인덱스 안에 기록하도록 하겠습니다. <code>elasticsearcy.yml</code> 파일을 열고<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/elasticsearch/elasticsearch.yml</span><br></pre></td></tr></table></figure></p>
+<p>아래 내용을 추가합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xpack.security.audit.enabled: true</span><br><span class="line">xpack.security.audit.outputs: [ &quot;index&quot; ]</span><br></pre></td></tr></table></figure></p>
+<p>이제 elasticsearch를 재시작 하고 나면 이제부터 감사 로그가 <code>.security_audit_log-yyyy.mm.dd</code> 인덱스에 쌓이게 됩니다.</p>
+<p>Kibana의 Dev Tool 에서<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -XGET &quot;http://서버주소:9200/.security_audit_log-*/_search&quot;</span><br></pre></td></tr></table></figure></p>
+<p>로 확인이 가능합니다.</p>
+<p>그런데 감사 로그는 기본적으로 모든 접속에 대한 이력을 쌓기 때문에 데이터가 쌓이는 속도가 어마무시 합니다. 가만히 있어도 .monitoring 이나 .watcher-history 같은 데이터와 같이 쌓이기 때문에 세밀하게 접속 정보를 모니터링 할게 아니라면 쌓이는데 필터링을 해 주는 것이 좋습니다.</p>
+<p>오늘 포스트는 여기까지 해서 마치도록 하고 감사 로그의 추가적인 설정은 다음에 기회가 되면 또 다루어 보도록 하겠습니다. 다음 포스트에서는 X-Pack License 적용 및 사용자 생성에 대해 다루도록 하겠습니다.</p>
+<blockquote>
+<p><a href="/2018/01/2018-01-build-es-cluster-1">1. 서버 생성 및 Elasticsearch RPM 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-2">2. 메모리, 네트워크 설정 및 플러그인 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-3">3. 클러스터 구성 및 마스터, 데이터 노드 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-4">4. Kibana 설치 및 X-Pack Monitoring 확인</a><br><a href="/2018/01/2018-01-build-es-cluster-5">5. NFS 구성 및 elasticsearch 추가 설정</a><br><strong>6. X-Pack Security를 이용한 SSL 및 TLS 설정</strong><br><a href="/2018/01/2018-01-build-es-cluster-7">7. X-Pack License 적용 및 사용자 생성</a><br><a href="/2018/01/2018-01-build-es-cluster-8">8. Logstash 설치 및 Elasticsearch 기본 템플릿 설정</a></p>
+</blockquote>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/01/2018-01-build-es-cluster-7/" data-toggle="tooltip" data-placement="top" title="Elastic Cluster 구성 7">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/01/2018-01-build-es-cluster-5/" data-toggle="tooltip" data-placement="top" title="Elastic Cluster 구성 5">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#Elastic Cluster Settings" title="Elastic Cluster Settings">Elastic Cluster Settings</a>
+                        
+                          <a class="tag" href="/tags/#X-Pack" title="X-Pack">X-Pack</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2018/01/2018-01-build-es-cluster-6/";
+    var disqus_url = "http://kimjmin.net/2018/01/2018-01-build-es-cluster-6/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

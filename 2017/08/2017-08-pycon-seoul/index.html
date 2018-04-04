@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          2017 파이콘 부스 운영기 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2017/08/2017-08-pycon-seoul/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('IMG_5559.JPG')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#PyCon" title="PyCon">PyCon</a>
+                        
+                          <a class="tag" href="/tags/#Conference" title="Conference">Conference</a>
+                        
+                    </div>
+                    <h1>2017 파이콘 부스 운영기</h1>
+                    <h2 class="subheading">PyCon Seoul 2017 행사 Elastic 부스 운영기</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2017-08-20
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p>정말 오랬만에 포스팅 하네요. 올해도 파이콘에서 열심히 약을 팔다 왔습니다. 작년과 마찬가지로 세션은 하나도 듣지 못하고 부스만 운영하다가 와서 파이콘 운영기가 아니라 <strong>파이콘 부스 운영기</strong> 입니다. 다녀와서 빨리 쓰려고 했는데 같은 주에 밋업을 해서 그런건지, 이번에는 혼자 한 것도 아니었는데 나이가 한살 더 먹었다고 그런건지 너무 피곤하고 몸 회복에 일주일은 걸린 것 같네요. 아마 행사 전 날 잠을 많이 못 잔게 제일 큰 원인이 아니었던가 싶습니다.</p>
+<p>작년에는 트위터 해시태그 집계 (<a href="/2016/08/pyconapac-seoul-2016/">작년 포스트 참조</a>) 데모를 만들어서 트위터에 해시태그 남긴 분들께 선물 드리고 그랬는데요, 이번에는 선물 갯수도 좀 애매하게 남고 그래서 무엇을 할까 하다가 Elastic Cloud 계정을 만들고 Metricbeat 수집 데모를 만든 분들께 선물 드리자는 아이디어가 전날 저녁 10시 쯤 떠올랐습니다. 막 뿌릴 수가 없으니 아무래도 미션 난이도는 좀 있어야겠고, 그렇다고 해서 너무 어려우면 아무도 안 할것 같고 했는데, 개인적으로 적절하게 잘 준비한 것 같아서 뿌듯했습니다.</p>
+<p>이벤트 때문에 자정 넘어서 까지 회사 블로그에 포스트를 작성했습니다. (<a href="https://www.elastic.co/kr/blog/metricbeat-with-elastic-cloud" target="_blank" rel="noopener">Elastic Cloud 에서 Metricbeat 으로 시스템 모니터링 하기</a>) 행사 준비도 하고, 회사에 블로그에 글도 썼으니 돌 하나로 새 두마리를 잡은 기분이네요😁. 여담으로 제가 써 놓고도 컨텐츠가 참 괜찮은것 같아서 영어로도 대충 번역 해 놓고 영문 블로그 관리하는 친구들에게 리뷰 부탁했더니 이거 똑같은 내용 누가 지금 쓰고 있다고 해서 오잉~? 하고 있는 중입니다. 지금 (URL 때문에) 중복해서 두개 올릴지, URL을 통합시킬지… 뭐, 저는 한글 페이지만 살아있으면 되니까 영문 페이지는 알아서 결정하라고 하고 일단 손 떼고 구경중입니다.</p>
+<p>작년에는 전날 미리 행사장에 짐 가져다 놓았는데, 이번에는 당일 아침에 설치하려고 차에만 실어 놓았습니다. 아들내미가 자꾸 굴러다니면서 저를 발로 차고, 얼굴을 덮고 해서 새벽 4시 쯤 깼는데, 더 잠도 안 올것 같고 해서 잽싸게 씻고, 이벤트 내용 프린트 하고, 다시 졸음이 오기 전에 빨리 행사장에 갔습니다. 아직 아무도 안 왔고, 짐 지키시는 보안요원, 자원 봉사자 몇분만 계시고 부스 바로 앞에 빈백이 있어서 올레!! 를 외치며 널부러졌습니다. </p>
+<p><img src="IMG_3089.jpg" alt=""> <img src="IMG_3098.jpg" alt=""></p>
+<p>제가 자고 있던 사이 파이콘에서 사진을 담당하신 <a href="https://www.facebook.com/diginori.min" target="_blank" rel="noopener">민경국</a>님이 스브적 도촬을 하고 가셨네요.</p>
+<p><img src="jm_at_beanbag.jpg" alt=""></p>
+<p>참고로 옆에 있는거 소주 아닙니다. 씨그램입니다.</p>
+<p>그리고 <a href="https://www.facebook.com/tebica" target="_blank" rel="noopener">박민우</a>님이 찍어 보내주신 사진.</p>
+<p><img src="IMG_3096.jpg" alt=""></p>
+<p>8시 반 까지 널부러져 자다가 입사 3주 되신 저희 Customer Success Manager 김진영님이 오셔서 같이 부스 설치하고 영업 준비를 시작했습니다.</p>
+<p><img src="IMG_3092.jpg" alt=""> <img src="IMG_5507.JPG" alt=""> </p>
+<p>보통 다른 개발자 행사들 가 보면 Elastic 알고 오시는 분 들이 보통 절반 이상입니다. 그런데 파이콘은 참석 연령대가 적어서인지 아직 Elastic Stack 에 대해서 잘 모르시는 분들의 비율이 아직 많습니다. 학생이나 나이가 아직 젊은 개발자 분들은 보통 이런 데이터 솔루션 보다는 보통 모바일이나 게임, 요즘은 딥 러닝 쪽에 주로 관심들이 많아서 그런 것 같다는게 저의 생각입니다.</p>
+<p><img src="pycon_attendees.png" alt=""></p>
+<p>파이콘에서 설문으로 받은 Elastic 경험 비율 표 입니다. 모수가 적어 정확하진 않겠지만 그래도 다른 컨퍼런스때와 비교하면 차이가 꽤 납니다.</p>
+<p>올해도 작년에 옆에 계셨던 스마트스터디가 옆 부스에 계셔서 반가웠습니다. 열심히 기술 부채를 나눠주고 계시던데, 저도 하나 받아왔습니다. 그 밖에도 행사 다 끝나고 저희 애들 가져다주라고 비타민이랑 스티커 챙겨주셔서 감사했습니다. 😭(주륵)</p>
+<p><img src="IMG_5524.JPG" alt=""></p>
+<p>슬슬 손님들이 몰려오고</p>
+<p><img src="IMG_5514.JPG" alt=""> <img src="IMG_5533.JPG" alt=""> <img src="IMG_5559.JPG" alt=""></p>
+<p>드디어 첫번째로 미션 완료하신 분도 나타났습니다.</p>
+<p><img src="IMG_5521.JPG" alt=""> </p>
+<p>미션 완료하신 분들께는 티셔츠를 드렸습니다. 검은색, 파란색, 민트색, 핑크색이 있었는데 검은색은 첫날 다 나갔고 핑크색은 마지막까지 몇장 남았습니다. 미션 내용 프린트해서 부스에 출력 해 놓고, 또 페이스북 파이썬 코리아 그룹에도 남겼는데 행사 듣다가 페이스북에 올라온 내용 보고 완료 하셔서 가져오셨다고 했습니다. </p>
+<p>“블로그에 설명 잘 되어 있어서 쉽게 했습니다” 라고 해 주셔서 참 감사했습니다. 😁</p>
+<p>보통 다른 행사 가면 제일 많이 듣는 이야기가</p>
+<ul>
+<li>지금 Elasticsearch 쓰고 있는데 질문좀 해도 될까요?</li>
+<li>한국에도 Elastic 지사가 있었어요?</li>
+<li>여기는 Amazon Elasticsearch 서비스 컨설팅 하는 업체인가요? 😩</li>
+</ul>
+<p>인데, 이번 파이콘에서는 </p>
+<ul>
+<li>잘 몰라서 그러는데 한번 설명좀 해 주세요</li>
+<li>미션 하려고 하는데 이 부분에서 막혀요</li>
+</ul>
+<p>라는 질문을 제일 많이 받았던 것 같습니다. 특히 오셔서 상당히 열정적으로 질문 하신 어느 학생 분, 제가 책 선물 해 드렸는데, 첫 날 Elastic Stack 처음 봤다고 하시고는 둘째날에는 미션까지 완료 하고 오셔서 저를 감동케 하셨습니다.</p>
+<p>이번에는 김진영님이 많이 도와주셔서 정말 지난 행사때 들과 비교해서 많이 편했던 것 같습니다. 저희 Elastic 조인 하신지 얼마 되지 않으셨는데 오시는 분들께 설명도 잘 드리고 대응도 잘 해 주셔서 정말 편했습니다. 저도 중간 중간 다른 부스들 다니면서 여유 부리면서 구경도 좀 하고 그랬습니다.</p>
+<p>JetBrain 부스에서 룰렛 돌려서 받은 경품입니다.</p>
+<p><img src="IMG_3100.jpg" alt=""></p>
+<p>보통은 행사 가면 저희 최신 기능 위주로 (X-Pack, 머신러닝 등) 설명하곤 했는데 머신러닝 물어보시는 분도 계셨지만 그것 보다는 기본적인 질문들이 많아서 예전에 제가 만들어 사골처럼 우려먹고 있는 <a href="https://www.elastic.co/kr/blog/seoul-metro-2014" target="_blank" rel="noopener">서울시 지하철 대시보드</a>랑 이번에 이벤트 미션으로 한 Metricbeat 데모를 많이 활용 했던 것 같습니다. 그리고 개발자 분들이 좋아할 것 같아서 저희 회사 Github 데모도 많이 활용했습니다. Logstash의 Github API로 Elasticsearch 에 실시간으로 데이터를 받아 저장하는데, 누가 얼마만큼 서밋을 쳤고, 하는게 다 시각화 되서 나옵니다. 오른쪽 위의 리스트가 활동 많이 한 순서대로 Elastic 개발자들 Github 아이디 입니다.</p>
+<p><img src="github_demo.png" alt=""></p>
+<p>어떤 분들은 보시고 회사 참 잔인하다고 하셨는데, 평가 지표로 쓰는건 아니고 그냥 저희끼리 재미로 만든겁니다. 참고로 솔루션 아키텍트들이나 교육 엔지니어 같은 사람들도 본인이 출장 다닌 경로나 업무했던 기록들을 Elasticsearch 에 색인해서 (재미로) 시각화 해서 만들어 두기도 합니다. 잘 만들면 그게 그 팀 공식 대시보드가 되기도 하고요.</p>
+<p>저희 DevRel(에반젤리스트) 팀의 대선배이자 제가 롤 모델로 삼고 있는 저희 프랑스 직원인 David Pilato 도 Elatic 입사 4주년에 본인 블로그에 자신이 그 동안 다닌 밋업, 컨퍼런스들을 통계 내는 대시보들을 만든 내용을 포스팅했습니다. <a href="http://david.pilato.fr/blog/2017/01/09/4-years-at-elastic/" target="_blank" rel="noopener">David Pilato의 블로그 - 4 Years at Elastic!</a>. 1년간 컨퍼런스 74개, 출장 거리 5만4천 킬로미터, 거기에 다비드는 Elasticsearch 커미터로서 개발도 열심히 하고 있습니다. (갑자기 부끄러워지는… 하하…)</p>
+<p>Elastic Stack 이 Elasticsearch, Kibana, Logstash, Beats 인데, 얘네들은 전부 자바, 자바스크립트, 루비, 고(go) 로 만들어서 사실 저희 제품 중에 파이썬으로 만든것은 없습니다. 그래도 저희 엔지니어들이 파이썬은 무슨 2외국어 마냥 즐겨 쓰는 사람이 많고, 저희 테스팅 벤치마크 툴인 <a href="https://github.com/elastic/rally" target="_blank" rel="noopener">Rally</a> 라던가 매니지먼트 툴인 <a href="https://github.com/elastic/curator" target="_blank" rel="noopener">Curator</a> 등은 파이썬으로 되어 있습니다. 그리고 또 다른 대선배이자 저희 컨설턴트인 <a href="https://www.facebook.com/honza.kral" target="_blank" rel="noopener">Honza Král</a> 같은 경우 유럽쪽 파이썬 커뮤니티의 유명인사 이기도 하고요. </p>
+<p>작년에는 저희가 Prelert 를 인수해서 머신러닝 기능을 추가 한 것이 화제였는데, 올해도 Opbeat 을 인수하면서 APM 솔루션을 런칭할 준비를 하고 있습니다. <a href="https://www.elastic.co/blog/starting-down-the-path-for-elastic-apm" target="_blank" rel="noopener">관련 블로그 포스트</a>. Opbeat은 아직 새 이름은 정해지진 않았는데, 현재 지원하고 있는 라이브러리가 node.js 그리고 Python 입니다. 제가 Opbeat 공부할 시간이 좀 있었으면 이번 파이콘에서 발표 신청도 아마 욕심 내 보지 않았을까 싶은데요 (넌 파이썬 쥐똥만큼도 모르잖아… 아마 안될거야…). 내년을 위해 지금부터 파이썬을 배워야 하나 고민입니다.</p>
+<p>어쩌다 보니 절반은 또 저희 회사 이야기가 됬네요. 여튼 올해도 참 즐겁고 유익한 컨퍼런스였습니다. 내년에도 함께 할 수 있었으면 좋겠습니다.</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/11/2017-11-technical-translations/" data-toggle="tooltip" data-placement="top" title="기술 문서 번역에 대하여">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/2017-03-lake-Tahoe/" data-toggle="tooltip" data-placement="top" title="Engineering all hands in South Lake Tahoe 2017">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#PyCon" title="PyCon">PyCon</a>
+                        
+                          <a class="tag" href="/tags/#Conference" title="Conference">Conference</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2017/08/2017-08-pycon-seoul/";
+    var disqus_url = "http://kimjmin.net/2017/08/2017-08-pycon-seoul/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

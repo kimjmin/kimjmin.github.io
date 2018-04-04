@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Elastic Cluster 구성 8 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2018/01/2018-01-build-es-cluster-8/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('bg-linux-prompt.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#Elastic Cluster Settings" title="Elastic Cluster Settings">Elastic Cluster Settings</a>
+                        
+                    </div>
+                    <h1>Elastic Cluster 구성 8</h1>
+                    <h2 class="subheading">Logstash 설치 및 Elasticsearch 기본 템플릿 설정</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2018-01-08
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p><del>새로 산 게임기 하느라</del> 바쁜 일정 때문에 며칠만에 포스팅 하네요.</p>
+<p>오늘은 Logstash 설치 및 Elasticsearch 기본 템플릿 설정을 하도록 하겠습니다. 이전 또는 이후 내용들은 아래 포스트에서 확인하세요.</p>
+<blockquote>
+<p><a href="/2018/01/2018-01-build-es-cluster-1">1. 서버 생성 및 Elasticsearch RPM 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-2">2. 메모리, 네트워크 설정 및 플러그인 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-3">3. 클러스터 구성 및 마스터, 데이터 노드 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-4">4. Kibana 설치 및 X-Pack Monitoring 확인</a><br><a href="/2018/01/2018-01-build-es-cluster-5">5. NFS 구성 및 elasticsearch 추가 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-6">6. X-Pack Security를 이용한 SSL 및 TLS 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-7">7. X-Pack License 적용 및 사용자 생성</a><br><strong>8. Logstash 설치 및 Elasticsearch 기본 템플릿 설정</strong></p>
+</blockquote>
+<p>아래는 저희가 지금까지 설치한 아키텍쳐입니다. </p>
+<p><img src="architecture-security.png" alt=""></p>
+<p>오늘은 Service 서버에 Logstash 설치를 먼저 해 보겠습니다. 오늘 포스트에서 Logstash 기본적인 사용 방법을 설명하진 않겠습니다. 설명은</p>
+<ul>
+<li>공식 도큐먼트 : <a href="https://www.elastic.co/guide/en/logstash/current/index.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/logstash/current/index.html</a></li>
+<li>또는 비디오: <a href="https://www.elastic.co/kr/webinars/getting-started-logstash" target="_blank" rel="noopener">https://www.elastic.co/kr/webinars/getting-started-logstash</a><br>등을 참고 부탁드립니다.</li>
+</ul>
+<h2 id="Logstash-설치"><a href="#Logstash-설치" class="headerlink" title="Logstash 설치"></a>Logstash 설치</h2><p>Logstash도 지금까지 설치한 Elasticsearch, Kibana와 마찬가지로 서비스로 돌릴 수 있도록 설치 해 보겠습니다.<br>Logstash도 Elasticsearch와 마찬가지로 Java 에서 실행되며 1.8 버전을 권장합니다. 앞서 Java는 설치했으므로 바로 넘어가겠습니다.</p>
+<h3 id="Yum-설치"><a href="#Yum-설치" class="headerlink" title="Yum 설치"></a>Yum 설치</h3><p>아래 문서를 참고해서 설치를 진행하겠습니다.<br><a href="https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#_yum" target="_blank" rel="noopener">https://www.elastic.co/guide/en/logstash/current/installing-logstash.html#_yum</a></p>
+<p>Yum 설치를 위해 <code>/etc/yum.repos.d/</code>에 <code>logstash.repo</code> 파일을 만들고 아래 내용을 추가합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[logstash-6.x]</span><br><span class="line">name=Elastic repository for 6.x packages</span><br><span class="line">baseurl=https://artifacts.elastic.co/packages/6.x/yum</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch</span><br><span class="line">enabled=1</span><br><span class="line">autorefresh=1</span><br><span class="line">type=rpm-md</span><br></pre></td></tr></table></figure></p>
+<p>그리고 설치합니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo yum install logstash</span><br></pre></td></tr></table></figure>
+<p>Logstash의 RPM 버전 설치 경로들은 아래와 같습니다.</p>
+<ul>
+<li>기본 프로그램 (<strong>$LS_HOME</strong>) : <code>/usr/share/logstash</code><ul>
+<li>실행 파일 : <code>bin/logstash</code></li>
+</ul>
+</li>
+<li>설정 : <code>/etc/logstash</code><ul>
+<li><code>logstash.yml</code></li>
+<li><code>jvm.options</code></li>
+<li><code>log4j2.properties</code></li>
+<li><code>startup.options</code></li>
+</ul>
+</li>
+<li>파이프라인 설정 (<strong>path.config</strong>) : <code>/etc/logstash/conf.d</code></li>
+<li>플러그인(<strong>path.plugins</strong>) : <code>/usr/share/logstash/plugins</code></li>
+<li>데이터 (추가 플러그인 설치 등) : <code>/var/lib/logstash</code></li>
+<li>로그 (<strong>path.logs</strong>) : <code>/var/log/logstash</code></li>
+</ul>
+<p>설치가 끝나고 logstash를 시작하기 위해서는 initctl를 사용합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo initctl start logstash</span><br></pre></td></tr></table></figure></p>
+<p>실행중인 logstash를 정지하려면 아래 명령을 사용합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo initctl stop logstash</span><br></pre></td></tr></table></figure></p>
+<h3 id="X-Pack-설치"><a href="#X-Pack-설치" class="headerlink" title="X-Pack 설치"></a>X-Pack 설치</h3><p>6.0 부터는 Logstash도 X-Pack을 설치할 수 있습니다. X-Pack을 설치하게 되면 Logstash 상태 모니터링과 파이프라인 뷰어, 파이프라인 빌더 등의 사용이 가능합니다.</p>
+<p>우선 설치 경로로 이동해서<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd /usr/share/logstash</span><br></pre></td></tr></table></figure></p>
+<p>X-Pack을 설치합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo bin/logstash-plugin install x-pack</span><br></pre></td></tr></table></figure></p>
+<p>그리고 <code>logstash.yml</code> 파일에 사용자와 ID, password를 등록 해 줘야 합니다. <a href="/2018/01/2018-01-build-es-cluster-2">2. 메모리, 네트워크 설정 및 플러그인 설치</a> 에서 생성한 <code>logstash_system</code> id를 사용합니다.</p>
+<h3 id="Logstash-모니터링-설정"><a href="#Logstash-모니터링-설정" class="headerlink" title="Logstash 모니터링 설정"></a>Logstash 모니터링 설정</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ sudo vim /etc/logstash/logstash.yml</span><br><span class="line"></span><br><span class="line">xpack.monitoring.elasticsearch.url: [&quot;http://192.168.0.10:9200&quot;]</span><br><span class="line">xpack.monitoring.elasticsearch.username: logstash_system</span><br><span class="line">xpack.monitoring.elasticsearch.password: logstashpassword</span><br></pre></td></tr></table></figure>
+<p>저희는 elasticsearch의 네트워크 설정을 했기 때문에 <code>xpack.monitoring.elasticsearch.url</code>에 실제 IP 주소를 적어야 합니다.<br>위 내용을 입력하고 나면 이제 Kibana 에서 Logstash 모니터링이 가능합니다.</p>
+<p><img src="ls-monitoring.png" alt=""></p>
+<h3 id="Logstash-관리-기능-설정"><a href="#Logstash-관리-기능-설정" class="headerlink" title="Logstash 관리 기능 설정"></a>Logstash 관리 기능 설정</h3><p>Kibana에서 Logstash 관리 기능의 사용이 가능합니다. 먼저 사용자 중에 <code>logstash_admin</code> 권한을 가진 사용자가 필요합니다. Kibana 에서 <code>logstash-admin-user</code> 라는 이름으로 사용자를 추가하겠습니다. 이 사용자에게는 <code>logstash_admin</code> 그리고 <code>logstash_system</code> 권한을 부여하도록 합니다.</p>
+<p><img src="ls-user-add.png" alt=""></p>
+<p><code>logstash.yml</code>에 아래 내용을 추가 해 줍니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xpack.management.enabled: true</span><br><span class="line">xpack.management.elasticsearch.url: &quot;http://192.168.0.10:9200/&quot;</span><br><span class="line">xpack.management.elasticsearch.username: logstash-admin-user</span><br><span class="line">xpack.management.elasticsearch.password: password</span><br><span class="line">xpack.management.logstash.poll_interval: 5s</span><br><span class="line">xpack.management.pipeline.id: [&quot;apache&quot;, &quot;cloudwatch_logs&quot;,&quot;ls-custom&quot;]</span><br></pre></td></tr></table></figure>
+<p><code>xpack.management.elasticsearch.password</code> 항목에는 당연히 <code>logstash-admin-user</code> 사용자의 계정 비밀번호를 넣으면 됩니다. 그리고 <code>xpack.management.pipeline.id</code> 항목에 내가 관리자 화면에서 사용할 Logstash 파이프 ID 들을 추가 해 줍니다. 저는 <code>ls-custom</code> 이라는 id를 추가 해 보았습니다. 뒤에 나오는 파이프라인 관리 화면에서는 이곳에 정의된 ID의 파이프들만 추가가 가능합니다.</p>
+<h3 id="Logstash-관리-화면에서-파이프라인-추가"><a href="#Logstash-관리-화면에서-파이프라인-추가" class="headerlink" title="Logstash 관리 화면에서 파이프라인 추가"></a>Logstash 관리 화면에서 파이프라인 추가</h3><p>이제 Logstash를 시작하고 Kibana의 <code>Management</code> &gt; <code>[Logstash] Pipelines</code> 메뉴에 들어가서 <code>add</code> 버튼을 눌러 <code>ls-custom</code> 파이프를 추가 해 보겠습니다.</p>
+<p><img src="ls-custom.png" alt=""></p>
+<p>위 그림과 같이 입력은 <code>tcp</code> 의 9999 포트에서 입력 받아 출력은 <code>elasticsearch</code> 로 해 보겠습니다.</p>
+<p>이제 콘솔에서 nc(NetCat) 명령을 이용해서 9999 포트로 “hello” 라는 메시지를 전송 해 보겠습니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ echo &apos;hello&apos; | nc 172.31.27.193 9999</span><br></pre></td></tr></table></figure>
+<p>그리고 <code>logstash-*</code> 인덱스를 확인 해 보면 <code>&quot;message&quot;: &quot;hello&quot;</code> 인 도큐먼트가 입력된 것을 확인할 수 있습니다.</p>
+<p><img src="ls-data-indexed.png" alt=""></p>
+<h3 id="모니터-화면에서-파이프라인-확인"><a href="#모니터-화면에서-파이프라인-확인" class="headerlink" title="모니터 화면에서 파이프라인 확인"></a>모니터 화면에서 파이프라인 확인</h3><p><code>Monitoring</code> &gt; <code>[Logstash] Pipelines</code> 로 들어가 보면 방금 만든 <code>ls-custom</code> 파이프가 보입니다.</p>
+<p><img src="pipe-view-1.png" alt=""></p>
+<p>클릭하고 들어가면 자세한 파이프를 볼 수 있습니다.</p>
+<p><img src="pipe-view-2.png" alt=""></p>
+<p>참고로 파이프라인 관리 도구는 X-Pack Gold 라이센스 이상, 파이프라인 모니터링 도구는 X-Pack Basic 라이센스에서 사용이 가능합니다. 라이센스는 아래 링크에서 확인하세요.<br><a href="https://www.elastic.co/kr/subscriptions" target="_blank" rel="noopener">https://www.elastic.co/kr/subscriptions</a></p>
+<h2 id="기본-Template-설정"><a href="#기본-Template-설정" class="headerlink" title="기본 Template 설정"></a>기본 Template 설정</h2><p><code>_template</code> API를 사용하면 특정한 인덱스 이름등에 대해서 setting, mapping 등의 값들을 미리 정해줄 수 있습니다.<br><code>GET /_cat/templates</code> 또는 <code>GET /_templates/템플릿이름</code> 을 이용해서 지금 설정되어 있는 템플릿들과 세부 내용들을 볼 수 있습니다.</p>
+<p><img src="get-template.png" alt=""></p>
+<p>Elasticsearch 가 가지고 있는 몇가지 기본 설정들이 있는데, 저희는 클러스터가 작고 노드가 3개밖에 없으므로 몇가지 기본 설정을 좀 변경 해 주겠습니다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT _template/basic</span><br><span class="line">&#123;</span><br><span class="line">  &quot;index_patterns&quot; : [&quot;*&quot;],</span><br><span class="line">  &quot;order&quot;: &quot;0&quot;,</span><br><span class="line">  &quot;settings&quot;: &#123;</span><br><span class="line">    &quot;number_of_shards&quot;: 1,</span><br><span class="line">    &quot;refresh_interval&quot;: &quot;10s&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&quot;index_patterns&quot; : [&quot;*&quot;]</code> : 앞으로 이 클러스터에서 생성될 모든 인덱스에 적용합니다.</li>
+<li><code>&quot;order&quot;: &quot;0&quot;</code> : 이 값이 높을수록 템플릿의 우선순위가 높으며, 지금 만든 basic 템플릿은 우선순위가 0으로 가장 낮습니다. logstash-* 와 같은 인덱스 패턴에 적용되는 또다른 템플릿이 order:1 등으로 설정되게 되면 해당 이름의 인덱스들은 더 높은 우선순위의 템플릿을 적용받습니다.</li>
+<li><code>&quot;settings.number_of_shards&quot;: 1</code> : 기본 샤드 개수를 5개 –&gt; 1개로 변경합니다.</li>
+<li><code>&quot;settings.refresh_interval&quot;: &quot;10s&quot;</code> : refresh 주기를 1초 –&gt; 10초 로 변경합니다.</li>
+</ul>
+<p>자, 이제 Logstash 설치와 템플릿 설정도 모두 끝났으니 클러스터에 데이터를 입력하고 사용할 준비를 모두 마쳤습니다.</p>
+<p>기본 클러스터 구성에 대한 내용은 지금까지의 블로그 포스트 시리즈로 설명을 드렸습니다.<br>앞으로 유용한 설정이나 운영 기법 등은 기회가 되는 대로 별도 개별 포스트 또는 새로운 시리즈로 추가하도록 하겠습니다.</p>
+<blockquote>
+<p><a href="/2018/01/2018-01-build-es-cluster-1">1. 서버 생성 및 Elasticsearch RPM 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-2">2. 메모리, 네트워크 설정 및 플러그인 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-3">3. 클러스터 구성 및 마스터, 데이터 노드 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-4">4. Kibana 설치 및 X-Pack Monitoring 확인</a><br><a href="/2018/01/2018-01-build-es-cluster-5">5. NFS 구성 및 elasticsearch 추가 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-6">6. X-Pack Security를 이용한 SSL 및 TLS 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-7">7. X-Pack License 적용 및 사용자 생성</a><br><strong>8. Logstash 설치 및 Elasticsearch 기본 템플릿 설정</strong></p>
+</blockquote>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/01/2018-01-parent-child-to-join/" data-toggle="tooltip" data-placement="top" title="Elasticsearch 6.x 에서의 join 사용">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/01/2018-01-build-es-cluster-7/" data-toggle="tooltip" data-placement="top" title="Elastic Cluster 구성 7">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+                        
+                          <a class="tag" href="/tags/#Elastic" title="Elastic">Elastic</a>
+                        
+                          <a class="tag" href="/tags/#Elastic Cluster Settings" title="Elastic Cluster Settings">Elastic Cluster Settings</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2018/01/2018-01-build-es-cluster-8/";
+    var disqus_url = "http://kimjmin.net/2018/01/2018-01-build-es-cluster-8/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

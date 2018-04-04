@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          AWS Summit Seoul 2016 - Jongmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://kimjmin.net/2016/05/aws-summit-seoul-2016/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/css/kimjmin.css">
+    
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jongmin&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('IMG_6216.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#AWS" title="AWS">AWS</a>
+                        
+                          <a class="tag" href="/tags/#ICT" title="ICT">ICT</a>
+                        
+                    </div>
+                    <h1>AWS Summit Seoul 2016</h1>
+                    <h2 class="subheading">AWS Summit Seoul 2016 부스 운영기.</h2>
+                    <span class="meta">
+                        Posted by Jongmin Kim (김종민) on
+                        2016-05-19
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+                
+                <div>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- kimjmin.net -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9760232529092117"
+       data-ad-slot="1811620965"
+       data-ad-format="auto"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+                
+                <p>AWS Summit Seoul 2016 행사에 스폰서로 참여했습니다. 일반 참석자로 참석한 것이 아니라 부스만 지키고 세션이나 강연은 하나도 못 들어서, 포스팅 제목을 부스 운영기라고 했습니다. 지금 AWS가 전 세계를 돌며 행사를 열고 있는데 저희 회사에서는 각 국가별로 전부 스폰서를 하면서 행사 참여를 하고 있습니다. 신청 시기가 늦었었는데 AWS의 테크 에반젤리스트이신 윤석찬님께서 연락 주셔서 뒤늦게 Bronze Sponsor 로 참석할 수 있었습니다. 보통 이정도 규모의 행사는 본사에서 지원이 오는데 공교롭게도 이 기간에 APEC 팀 전체가 다른 곳에 모이는 행사를 하고 있어서 이번 행사의 현장 준비와 진행은 저 혼자 해야 했습니다.<br><img src="IMG_6177.jpg" alt=""> <img src="IMG_6216.jpg" alt=""> <img src="IMG_6194.jpg" alt=""></p>
+<p>사람들이 정말 많이 왔습니다. 등록 인원이 6천명, 참석은 3,800 명 정도였다고 합니다. 점심도 못 먹을것 같아서 간단히 먹을 수 있는 간식을 넉넉히 싸 왔는데, 다행이 저희 파트너사 Basis 에 계신 문금성님 께서 도와주시기로 하셔서 잠깐 나가서 점심은 먹고 왔습니다. 다른 부스는 여럿 오셔서 계셧는데 저 혼자 있다 보니 오전에는 화장실 갈 시간도 없었습니다. ^^<br> <img src="IMG_6207.jpg" alt=""> <img src="IMG_6209.jpg" alt=""> <img src="IMG_6213.jpg" alt=""> <img src="IMG_6214.jpg" alt=""> <img src="IMG_6217.jpg" alt=""></p>
+<p>본사에서 보낸 패킷이 통관을 못하고 관세청에 붙잡혀 있다고 Fedex 에서 연락이 와서 몇가지 지원 물품은 못 받고 그냥 해야 했습니다. 급하게 아침에 와서 Google drive form 으로 소속, 이름, 이메일 주소, 직무 정도만 등록할 수 있게 만들어 놓고 데모용 모니터 옆에 제 맥북에 띄워놓고 오시는 분들께 등록을 부탁드렸습니다. 앗차 싶었던게, 저는 항상 Mac 을 써서 생각이 없었는데 Mac 을 다룰줄 몰라 입력을 잘 못하시는 분들이 많았습니다. 집에서 아이패드 가져올걸 하는 후회를.. 하지만 이미 때는 늦었고.. </p>
+<p>지난번에 다른 행사에서는 신청자들의 명찰을 스캔할 수 있는 lead scanner 를 제공 했었는데 이번 AWS 에서는 따로 제공받지를 못해서 조금 아쉬웠습니다. 혹시 저희 회사는 Bronze 라서 제공 안 했던건지도 모르겠네요. 그렇게 오신 분들 신상을 받고, 옆에 명함통을 놓고 (이것도 어제 급하게 구입) 처음에 등록하신 분들께는 티셔츠 나눠드렸습니다. 볼펜도 테이블 위에 올려놨는데 볼펜은 가끔 어떤 분들이 한뭉터기씩 가져가셔서 금방 동났습니다. 사실 처음부터 많이 구비 해 놓지를 않았습니다.</p>
+<p><img src="IMG_6224.jpg" alt=""> <img src="IMG_6226.jpg" alt=""> <img src="IMG_6227.jpg" alt=""> </p>
+<p>오전에 오신 분들 중에는 Elasticsearch 가 뭔지 잘 모르시는 분들도 많았습니다. 가끔 알아보시는 분들은 “어? 엘라스틱서치도 있네?” 라고 하고 가신 분들도 계시고, 절 알아보시고 오셔서 이런 저런 질문 주신 분들도 많았습니다. 이 날 오신 분들께 많이 받았던 질문들입니다.</p>
+<ul>
+<li><strong>Q: 엘라스틱서치가 AWS 에 있는 Elasticsearch Service 랑 같은것인가요? 무슨 연관이 있나요?</strong><ul>
+<li><em>A: Elastic Stack 은 오픈소스이며 제 3자가 자신의 시스템에 내재해서 배포하거나 서비스 하는데에 아무런 제약이 없습니다. 아마존에서 AWS 내에 Elasticsearch를 이용해서 시스템을 만들어 서비스 하는 것이고 저희와 직접적인 비즈니스 연관 관계는 없습니다.</em></li>
+</ul>
+</li>
+<li><strong>Q: AWS의 Elasticsearch Service 랑 Elasticsearch 그냥 쓰는거랑 뭐가 더 낫나요?</strong><ul>
+<li><em>A: 경우에 따라 다르겠지만 AWS의 서비스나 저희가 직접 서비스 하고 있는 Elastic Clound 는 미리 정의된 설정들을 사용하기 때문에 나중에 더 많은 설정을 건드리기 위해서는 직접 인스턴스를 생성해서 쓰시는 것을 추천드립니다.</em></li>
+</ul>
+</li>
+<li><strong>Q: 엘라스틱서치 한국 지사가 있나요? 기술 지원을 받을 수 있나요?</strong><ul>
+<li><em>A: 지금 비즈니스 셋업 중입니다. 현재 영업대표와 에반젤리스트 2명이 있고 계속 채용 중이며 파트너사와도 연계를 계속 만들어 나가고 있습니다.</em></li>
+</ul>
+</li>
+<li><strong>Q: SI도 하시나요?</strong><ul>
+<li><em>A: SI는 안합니다.</em></li>
+</ul>
+</li>
+<li><strong>Q: (제게 개인적으로) Elastic 에는 어떻게 입사하셨나요?</strong><ul>
+<li><em>A: 제 블로그에 <a href="/2015/06/join-elastic/">입사 스토리</a>를 적어 놓았습니다.</em></li>
+</ul>
+</li>
+<li><strong>Q: Logstash 와 Beats 의 차이점이 뭔가요?</strong><ul>
+<li><em>A: Logstash 는 다양한 input, output 파이프라인과 필터 기능이 있지만 무겁고, Beats 는 lightweight data shipper 로서 ES 또는 Logstash로 데이터를 전송하는 기능만 있지만 가볍습니다. 보통 데이터를 수집할 원격 시스템에 Beats 를 설치하고 중간 파이프라인으로 Logstash 를 두는 식으로 설정해서 사용합니다.</em></li>
+</ul>
+</li>
+<li><strong>Q: (제가 준비 해 간 Kibana 데모를 보면서) 이런건 어떻게 만드나요?</strong><ul>
+<li><em>A: Elastic 블로그에 <a href="https://www.elastic.co/kr/blog/seoul-metro-2014" target="_blank" rel="noopener">키바나 대쉬보드 만드는 방법에 대한 웨비나</a>를 올려 놓았습니다.</em></li>
+</ul>
+</li>
+</ul>
+<p>마치는 시간까지 잘 마무리 하고 돌아왔습니다. 다음날 꼼짝을 못하겠더군요. 체력 관리를 잘 해야 하는데. =_=; 이 날 득템한 아이템 들입니다. 돌아다니질 못해서 얻지는 못하고 Splunk 와 Megazone 에 계신 분들 께서 손수 챙겨주셨습니다.<br><img src="IMG_6218.jpg" alt=""> <img src="IMG_6234.jpg" alt=""> </p>
+<p>여하튼 재미있는 행사였고, 이 날 방문해 주신 분들, 특별히 도와주신 문금성님 다시 한번 감사드립니다. :)<br><img src="IMG_6204.jpg" alt=""> <img src="IMG_6221.jpg" alt=""> <img src="IMG_6230.jpg" alt=""> </p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/06/create-own-beats/" data-toggle="tooltip" data-placement="top" title="나만의 Beats 만들기">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/05/blog-reopen/" data-toggle="tooltip" data-placement="top" title="블로그 다시 시작">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#AWS" title="AWS">AWS</a>
+                        
+                          <a class="tag" href="/tags/#ICT" title="ICT">ICT</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://elastic.co">Elastic</a></li>
+                    
+                        <li><a href="http://david.pilato.fr">David Pilato Blog</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "kimjmin";
+    var disqus_identifier = "http://kimjmin.net/2016/05/aws-summit-seoul-2016/";
+    var disqus_url = "http://kimjmin.net/2016/05/aws-summit-seoul-2016/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                  <!-- Jongmin Kim : RSS Feed added start -->
+                  <li>
+                      <a href="/atom.xml">
+                          <span class="fa-stack fa-lg">
+                              <i class="fa fa-circle fa-stack-2x"></i>
+                              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                          </span>
+                      </a>
+                  </li>
+                  <!-- Jongmin Kim : RSS Feed added end -->
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/kimjmin81">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/kimjmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://kimjmin.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-51709817-2';
+    var _gaDomain = 'kimjmin.net';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://kimjmin.net/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
