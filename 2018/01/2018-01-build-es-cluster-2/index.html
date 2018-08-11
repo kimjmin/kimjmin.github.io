@@ -92,14 +92,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -219,11 +219,11 @@
 <h2 id="네트워크-설정"><a href="#네트워크-설정" class="headerlink" title="네트워크 설정"></a>네트워크 설정</h2><p>네트워크 설정은 <code>elasticsearch.yml</code> 설정 파일의 <code>network.host</code> 부분을 수정합니다.</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/elasticsearch/elasticsearch.yml</span><br></pre></td></tr></table></figure>
 <p>보통은 <code>network.host: 192.168.0.1</code> 과 같은 형식으로 IP 주소를 직접 입력해도 되지만, 더 간편하게 <code>_local_</code>, <code>_site_</code>, <code>_global_</code> 같은 값 들을 이용할 수도 있습니다. 저희 서버는 아래와 같이 설정하였습니다.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">network.host: _site_</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">network.host:</span> <span class="string">_site_</span></span><br></pre></td></tr></table></figure>
 <p>network.host 의 값들에 대해서는 아래 페이지를 참고하시기 바랍니다.<br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/modules-network.html#network-interface-values" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/modules-network.html#network-interface-values</a></p>
 <h2 id="Bootstrap-Check"><a href="#Bootstrap-Check" class="headerlink" title="Bootstrap Check"></a>Bootstrap Check</h2><p>기본적으로 아래 문서에 나와있는 설정들은 모두 확인 하도록 합니다.<br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.1/important-settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/6.1/important-settings.html</a></p>
 <h3 id="bootstrap-memory-lock-활성"><a href="#bootstrap-memory-lock-활성" class="headerlink" title="bootstrap.memory_lock 활성"></a>bootstrap.memory_lock 활성</h3><p><code>elasticsearch.yml</code> 설정 파일에서 <code>bootstrap.memory_lock</code> 을 활성화 합니다.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bootstrap.memory_lock: true</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">bootstrap.memory_lock:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>설정 후 elasticsearch를 재시작하면 실행에 실패하는 경우가 있습니다. 시스템 로그를 보면 친절하게 어떻게 설정을 해 줘야 하는지 안내하고 있습니다.</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[2017-12-29T06:16:43,809][WARN ][o.e.b.JNANatives         ] Unable to lock JVM Memory: error=12, reason=Cannot allocate memory</span><br><span class="line">[2017-12-29T06:16:43,811][WARN ][o.e.b.JNANatives         ] This can result in part of the JVM being swapped out.</span><br><span class="line">[2017-12-29T06:16:43,811][WARN ][o.e.b.JNANatives         ] Increase RLIMIT_MEMLOCK, soft limit: 65536, hard limit: 65536</span><br><span class="line">[2017-12-29T06:16:43,812][WARN ][o.e.b.JNANatives         ] These can be adjusted by modifying /etc/security/limits.conf, for example:</span><br><span class="line">	# allow user &apos;elasticsearch&apos; mlockall</span><br><span class="line">	elasticsearch soft memlock unlimited</span><br><span class="line">	elasticsearch hard memlock unlimited</span><br><span class="line">[2017-12-29T06:16:43,812][WARN ][o.e.b.JNANatives         ] If you are logged in interactively, you will have to re-login for the new limits to take effect.</span><br><span class="line">...</span><br><span class="line">[1] bootstrap checks failed</span><br><span class="line">[1]: memory locking requested for elasticsearch process but memory is not locked</span><br></pre></td></tr></table></figure>
 <p><code>/etc/security/limits.conf</code> 파일을 열고<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/security/limits.conf</span><br></pre></td></tr></table></figure></p>

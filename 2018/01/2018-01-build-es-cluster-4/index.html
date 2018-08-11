@@ -92,14 +92,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -236,9 +236,9 @@
 <p>아래와 같은 오류들이 나타납니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&quot;type&quot;:&quot;log&quot;,&quot;@timestamp&quot;:&quot;2018-01-02T07:09:36Z&quot;,&quot;tags&quot;:[&quot;warning&quot;,&quot;elasticsearch&quot;,&quot;admin&quot;],&quot;pid&quot;:3388,&quot;message&quot;:&quot;Unable to revive connection: http://localhost:9200/&quot;&#125;</span><br><span class="line">&#123;&quot;type&quot;:&quot;log&quot;,&quot;@timestamp&quot;:&quot;2018-01-02T07:09:36Z&quot;,&quot;tags&quot;:[&quot;warning&quot;,&quot;elasticsearch&quot;,&quot;admin&quot;],&quot;pid&quot;:3388,&quot;message&quot;:&quot;No living connections&quot;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>Elasticsearch와 정상적으로 통신을 하고, 외부에서 접근하기 위해 <code>kibana.yml</code>에 몇가지 설정을 추가해야 합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/kibana/kibana.yml</span><br></pre></td></tr></table></figure></p>
 <p>먼저 Kibana 는 기본적으로 localhost:9200 을 통해 elasticsearch에 접근하도록 되어 있습니다. 저희는 앞에서 elasticsearch의 <code>network.host</code>를 실제 IP 주소로 수정했기 때문에 Kibana 역시 실제 IP 주소로 elasticsearch를 찾도록 <code>elasticsearch.url</code> 설정을 실제 IP 주소로 설정 해 주어야 합니다.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">elasticsearch.url: &quot;http://192.168.0.10:9200&quot;</span><br></pre></td></tr></table></figure>
-<p>그리고 외부에서 접근하기 위해서는 <code>server.host</code> 도 실제 IP 주소로 수정해야 합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.host: &quot;192.168.0.10&quot;</span><br></pre></td></tr></table></figure></p>
-<p>그리고 X-Pack Security를 설치했기 때문에 Elasticsearch 에 접속을 위한 kibana 계정의 아이디와 패스워드도 입력합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">elasticsearch.username: &quot;kibana&quot;</span><br><span class="line">elasticsearch.password: &quot;changeme&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">elasticsearch.url:</span> <span class="string">"http://192.168.0.10:9200"</span></span><br></pre></td></tr></table></figure>
+<p>그리고 외부에서 접근하기 위해서는 <code>server.host</code> 도 실제 IP 주소로 수정해야 합니다.<br><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">server.host:</span> <span class="string">"192.168.0.10"</span></span><br></pre></td></tr></table></figure></p>
+<p>그리고 X-Pack Security를 설치했기 때문에 Elasticsearch 에 접속을 위한 kibana 계정의 아이디와 패스워드도 입력합니다.<br><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">elasticsearch.username:</span> <span class="string">"kibana"</span></span><br><span class="line"><span class="string">elasticsearch.password:</span> <span class="string">"changeme"</span></span><br></pre></td></tr></table></figure></p>
 <p>Kibana는 기본적으로 5601 포트를 사용합니다. (AWS의 경우) 외부에서 접근 가능하도록 보안 그룹에 5601 포트를 추가로 오픈 해 줍니다.</p>
 <p><img src="kibana_sec_group.png" alt=""></p>
 <p><code>kibana.yml</code>에 위 설정을을 추가하고 보안 그룹 설정을 마치면 Kibana 서비스를 재시작 합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ ]$ sudo service kibana restart</span><br><span class="line">kibana stopped.</span><br><span class="line">kibana started</span><br></pre></td></tr></table></figure></p>
