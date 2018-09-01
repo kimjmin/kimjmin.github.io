@@ -207,7 +207,7 @@
 <blockquote>
 <p><a href="/2018/01/2018-01-build-es-cluster-1">1. 서버 생성 및 Elasticsearch RPM 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-2">2. 메모리, 네트워크 설정 및 플러그인 설치</a><br><a href="/2018/01/2018-01-build-es-cluster-3">3. 클러스터 구성 및 마스터, 데이터 노드 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-4">4. Kibana 설치 및 X-Pack Monitoring 확인</a><br><a href="/2018/01/2018-01-build-es-cluster-5">5. NFS 구성 및 elasticsearch 추가 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-6">6. X-Pack Security를 이용한 SSL 및 TLS 설정</a><br><a href="/2018/01/2018-01-build-es-cluster-7">7. X-Pack License 적용 및 사용자 생성</a><br><a href="/2018/01/2018-01-build-es-cluster-8">8. Logstash 설치 및 Elasticsearch 기본 템플릿 설정</a></p>
 </blockquote>
-<p>Elastic Stack 6.3 버전부터 큰 변호가 있었습니다. 기존에 별도 플러그인으로 제공하던 기능들을 기본 배포 패키지에 포함시키게 되었습니다. 이에 대한 내용은 Elastic 공식 페이지의 아래 블로그 포스트를 참고하세요.</p>
+<p>Elastic Stack 6.3 버전부터 큰 변화가 있었습니다. 기존에 별도 플러그인으로 제공하던 기능들을 기본 배포 패키지에 포함시키게 되었습니다. 이에 대한 내용은 Elastic 공식 페이지의 아래 블로그 포스트를 참고하세요.</p>
 <p><a href="https://www.elastic.co/kr/blog/doubling-down-on-open" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/doubling-down-on-open</a></p>
 <p>6.3 버전부터는 x-pack 플러그인 설치팩을 제공하지 않습니다. 2018년 8월 부터는 X-Pack 이라는 브랜드도 버리고 Elastic 확장 기능 (Elastic Feature) 라고만 명명하고 있습니다. 6.2 이전 버전에서는 <code>bin/elasticsearch-plugin install x-pack</code> 명령으로 계속 설치가 가능합니다. 6.3 버전 부터는 <a href="https://www.elastic.co/kr/downloads" target="_blank" rel="noopener">다운로드 페이지</a> 에서 아래와 같이 확장 기능이 포함된 배포판을 내려받을 수 있습니다.</p>
 <p><img src="download.png" alt=""></p>
