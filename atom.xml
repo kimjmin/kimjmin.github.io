@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://kimjmin.net/"/>
-  <updated>2018-10-26T06:37:27.139Z</updated>
+  <updated>2018-12-08T02:10:22.426Z</updated>
   <id>http://kimjmin.net/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Elastic Stack 롤링 업그레이드</title>
+    <link href="http://kimjmin.net/2018/12/2018-12-elasticsearch-rolling-upgrade/"/>
+    <id>http://kimjmin.net/2018/12/2018-12-elasticsearch-rolling-upgrade/</id>
+    <published>2018-12-07T15:00:00.000Z</published>
+    <updated>2018-12-08T02:10:22.426Z</updated>
+    
+    <content type="html"><![CDATA[<p>얼마 전에 Elastic Stack 6.5 가 출시되었습니다. 6.5 는 마이너 업그레이드이지만 상당히 방대한 새로운 기능들을 포함하고 있습니다. 6.5 에 대한 자세한 내용들은 출시 블로그에서 확인 바랍니다.<br><a href="https://www.elastic.co/kr/blog/elastic-stack-6-5-0-released" target="_blank" rel="noopener">https://www.elastic.co/kr/blog/elastic-stack-6-5-0-released</a></p><p><a href="/2018/01/2018-01-build-es-cluster-8">Elastic Cluster 구성</a> 시리즈에서 구성했던 시스템을 계속해서 제 여러 용도의 데모 서버로 사용하고 있습니다. 6.1 버전으로 처음 설치 한 이후에 가끔 한번씩 새 버전이 나올 때 마다 업그레이드를 해 주고 있었습니다. 이번에도 6.5.0 이 나오면서 이전에는 6.4.2 버전이었 던 것ㅇ르 새로 나온 6.5.1로 업그레이드를 하였습니다. 롤링 업그레이드 하는 전체 과정은 동영상으로 기록했습니다. 포스트 맨 하단에 있습니다.</p><p>데모 서버의 컨셉 아키텍쳐는 아래와 같습니다. 총 4개의 서버에 각각 Elasticsearch 노드를 하나씩 설치했습니다. 3개는 데이터 노드로 사용하고 하나는 Coordinate Only 노드로 설정해서 서비스 노드로 사용합니다. 서비스 노드가 있는 서버에는 Kibana, Logstash, Filebeat, Metricbeat 그리고 테스트를 위해 PHP, MySQL, Apache 웹 서버를 깔고 워드프레스 블로그를 설치 해 놓았습니다.</p><p><img src="es-architecture.png" alt=""></p><p>Elastic Stack 업그레이드에 대한 내용은 아래의 공식 도큐먼트에 자세히 나와 있습니다.<br><a href="https://www.elastic.co/guide/en/elastic-stack/current/upgrading-elastic-stack.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elastic-stack/current/upgrading-elastic-stack.html</a></p><p>Elasticsearch 를 업그레이드 하는 방법은 크게 다음의 3가지로 구분할 수 있습니다</p><p><strong><a href="#Full-Cluster-Restart">1. Full Cluster Restart</a></strong><br><strong><a href="#Cluster-Re-Index">2. Cluster Re-Index</a></strong><br><strong><a href="#Rolling-Upgrade">3. Rolling Upgrade</a></strong></p><p><img src="upgrade-support.png" alt=""></p><p>2.x –&gt; 5.x 와 같이 메이져 버전으로 업그레이드를 할 때는 롤링 업그레이드가 불가능합니다. 따라서 전체 클러스터를 재시작해야 합니다. 마이너 버전 끼리만 롤링 업그레이드가 가능하나 예외적으로 5.x 의 마지막 마이너 버전인 5.6.x 에서는 6.x 버전으로 롤링 업그레이드가 가능합니다.</p><p>다음은 각각 업그레이드에 대한 설명입니다.</p><blockquote><p>참고로 Elasticsearch 는 3, 4 메이져 버전이 없고 1.x &gt; 2.x &gt; 5.x &gt; 6.x 순서로 릴리즈가 되었습니다.</p></blockquote><h4 id="Full-Cluster-Restart"><a href="#Full-Cluster-Restart" class="headerlink" title="Full Cluster Restart"></a>Full Cluster Restart</h4><p>Full Cluster Restart 는 말 그대로 모든 노드를 내렸다가 프로그램을 업그레이드 하고 다시 전체 재시작을 하는 방법입니다. 클러스터 전체 재시작이 일어나기 때문에 필연적으로 운영 시스템의 가동 중단 시간이 발생하게 됩니다.</p><p>데이터가 저장 된 경로의 내용들을 그대로 두고 elasticsearch를 새로 설치 한 다음에 <code>path.data</code> 경로만 기존 데이터 경로로 설정하여 재실행 하면 업그레이드가 끝납니다. Unix 의 경우는 path.data 경로의 심볼릭 링크를 변경해서 업그레이드 하기도 합니다.</p><p><img src="full-cluster-restart.gif" alt=""></p><p>다만 Full Cluster Restart 라도 <strong><font color="red">2개 단계 이상의 상위 메이져 버전으로는 업그레이드가 불가능합니다</font></strong>. 2.x 버전의 운영 클러스터를 6.x 버전의 운영 클러스터로 업그레이드는 할 수 없습니다. 2개 단계 이상으로 업그레이드를 하기 위해서는 <strong><a href="#Cluster-Re-Index">Cluster Re-Index</a></strong>를 해야 합니다.<br>그리고 2.x 에서 생성한 인덱스를 5.x 으로 full cluster restart 해서 유지한 경우에도 이 인덱스는 6.x 으로 업그레이드가 불가능합니다. 5.x 클러스터에서 사용중이지만 2.x 에서 생성된 인덱스는 5.x 클러스터 안에서 다시 재색인을 해 주어야 합니다.</p><p>이전 버전에서 찍은 스냅샷을 새 버전에서 restore 해서 업그레이드 하는 방법도 있습니다. 이 경우에도 색인이 끝난 샤드의 세그먼트 파일을 그대로 복사하는 것이기 때문에 내부적으로는 <code>path.data</code> 를 유지한 Full Cluster Restart 방식과 유사하게 동작합니다. 따라서 2개 단계 이상의 버전에서는 스냅샷을 불러올 수 없습니다.</p><p><img src="snapshot-restore.png" alt=""></p><p><strong>Full Cluster Restart 의 특징을 요약하면 다음과 같습니다.</strong></p><blockquote><ul><li>운영 시스템의 가동 중단 시간이 필연적으로 발생합니다.</li><li>2 단계 이상 버전으로 업그레이드가 불가능합니다.</li><li>스냅샷 &amp; 복원 과정도 Full Cluster Restart 와 동일합니다.</li></ul></blockquote><h4 id="Cluster-Re-Index"><a href="#Cluster-Re-Index" class="headerlink" title="Cluster Re-Index"></a>Cluster Re-Index</h4><p>2.x 에서 6.x 와 같이 두개의 메이져 버전을 업그레이드 하는 경우에는 클러스터를 새로 구성하고 이전 클러스터에서 새로운 클러스터로 데이터를 재색인 하는 방법을 사용할 수 있습니다. 미리 클러스터를 이중화 시켜서 데이터의 재색인이 끝난 뒤 클라이언트 프로그램이 새로운 Elasticsearch 클러스터를 바라보도록 변경하기만 하면 가동 중단 시간도 거의 없이 안전한 업그레이드가 가능합니다. 마치 <a href="https://martinfowler.com/bliki/BlueGreenDeployment.html" target="_blank" rel="noopener">Blue Green 배포</a> 기법과 유사한 개념입니다.</p><p>인덱스에 <code>_source</code> 를 저장하지 않도록 설정했으면 그 인덱스는 재색인이 불가능 합니다. 이 경우 원본 데이터에서 다시 가져오는 방법을 써야 합니다.</p><p>이전 클러스터의 데이터를 새로운 클러스터로 재색인 하기 위해서는 <code>Logstash</code> 를 사용하거나 <code>_reindex API</code>를 활용합니다.</p><p><img src="reindex.png" alt=""></p><p>Logstash 를 사용하는 방법은 다음과 같습니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    hosts =&gt; &quot;es.production.mysite.org&quot;</span><br><span class="line">    index =&gt; &quot;mydata-2018.09.*&quot;</span><br><span class="line">    query =&gt; &apos;&#123; &quot;query&quot;: &#123; &quot;query_string&quot;: &#123; &quot;query&quot;: &quot;*&quot; &#125; &#125; &#125;&apos;</span><br><span class="line">    size =&gt; 500</span><br><span class="line">    scroll =&gt; &quot;5m&quot;</span><br><span class="line">    docinfo =&gt; true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">output &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    index =&gt; &quot;copy-of-production.%&#123;[@metadata][_index]&#125;&quot;</span><br><span class="line">    document_type =&gt; &quot;%&#123;[@metadata][_type]&#125;&quot;</span><br><span class="line">    document_id =&gt; &quot;%&#123;[@metadata][_id]&#125;&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p><code>docinfo =&gt; true</code> 설정을 하면 document_id 까지 모두 동일하게 재색인을 합니다. 더 자세한 설명은 <a href="https://www.elastic.co/guide/en/logstash/current/plugins-inputs-elasticsearch.html" target="_blank" rel="noopener">Logstahs Elasticsearch input 도큐먼트</a>를 참고하세요.</p><p>원격 클러스터간 _reindex API 를 사용하는 방법은 다음과 같습니다.<br><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">POST _reindex</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"source"</span>: &#123;</span><br><span class="line">    <span class="attr">"remote"</span>: &#123;</span><br><span class="line">      <span class="attr">"host"</span>: <span class="string">"http://otherhost:9200"</span>,</span><br><span class="line">      <span class="attr">"username"</span>: <span class="string">"user"</span>,</span><br><span class="line">      <span class="attr">"password"</span>: <span class="string">"pass"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"index"</span>: <span class="string">"source"</span>,</span><br><span class="line">    <span class="attr">"query"</span>: &#123;</span><br><span class="line">      <span class="attr">"match"</span>: &#123;</span><br><span class="line">        <span class="attr">"test"</span>: <span class="string">"data"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dest"</span>: &#123;</span><br><span class="line">    <span class="attr">"index"</span>: <span class="string">"dest"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>원격 클러스터간 _reindex API를 사용하려면 <code>elasticsearch.yml</code> 파일에 다음과 같이 <code>reindex.remote.whitelist</code> 설정이 되어 있어야 합니다.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reindex.remote.whitelist: &quot;otherhost:9200, another:9200, 127.0.10.*:9200, localhost:*&quot;</span><br></pre></td></tr></table></figure></p><p>_reindex 는 기본적으로 <code>document_id</code>, <code>@timestamp</code> 값 까지 동일하게 복사합니다. 더 자세한 설명은 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.5/docs-reindex.html" target="_blank" rel="noopener">_reindex API 도큐먼트</a>를 참고하세요.</p><p><strong>Cluster Re-Index 의 특징을 요약하면 다음과 같습니다.</strong></p><blockquote><ul><li>2 단계 이상의 버전으로 바로 업그레이드가 가능합니다.</li><li>클러스터를 별도로 준비를 위한 비용이 발생합니다.</li><li>데이터를 새로 색인해야 하기 때문에 다른 업그레이드 방법들과 비교하여 시간이 오래 걸립니다.</li><li>비교적 안정적으로 가동 중단 시간 없이 업그레이드가 가능합니다.</li><li>_source 가 저장되어 있지 않으면 사용이 불가능합니다.</li></ul></blockquote><h4 id="Rolling-Upgrade"><a href="#Rolling-Upgrade" class="headerlink" title="Rolling Upgrade"></a>Rolling Upgrade</h4><p>6.4.1 -&gt; 6.5.1 같이 마이너 버전 간에는 롤링 업그레이드가 가능합니다. 롤링 업그레이드는 클러스터에 있는 노드들을 하나씩 내리고 업그레이드 한 뒤 다시 시작해서 업그레이드를 하는 방식입니다. Elasticsearch 노드들 간에는 메이져 버전이 같으면 마이너 버전이 달라도 클러스터 구성이 가능하기 때문에 사용 가능한 방법입니다. 클러스터 전체를 재시작 하지 않기 때문에 가동 중단 시간이 발생하지 않습니다.</p><p><img src="rolling-upgrade.gif" alt=""></p><p>원래는 마이너 버전 간의 업그레이드이지만, 5.6.x 부터는 메이져 버전의 가장 마지막 버전은 그 다음 메이져 버전으로도 롤링 업그레이드가 가능합니다. 메이져 버전 간에 롤링 업그레이드를 할때는 Kibana에 제공되는 마이그레이션 도구를 이용해서 이전 버전의 인덱스들이 새 버전으로 마이그레이션 했을 때 문제 없이 실행이 되는지를 체크하는 것이 안전합니다. </p><p>6.2 이전의 버전과 6.3 이후 버전의 경우에도 배포판의 방식에 큰 변경이 있었기 때문에 별도 가이드 도구가 제공됩니다. 아래 사이트에서 확인이 가능합니다.<br><a href="https://www.elastic.co/products/upgrade_guide" target="_blank" rel="noopener">https://www.elastic.co/products/upgrade_guide</a><br><img src="upgrade-tool.png" alt=""></p><p>그리고 예전에 작성된 <a href="/2018/08/2018-08-install-security-over-es63">Elastic 6.3 에서 상용 라이센스 활성</a> 블로그포스트도 참고하시기 바랍니다.</p><p>롤링 업그레이드는 다음 순서로 진행됩니다. 자세한 내용은 <a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.5/rolling-upgrades.html" target="_blank" rel="noopener">Rolling upgrades 도큐먼트</a> 에 있습니다.</p><ol><li><p>Shard Allocation 중지 : 노드를 중단했을때 샤드들이 재배치 되지 않도록 다음 명령을 실행합니다.</p><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">PUT _cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"persistent"</span>: &#123;</span><br><span class="line">    <span class="attr">"cluster.routing.allocation.enable"</span>: <span class="string">"none"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>Sync Flus 실행 : Primary - Replica 샤드들 간의 세그먼트 저장 상태를 동기화 시켜줍니다.</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST _flush/synced</span><br></pre></td></tr></table></figure></li><li><p>노드 1개 중단 : 중단하고 나면 클러스터 상태가 <strong><font color="orange">Yellow</font></strong> 로 됩니다.</p></li><li>중단한 노드 업그레이드 : 이 때 설치된 플러그인들도 모두 제거하고 새 버전에 맞게 새로 설치 해 줘야 합니다.</li><li><p>중단한 노드 재시작 : 아래 명령으로 노드가 정상적으로 실행됬는지 확인합니다.</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET _cat/nodes</span><br></pre></td></tr></table></figure></li><li><p>Shard Allocation 재가동 : unassigned 된 샤들이 새 노드에 다시 배치되도록 다음 명령을 실행합니다.</p><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">PUT _cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"persistent"</span>: &#123;</span><br><span class="line">    <span class="attr">"cluster.routing.allocation.enable"</span>: <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>클러스터 상태가 <strong><font color="green">Green</font></strong> 이 될 때 까지 기다립니다. 클러스터 상태는 아래 명령으로 확인이 가능합니다.</p><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET _cat/health</span><br></pre></td></tr></table></figure></li><li><p>클러스터 상태가 <strong><font color="green">Green</font></strong>이 되고 나면 다시 1번 과정 부터 모든 노드들에 돌아가면서 실행을 반복합니다.</p></li></ol><p><strong>Rolling Upgrade 의 특징을 요약하면 다음과 같습니다.</strong></p><blockquote><ul><li>마이너 버전 혹은 메이져의 마지막 버전에서만 사용이 가능합니다.</li><li>운영 시스템의 가동 중단 시간이 발생하지 않습니다.</li><li>절차가 복잡하여 플러그인 미설치, 샤드 중단 미실행 등의 실수나 unassign 중 새로 색인된 샤드 등이 있을 때 대규모의 샤드 재배치가 발생하여 시스템에 부하가 발생 할 위험이 있습니다.</li></ul></blockquote><p>아래는 처음 언급한 데모 환경을 6.4.2 에서 6.5.1로 업그레이드 하는 과정을 녹화 한 영상입니다. 앞의 롤링 업그레이드 과정을 실행하고 있으니 참고 해 보시기 바랍니다.</p><iframe width="560" height="315" src="https://www.youtube.com/embed/fkwMt_K0nRQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;얼마 전에 Elastic Stack 6.5 가 출시되었습니다. 6.5 는 마이너 업그레이드이지만 상당히 방대한 새로운 기능들을 포함하고 있습니다. 6.5 에 대한 자세한 내용들은 출시 블로그에서 확인 바랍니다.&lt;br&gt;&lt;a href=&quot;https:/
+      
+    
+    </summary>
+    
+      <category term="Engineering" scheme="http://kimjmin.net/categories/Engineering/"/>
+    
+    
+      <category term="Elasticsearch" scheme="http://kimjmin.net/tags/Elasticsearch/"/>
+    
+      <category term="Elastic" scheme="http://kimjmin.net/tags/Elastic/"/>
+    
+      <category term="Elastic Cluster Settings" scheme="http://kimjmin.net/tags/Elastic-Cluster-Settings/"/>
+    
+  </entry>
   
   <entry>
     <title>나는 과연 SW Engineer 라고 말할 수 있을까?</title>
@@ -593,35 +622,6 @@
       <category term="여행" scheme="http://kimjmin.net/tags/%EC%97%AC%ED%96%89/"/>
     
       <category term="미국" scheme="http://kimjmin.net/tags/%EB%AF%B8%EA%B5%AD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2017-02-22 ES Seoul Meetup 후기</title>
-    <link href="http://kimjmin.net/2017/03/2017-02-seoul-meetup/"/>
-    <id>http://kimjmin.net/2017/03/2017-02-seoul-meetup/</id>
-    <published>2017-03-05T15:00:00.000Z</published>
-    <updated>2017-11-24T22:42:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>이런 저런 일로 바빠서 출장중에 이제야 올립니다.</p><p>사전 질문과 서베이 내용은 <a href="/2017/02/2017-02-meetup-survey">이전 포스트</a>에서 보실 수 있습니다.</p><p>눈대중으로 130~140여 분 정도 와 주셨고요, 참석 리스트에 체크 해 주신 분이 97분 이신데 뒤에 서 계신 분들도 많았습니다.</p><p>발표 자료는 각 순서 제목에 링크되어 있습니다. 몇몇 민감한 정보는 삭제했거나 변경되어 발표때와 자료가 약간 다를 수 있습니다.</p><ol><li>김종민 - <a href="Elastic-Stack-Overview.pdf">Elastic Overview</a></li><li>허광남 - <a href="ELK-on-OKKY-HeoKN.pdf">ES 커뮤니티 로그 데이터 활용</a></li><li>김정환 - <a href="elasticsearch-in-nbt.pdf">시스템 운영 아키텍쳐, Logstash 설정과 트러블 슈팅</a></li><li>김종민 - <a href="community-plan.pdf">Elastic 시작하기 &amp; 커뮤니티 운영 방안</a></li></ol><p>허광남님은 별도 발표자료가 아닌 마인드맵과 실제 운용 화면을 이용해서 발표를 해 주셨습니다. 그리고 마침 한국을 방문 중이던 미국의 Product Manager인 Alvin Chen이 Logstash 와 ES-Hadoop 을 잠시 소개하는 시간도 가졌습니다.</p><p>2014년 4월 12명의 참석자분들과 함께 처음 밋업을 시작한 후 이제 10배가 넘는 분들이 이제 매 회마다 참석을 해 주십니다. 항상 관심 갖고 와 주시는 분들께 너무 감사드리고, 먼저 등록 해 주신 분들께는 작은 포장지에 이름 붙여서 조금이나마 특별한 대우를 받는 느낌도 좀 드리고 싶었습니다.</p><p>늦은 시간에 끝났음에도 15분 정도가 2차 치맥 자리까지 함께 해 주셨습니다. 네트워킹도 점점 더 활발 해 지는것 같아서 좋네요. 커뮤니티 운영 방안에 대해 말씀 드린 것은 출장 끝나고 돌아가서 정리한 뒤 다시 공유 드리겠습니다.</p><p>행사 사진 몇장 갈무리 하며 포스트를 마칩니다.</p><p><img src="IMG_1141.jpg" alt=""> <img src="IMG_1143.jpg" alt=""> <img src="IMG_1148.jpg" alt=""> <img src="IMG_1152.jpg" alt=""> <img src="IMG_1154.jpg" alt=""> <img src="IMG_1156.jpg" alt=""> <img src="IMG_1157.jpg" alt=""> <img src="IMG_1158.jpg" alt=""> <img src="IMG_1161.jpg" alt=""> <img src="IMG_1164.JPG" alt=""> </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;이런 저런 일로 바빠서 출장중에 이제야 올립니다.&lt;/p&gt;
-&lt;p&gt;사전 질문과 서베이 내용은 &lt;a href=&quot;/2017/02/2017-02-meetup-survey&quot;&gt;이전 포스트&lt;/a&gt;에서 보실 수 있습니다.&lt;/p&gt;
-&lt;p&gt;눈대중으로 130~140여 
-      
-    
-    </summary>
-    
-      <category term="ICT" scheme="http://kimjmin.net/categories/ICT/"/>
-    
-    
-      <category term="Hackathon" scheme="http://kimjmin.net/tags/Hackathon/"/>
-    
-      <category term="Meetup" scheme="http://kimjmin.net/tags/Meetup/"/>
     
   </entry>
   
