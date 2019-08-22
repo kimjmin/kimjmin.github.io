@@ -234,7 +234,7 @@
 <p>만약에 운영 클러스터와 원격 모니터링 클러스터에 모니터링 데이터를 모두 저장하고 싶으면 아래와 같이 <code>type: local</code> 값을 설정하면 됩니다.<br><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">xpack.monitoring.exporters:</span></span><br><span class="line"><span class="attr">  local:</span></span><br><span class="line"><span class="attr">    type:</span> <span class="string">local</span></span><br><span class="line"><span class="attr">  remote-cluster:</span></span><br><span class="line"><span class="attr">    type:</span> <span class="string">http</span></span><br><span class="line"><span class="attr">    host:</span> <span class="string">["&lt;monitoring_cluster_host&gt;:9200"]</span></span><br><span class="line"><span class="attr">    auth:</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">"&lt;user&gt;"</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">"&lt;password&gt;"</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="Elastic-Cloud로-모니터링-전용-클러스터-사용"><a href="#Elastic-Cloud로-모니터링-전용-클러스터-사용" class="headerlink" title="Elastic Cloud로 모니터링 전용 클러스터 사용"></a>Elastic Cloud로 모니터링 전용 클러스터 사용</h3><p>Elastic 사에서는 SaaS 형태의 Elastic Cluster 클라우드 서비스를 운영하고 있습니다. 클라우드 서비스는 <a href="https://cloud.elastic.co" target="_blank" rel="noopener">https://cloud.elastic.co</a> 에 접속해서 사용 가능합니다. 처음 계정을 만들면 14일간 무료로 사용이 가능하며 X-Pack Gold, Platinum 기능들의 사용이 가능합니다. 관리 화면에서 간편하게 버튼을 클릭해서 elasticsearch 노드들과 kibana의 실행이 가능합니다.</p>
 <p><img src="es-cloud-login.png" alt=""> <img src="es-cloud-1.png" alt=""> <img src="es-cloud-2.png" alt=""> <img src="es-cloud-3.png" alt=""> <img src="es-cloud-4.png" alt=""></p>
-<p>Elastict 사에서는 기존의 Gold / Platinum 기술지원 구독을 구매한 고객에게 <strong>무료로 Elastic Cloud에 모니터링 전용 클러스터를 제공</strong>하고 있습니다. 모니터링 클러스터를 사용하면 모니터링 데이터 저장 공간을 아낄 수 있고 문제가 생겼을 경우 Elastic의 기술지원 엔지니어들이 모니터링 클러스터에서 직접 문제의 확인이 가능하기 때문에 더욱 효과적인 기술지원이 가능한 장점이 있습니다.</p>
+<p>Elastict 사에서는 기존의 Gold / Platinum 기술지원 구독을 구매한 고객에게 <strong>무료로 Elastic Cloud에 모니터링 전용 클러스터를 제공</strong>하고 있습니다. 관련된 내용은 <a href="https://www.elastic.co/blog/introducing-the-elastic-stack-monitoring-service" target="_blank" rel="noopener">https://www.elastic.co/blog/introducing-the-elastic-stack-monitoring-service</a> 에서 확인이 가능합니다. 모니터링 클러스터를 사용하면 모니터링 데이터 저장 공간을 아낄 수 있고 문제가 생겼을 경우 Elastic의 기술지원 엔지니어들이 모니터링 클러스터에서 직접 문제의 확인이 가능하기 때문에 더욱 효과적인 기술지원이 가능한 장점이 있습니다.</p>
 <p>클러스터를 만들고 나면 Elastic Cloud의 관리 화면에서 elasticsearch 및 kibana의 엔드포인트 주소를 확인할 수 있습니다.</p>
 <p><img src="es-cloud-5.png" alt=""></p>
 <p>kibana 엔드포인트 주소로 접속하면 모니터링 클러스터의 kibana에 접속해서 사용이 가능합니다. 위의 <code>&lt;monitoring_cluster_host&gt;</code>에 elasticsearch 엔드포인트 주소를 입력하면 Elastic Cloud를 모니터링 클러스터로 사용이 가능합니다.</p>
@@ -456,7 +456,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Jongmin&#39;s Blog 2018 
+                    Copyright &copy; Jongmin&#39;s Blog 2019 
                     <br>
                     Theme by <a href="http://huangxuan.me">Hux</a> 
                     <span style="display: inline-block; margin: 0 5px;">
